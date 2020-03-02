@@ -1,5 +1,5 @@
 server:
-  port: 8080
+port: 8080
 
 spring:
   datasource:
@@ -10,5 +10,5 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml  #×¢Òâ£ºÒ»¶¨Òª¶ÔÓ¦mapperÓ³ÉäxmlÎÄ¼şµÄËùÔÚÂ·¾¶
+  mapper-locations: classpath:mapper/*.xml  #æ³¨æ„ï¼šä¸€å®šè¦å¯¹åº”mapperæ˜ å°„xmlæ–‡ä»¶çš„æ‰€åœ¨è·¯å¾„
   type-aliases-package: com.ncu.mfc.model
