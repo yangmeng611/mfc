@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>南昌大学成绩管理平台教师端</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <style>
+        th,td
+        {
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="row" style="width:100%;height: 50px;line-height: 50px;background-color: #1b6d85;color: white;margin: 0;">
+            <div class="col-md-3">
+            &nbsp;&nbsp;<span class="glyphicon glyphicon-education" style="font-size: 25px" aria-hidden="true"></span>
+            &nbsp;&nbsp;<span style="font-weight: bold;font-size: 16px">南昌大学成绩管理平台</span>
+            </div>
+            <!--<div class="col-md-offset-6 col-md-2">-->
+                <!--<span >杨萌</span><span>，欢迎登录系统</span>-->
+            <!--</div>-->
+            <div class="col-md-offset-8 col-md-1">
+                <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
+                <span>退出</span>
+            </div>
+        </div>
+        <div style="position:absolute;bottom:0;margin: 0;width: 100%;height: 93%;
+        background: url(image/img2.jpg) no-repeat center;background-size:cover;">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <span class="navbar-brand" href="#">杨萌（6130116020）</span>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="row collapse navbar-collapse">
+                        <ul class="nav navbar-nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-home"></span> </a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人信息<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#alter" aria-controls="alter" role="tab" data-toggle="tab">修改个人信息</a></li>
+                                    <li><a href="#pwd" aria-controls="pwd" role="tab" data-toggle="tab">修改密码</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">学籍成绩<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#search" aria-controls="search" role="tab" data-toggle="tab">成绩查询</a></li>
+                                    <li><a href="#" aria-controls="" role="tab" data-toggle="tab">成绩分析</a></li>
+                                </ul>
+                            </li>
+                            <form class="navbar-form navbar-left">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="输入课程名称">
+                                </div>
+                                <button type="submit" class="btn btn-default" >查询</button>
+                            </form>
+                        </ul>
+
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <div class="tab-content">
+                <div id="home" role="tabpanel" class="tab-pane fade in active panel panel-primary nav-tabs" style="width: 800px;margin: 50px auto;">
+                    <div class="panel-heading">
+                        <h1 class="panel-title"><span class="glyphicon glyphicon-user"></span> 个人名片</h1>
+                    </div>
+                    <!--<div class="panel-body">-->
+
+                    <!--</div>-->
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <td style="width: 40%;">姓名</td>
+                            <td id="name" style="width: 60%;">杨萌</td>
+                        </tr>
+                        <tr>
+                            <td>学号</td>
+                            <td id="sno">6130116020</td>
+                        <tr>
+                            <td>性别</td>
+                            <td id="sex">女</td>
+                        </tr>
+                        <tr>
+                            <td>年龄</td>
+                            <td id="age">22</td>
+                        </tr>
+                        <tr>
+                            <td>院系</td>
+                            <td id="depart">信息工程学院</td>
+                        </tr>
+                        <tr>
+                            <td>专业</td>
+                            <td id="major">计算机科学与技术</td>
+                        </tr>
+                    </table>
+                    <div class="panel-footer">@南昌大学</div>
+                </div>
+                <div id="alter" role="tabpanel" class="tab-pane" style="width: 400px;margin: 70px auto;">
+                    <form class="form-horizontal nav-tabs">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="username" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">学号</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static" id="num">6130116020</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ssex" class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="ssex">
+                                    <option>男</option>
+                                    <option>女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sage" class="col-sm-2 control-label">年龄</label>
+                            <div class="col-sm-10">
+                                <input type="number" min="0" max="100" class="form-control" id="sage" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">专业</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static" id="smajor">计算机科学与技术</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">院系</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static" id="sdepart">信息工程学院</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="pwd" role="tabpanel" class="tab-pane" style="width: 600px;margin: 70px auto;">
+                    <form class="form-horizontal nav-tabs">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">学号</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static">6130116020</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="oldPwd" class="col-sm-2 control-label">旧密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="oldPwd" placeholder="旧密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPwd" class="col-sm-2 control-label">新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="newPwd" placeholder="新密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPwd2" class="col-sm-2 control-label">确认新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="newPwd2" placeholder="确认新密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="search" role="tabpanel" class="tab-pane" style="width: 800px;margin: 70px auto;">
+                    <form class="form-inline" style="margin: 0 auto">
+                        <!--<div class="form-group">-->
+                            <!--<label for="exampleInputName2">课程性质</label>-->
+                            <!--<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">-->
+                        <!--</div>-->
+                        <label for="ctype">课程性质</label>
+                        <select id="ctype" class="form-control">
+                            <option>==请选择==</option>
+                            <option>学科基础课</option>
+                            <option>专业主干课</option>
+                            <option>专业选修课</option>
+                            <option>创新创业课</option>
+                            <option>个性课</option>
+                            <option>通识课</option>
+                            <option>其他</option>
+                        </select>&nbsp;&nbsp;
+                        <div class="form-group">
+                            <label for="cname">课程名称</label>
+                            <input type="text" class="form-control" id="cname" placeholder="输入课程名称">
+                        </div>&nbsp;&nbsp;
+                        <label for="all">显示方式</label>
+                        <select id="all" class="form-control">
+                            <option>显示全部成绩</option>
+                            <option>显示及格成绩</option>
+                            <option>显示不及格成绩</option>
+                        </select>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary">查询</button>
+                    </form><br>
+                    <div id='showGrade' class="panel">
+                        <table class="table table-bordered table-condensed" style="border-color: black">
+                            <tr>
+                                <th style="width: 10%">序号</th>
+                                <th style="width: 15%">课程编号</th>
+                                <th style="width: 20%">课程名称</th>
+                                <th style="width: 10%">成绩</th>
+                                <th style="width: 10%">学分</th>
+                                <th style="width: 10%">学时</th>
+                                <th style="width: 15%">课程性质</th>
+                            </tr>
+                            <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
