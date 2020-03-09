@@ -88,7 +88,7 @@
                     <div class="panel-footer">@南昌大学</div>
                 </div>
                 <div id="student" role="tabpanel" class="tab-pane" style="width: 1000px;margin: 70px auto;">
-                    <form class="form-inline" style="margin: 0 auto">
+                    <form class="form-inline" style="text-align: center">
                         <div class="form-group">
                             <label for="sno3">学号</label>
                             <input type="text" class="form-control input-sm" id="sno3" placeholder="输入学号">
@@ -162,7 +162,7 @@
                     </nav>
                 </div>
                 <div id="teacher" role="tabpanel" class="tab-pane" style="width: 1000px;margin: 70px auto;">
-                    <form class="form-inline" style="margin: 0 auto">
+                    <form class="form-inline" style="text-align: center">
                         <div class="form-group">
                             <label for="tno2">职工号</label>
                             <input type="text" class="form-control input-sm" id="tno2" placeholder="输入职工号">
@@ -230,7 +230,7 @@
                     </nav>
                 </div>
                 <div id="course" role="tabpanel" class="tab-pane" style="width: 1000px;margin: 70px auto;">
-                    <form class="form-inline" style="margin: 0 auto">
+                    <form class="form-inline" style="text-align: center">
                         <div class="form-group">
                             <label for="cno1">课程编号</label>
                             <input type="text" class="form-control input-sm" id="cno1" placeholder="课程编号">
@@ -308,7 +308,7 @@
                     </nav>
                 </div>
                 <div id="degree" role="tabpanel" class="tab-pane" style="width: 1100px;margin: 70px auto;">
-                    <form class="form-inline" style="margin: 0 auto">
+                    <form class="form-inline" style="text-align: center">
                         <!--<div class="form-group">-->
                         <!--<label for="exampleInputName2">课程性质</label>-->
                         <!--<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">-->
@@ -343,8 +343,53 @@
                             <option>显示不及格成绩</option>
                         </select>&nbsp;
                         <button type="submit" class="btn btn-primary btn-sm">查询</button>
-                    </form><br>
-                    <div id='showGrade' class="panel">
+                    </form>
+                    <!-- Button trigger modal -->
+                    <button style="position: relative;left: 830px;margin-top: 10px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#insert">
+                        <span class="glyphicon glyphicon-plus"></span> 录入成绩
+                    </button>
+                    <button style="position: relative;left: 830px;margin-top: 10px" type="button" class="btn btn-info" data-toggle="tab" data-target="#analyse">
+                        <span class="glyphicon glyphicon-object-align-bottom"></span> 成绩分析
+                    </button>
+                    <!--Model-->
+                    <div id="insert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">学生成绩录入</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="sno2" class="col-sm-2 control-label">学号</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="sno2" placeholder="输入学号">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cno2" class="col-sm-2 control-label">课程编号</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="cno2" placeholder="输入课程编号">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="degree2" class="col-sm-2 control-label">成绩</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="degree2" placeholder="输入成绩">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+                                        <button type="button" class="btn btn-primary">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id='showGrade' class="panel" style="margin-top: 5px">
                         <table class="table table-bordered editable3 table-condensed" style="border-color: black">
                             <tr>
                                 <th style="width: 10%">序号</th>
@@ -407,6 +452,20 @@
                         </ul>
                     </nav>
                 </div>
+                <div id="analyse" role="tabpanel" class="tab-pane" style="width: 100%;margin: 50px auto;">
+                    <a href="#degree"  aria-controls="degree" role="tab" data-toggle="tab" style="margin-left: 100px">
+                        <span class="glyphicon glyphicon-chevron-left"></span>返回 </a>
+                    <form class="form-inline" style="text-align: center">
+                        <div class="form-group">
+                            <label for="cname1">课程名称</label>
+                            <input type="text" class="form-control" id="cname1" placeholder="输入课程名称">
+                        </div>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary">查询</button>
+                    </form><br>
+                    <div style="width:600px; margin: 20px auto;">
+                        <canvas id="myChart" width="600" height="300"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -414,6 +473,39 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['不及格', '及格','优秀'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [3,44,23],
+                    backgroundColor: [
+                        'red',
+                        'yellow',
+                        '#78eabc'
+                    ],
+                    borderColor: [
+                        'red',
+                        'yellow',
+                        '#78eabc',
+                    ],
+                }]
+            },
+            options: {
+                // scales: {
+                //     yAxes: [{
+                //         ticks: {
+                //             beginAtZero: true
+                //         }
+                //     }]
+                // }
+            }
+        });
+    </script>
     <script src="js/editTable.js"></script>
     <script>
         $(function() {
@@ -557,7 +649,7 @@
                 "del" : " <span class='glyphicon glyphicon-remove'></span>",
                 "operatePos" : -1,
                 "editableCols" : "all",
-                "order": ["add","edit","del"],
+                "order": ["edit","del"],
                 "saveCallback" : function(data, isSuccess) { //这里可以写ajax内容，用于保存编辑后的内容
                     //data: 返回的数据
                     //isSucess: 方法，用于保存数据成功后，将可编辑状态变为不可编辑状态
