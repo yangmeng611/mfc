@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author 杨萌
  */
-public interface course {
+public interface CourseService {
 
     /**
      * @return 查询所有课程
