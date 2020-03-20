@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public int updateStuBySno(Student stu) {
-        return studentDao.updateByPrimaryKey(stu);
+        return studentDao.updateByPrimaryKeySelective(stu);
     }
 
     @Override

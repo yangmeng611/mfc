@@ -55,21 +55,22 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login",
-    produces = "appication/json",
-    method = RequestMethod.GET)
+     consumes = "application/json",
+    produces = "application/json",
+    method = RequestMethod.POST)
     public ResponseData login(@RequestBody User record){
 
         ResponseData responseData = new ResponseData();
         User user = userService.login(record.getUid());
         if(user != null) {
-            if(user.equals(record)) {
+            if(user.getUpwd().equals(record.getUpwd())) {
                 responseData.setCode(0);
                 responseData.setMsg("登录成功");
                 responseData.getData().put("user",user);
 
             } else {
                 responseData.setCode(1);
-                responseData.setMsg("密码错误，登录失败");
+                responseData.setMsg("密码错误");
             }
         } else {
             responseData.setCode(1);
@@ -81,6 +82,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "",
+    consumes = "application/json",
     produces = "application/json",
     method = RequestMethod.POST)
     public ResponseData updateUser(@RequestBody User record) {

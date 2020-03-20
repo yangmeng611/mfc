@@ -20,10 +20,10 @@
             &nbsp;&nbsp;<span class="glyphicon glyphicon-education" style="font-size: 25px" aria-hidden="true"></span>
             &nbsp;&nbsp;<span style="font-weight: bold;font-size: 16px">南昌大学成绩管理平台</span>
             </div>
-            <!--<div class="col-md-offset-6 col-md-2">-->
-                <!--<span >杨萌</span><span>，欢迎登录系统</span>-->
-            <!--</div>-->
-            <div class="col-md-offset-8 col-md-1">
+            <div class="col-md-offset-7 col-md-1">
+                <span >学生端</span>
+            </div>
+            <div class="col-md-1">
                 <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
                 <span>退出</span>
             </div>
@@ -40,7 +40,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <span class="navbar-brand" href="#">杨萌（6130116020）</span>
+                        <span class="navbar-brand" href="#"></span>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -77,33 +77,7 @@
                     <div class="panel-heading">
                         <h1 class="panel-title"><span class="glyphicon glyphicon-user"></span> 个人名片</h1>
                     </div>
-                    <!--<div class="panel-body">-->
-
-                    <!--</div>-->
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <td style="width: 40%;">姓名</td>
-                            <td id="name" style="width: 60%;">杨萌</td>
-                        </tr>
-                        <tr>
-                            <td>学号</td>
-                            <td id="sno">6130116020</td>
-                        <tr>
-                            <td>性别</td>
-                            <td id="sex">女</td>
-                        </tr>
-                        <tr>
-                            <td>年龄</td>
-                            <td id="age">22</td>
-                        </tr>
-                        <tr>
-                            <td>院系</td>
-                            <td id="depart">信息工程学院</td>
-                        </tr>
-                        <tr>
-                            <td>专业</td>
-                            <td id="major">计算机科学与技术</td>
-                        </tr>
+                    <table id="stuTable" class="table table-striped table-bordered">
                     </table>
                     <div class="panel-footer">@南昌大学</div>
                 </div>
@@ -118,7 +92,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">学号</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static" id="num">6130116020</p>
+                                <p class="form-control-static" id="num"></p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -139,18 +113,18 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">专业</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static" id="smajor">计算机科学与技术</p>
+                                <p class="form-control-static" id="smajor"></p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">院系</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static" id="sdepart">信息工程学院</p>
+                                <p class="form-control-static" id="sdepart"></p>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">修改</button>
+                                <button id="alertInfo" type="button" class="btn btn-primary">修改</button>
                             </div>
                         </div>
                     </form>
@@ -160,30 +134,30 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">学号</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static">6130116020</p>
+                                <p class="form-control-static" id="sno"></p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="oldPwd" class="col-sm-2 control-label">旧密码</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="oldPwd" placeholder="旧密码">
+                                <input type="password" class="form-control" id="oldPwd" placeholder="旧密码" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="newPwd" class="col-sm-2 control-label">新密码</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="newPwd" placeholder="新密码">
+                                <input type="password" class="form-control" id="newPwd" placeholder="新密码" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="newPwd2" class="col-sm-2 control-label">确认新密码</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="newPwd2" placeholder="确认新密码">
+                                <input type="password" class="form-control" id="newPwd2" placeholder="确认新密码" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">修改</button>
+                                <button id="alertPwd" type="button" class="btn btn-primary">修改</button>
                             </div>
                         </div>
                     </form>
@@ -275,5 +249,145 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+            var user = JSON.parse(localStorage.getItem("user"));
+            var uid = user.uid;
+            // alert(uid);
+            $.ajax({
+                type: "get",
+                url: "/student/" + uid,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.code == 0) {
+                        // alert("数据获取成功");
+                        let student = response.data.student;
+                        var username = student.sname;
+                        $(".navbar-brand").html(username + "(" + student.sno + ")");
+                        $("#stuTable").html("<tr>\n" +
+                            "                            <td style=\"width: 40%;\">姓名</td>\n" +
+                            "                            <td id=\"name\" style=\"width: 60%;\">" + student.sname + "</td>\n" +
+                            "                        </tr>\n" +
+                            "                        <tr>\n" +
+                            "                            <td>学号</td>\n" +
+                            "                            <td id=\"sno\">" + student.sno + "</td>\n" +
+                            "                        <tr>\n" +
+                            "                            <td>性别</td>\n" +
+                            "                            <td id=\"sex\">" + student.ssex + "</td>\n" +
+                            "                        </tr>\n" +
+                            "                        <tr>\n" +
+                            "                            <td>年龄</td>\n" +
+                            "                            <td id=\"age\">" + student.sage + "</td>\n" +
+                            "                        </tr>\n" +
+                            "                        <tr>\n" +
+                            "                              <td>专业</td>\n" +
+                            "                            <td id=\"depart\">" + student.major + "</td>\n" +
+                            "                        </tr>\n" +
+                            "                        <tr>\n" +
+                            "                            <td>院系</td>\n" +
+                            "                            <td id=\"major\">" + student.depart + "</td>\n" +
+                            "                        </tr>");
+                        $("#num").html(uid);
+                        $("#smajor").html(student.major);
+                        $("#sdepart").html(student.depart);
+                        $("#sno").html(uid);
+
+                    } else {
+                        alert("获取数据失败");
+                    }
+                }
+
+
+            })
+            $("#alertPwd").on("click", function () {
+                var newPwd = $("#newPwd").val();
+                var newPwd2 = $("#newPwd2").val();
+                var oldPwd = $("#oldPwd").val();
+                console.log(oldPwd + newPwd + newPwd2);
+                var old = user.upwd;
+                var utype = user.utype;
+                if (oldPwd == null || newPwd == null || newPwd2 == null) {
+                    alert("请输入完整");
+                } else if (oldPwd != old) {
+                    alert("旧密码输入不正确，请重新输入！")
+                    $("#oldPwd").val('');
+                } else if (newPwd2 != newPwd) {
+                    alert("两次输入密码不一致，请重新输入！")
+                    $("#newPwd2").val('');
+                } else {
+                    $.ajax({
+                        type: "post",
+                        url: "/user",
+                        data: JSON.stringify({
+                            "uid": uid,
+                            "upwd": newPwd,
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.code == 0) {
+                                alert("修改成功");
+                                localStorage.setItem("user", JSON.stringify({
+                                    "uid": uid,
+                                    "upwd": newPwd,
+                                    "utype": utype
+                                }));
+                                window.location.reload();
+                            } else {
+                                alert("修改失败");
+                                $("#oldPwd").val('');
+                                $("#newPwd").val('');
+                                $("#newPwd2").val('');
+                            }
+                        },
+                    })
+                }
+
+            })
+            $("#alertInfo").on("click", function () {
+                var sname = $("#username").val();
+                var ssex = $("#ssex").val();
+                var sage = $("#sage").val();
+                var sno = $("#num").val();
+                console.log(sname + ssex + sage + sno);
+                if (sname == null || sage == null) {
+                    alert("请输入完整");
+                } else {
+                    $.ajax({
+                        type: "put",
+                        url: "/student",
+                        data: JSON.stringify({
+                            "sno": uid,
+                            "sname": sname,
+                            "ssex": ssex,
+                            "sage": sage,
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.code == 0) {
+                                alert("修改成功");
+                                window.location.reload();
+                            } else {
+                                alert("修改失败");
+                                $("#username").val('');
+                                $("#ssex").val('');
+                                $("#sage").val('');
+                            }
+                        },
+                        error: function (response) {
+                            if (response.code == 0) {
+                                alert("修改成功");
+                            } else {
+                                alert("修改失败");
+                            }
+                        },
+                    })
+                }
+
+            })
+        })
+    </script>
 </body>
 </html>

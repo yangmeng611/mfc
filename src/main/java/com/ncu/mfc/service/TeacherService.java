@@ -17,20 +17,20 @@ public interface TeacherService {
     /**
      * @return 查询指定教师信息
      */
-    Teacher findTeaByTno();
+    Teacher findTeaByTno(String tno);
 
     /**
      * @return 修改教师信息
      */
-    int updateTeaByTno();
+    int updateTeaByTno(Teacher teacher);
 
     /**
      * @return 添加教师信息
      */
-    int insertTeaByTno();
+    int insertTeaByTno(Teacher teacher);
 
     /**
      * @return 删除教师信息
      */
-    int delTeaByTno();
+    int delTeaByTno(String tno);
 }

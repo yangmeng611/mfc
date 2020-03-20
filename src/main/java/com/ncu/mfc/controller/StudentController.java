@@ -38,7 +38,8 @@ public class StudentController {
 
     }
 
-    @RequestMapping(value = "/sno",
+    @RequestMapping(value = "",
+            consumes = "application/json",
             produces = "application/json",
             method = RequestMethod.PUT)
     public ResponseData updateStu(@RequestBody Student record) throws IOException {

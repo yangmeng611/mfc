@@ -20,10 +20,10 @@
             &nbsp;&nbsp;<span class="glyphicon glyphicon-education" style="font-size: 25px" aria-hidden="true"></span>
             &nbsp;&nbsp;<span style="font-weight: bold;font-size: 16px">南昌大学成绩管理平台</span>
             </div>
-            <!--<div class="col-md-offset-6 col-md-2">-->
-                <!--<span >杨萌</span><span>，欢迎登录系统</span>-->
-            <!--</div>-->
-            <div class="col-md-offset-8 col-md-1">
+            <div class="col-md-offset-7 col-md-1">
+                <span >教师端</span>
+            </div>
+            <div class="col-md-1">
                 <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
                 <span>退出</span>
             </div>
@@ -40,7 +40,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <span class="navbar-brand" href="#">杨萌（6130116020）</span>
+                        <span class="navbar-brand" href="#"></span>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -69,7 +69,7 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="输入课程名称">
                                 </div>
-                                <button type="submit" class="btn btn-default" >查询</button>
+                                <button type="button" class="btn btn-default" >查询</button>
                             </form>
                         </ul>
 
@@ -81,46 +81,28 @@
                     <div class="panel-heading">
                         <h1 class="panel-title"><span class="glyphicon glyphicon-user"></span> 个人名片</h1>
                     </div>
-                    <!--<div class="panel-body">-->
-
-                    <!--</div>-->
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <td style="width: 40%;">姓名</td>
-                            <td id="name" style="width: 60%;">杨萌</td>
-                        </tr>
-                        <tr>
-                            <td>职工号</td>
-                            <td id="tno">6130116020</td>
-                        <tr>
-                            <td>性别</td>
-                            <td id="sex">女</td>
-                        </tr>
-                        <tr>
-                            <td>院系</td>
-                            <td id="depart">信息工程学院</td>
-                        </tr>
+                    <table id="teaTable" class="table table-striped table-bordered">
                     </table>
                     <div class="panel-footer">@南昌大学</div>
                 </div>
                 <div id="alter" role="tabpanel" class="tab-pane" style="width: 500px;margin: 70px auto;">
                     <form class="form-horizontal nav-tabs">
                         <div class="form-group">
-                            <label for="tname" class="col-sm-2 control-label">姓名</label>
+                            <label for="username" class="col-sm-2 control-label">姓名</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="tname" placeholder="">
+                                <input type="text" class="form-control" id="username" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="tno2" class="col-sm-2 control-label">职工号</label>
+                            <label for="num" class="col-sm-2 control-label">职工号</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static" id="tno2">6130116020</p>
+                                <p class="form-control-static" id="num"></p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ssex" class="col-sm-2 control-label">性别</label>
+                            <label for="tsex" class="col-sm-2 control-label">性别</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="ssex">
+                                <select class="form-control" id="tsex">
                                     <option>男</option>
                                     <option>女</option>
                                 </select>
@@ -130,12 +112,12 @@
                         <div class="form-group">
                             <label for="tdepart" class="col-sm-2 control-label">院系</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static" id="tdepart">信息工程学院</p>
+                                <p class="form-control-static" id="tdepart"></p>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">修改</button>
+                                <button id="alertInfo" type="button" class="btn btn-primary">修改</button>
                             </div>
                         </div>
                     </form>
@@ -145,7 +127,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">职工号</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static">6130116020</p>
+                                <p id="tno" class="form-control-static"></p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -168,7 +150,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">修改</button>
+                                <button id="alertPwd" type="button" class="btn btn-primary">修改</button>
                             </div>
                         </div>
                     </form>
@@ -200,7 +182,7 @@
                             <!--<option>显示及格成绩</option>-->
                             <!--<option>显示不及格成绩</option>-->
                         <!--</select>&nbsp;&nbsp;-->
-                        <button type="submit" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary">查询</button>
                     </form><br>
                     <div id='showClass' class="panel">
                         <table class="table table-bordered table-condensed" style="border-color: black">
@@ -280,7 +262,7 @@
                         <option>显示及格成绩</option>
                         <option>显示不及格成绩</option>
                         </select>&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary">查询</button>
                     </form><br>
                     <div id='showGrade' class="panel">
                         <table class="table table-bordered table-condensed" style="border-color: black">
@@ -353,7 +335,7 @@
                             <label for="cname1">课程名称</label>
                             <input type="text" class="form-control" id="cname1" placeholder="输入课程名称">
                         </div>&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary">查询</button>
+                        <button type="button" class="btn btn-primary">查询</button>
                     </form><br>
                     <div style="width:600px; margin: 20px auto;">
                         <canvas id="myChart" width="600" height="300"></canvas>
@@ -427,15 +409,134 @@
                 }]
             },
             options: {
-                // scales: {
-                //     yAxes: [{
-                //         ticks: {
-                //             beginAtZero: true
-                //         }
-                //     }]
-                // }
             }
         });
+        $(function() {
+            var user = JSON.parse(localStorage.getItem("user"));
+            var uid = user.uid;
+            // alert(uid);
+            $.ajax({
+                type: "get",
+                url: "/teacher/" + uid,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.code == 0) {
+                        // alert("数据获取成功");
+                        let teacher = response.data.teacher;
+                        var username = teacher.tname;
+                        $(".navbar-brand").html(username + "(" + teacher.tno + ")");
+                        $("#teaTable").html("<tr>\n" +
+                            "                            <td style=\"width: 40%;\">姓名</td>\n" +
+                            "                            <td style=\"width: 60%;\">" + teacher.tname + "</td>\n" +
+                            "                        </tr>\n" +
+                            "                        <tr>\n" +
+                            "                            <td>职工号</td>\n" +
+                            "                            <td>" + teacher.tno + "</td>\n" +
+                            "                        <tr>\n" +
+                            "                            <td>性别</td>\n" +
+                            "                            <td>" + teacher.tsex + "</td>\n" +
+                            "                        </tr>\n" +
+                            "                        <tr>\n" +
+                            "                            <td>院系</td>\n" +
+                            "                            <td>" + teacher.tdepart + "</td>\n" +
+                            "                        </tr>");
+                        $("#num").html(uid);
+                        $("#tdepart").html(teacher.tdepart);
+                        $("#tno").html(uid);
+
+                    } else {
+                        alert("获取数据失败");
+                    }
+                }
+
+
+            })
+            $("#alertPwd").on("click", function () {
+                var newPwd = $("#newPwd").val();
+                var newPwd2 = $("#newPwd2").val();
+                var oldPwd = $("#oldPwd").val();
+                console.log(oldPwd + newPwd + newPwd2);
+                var old = user.upwd;
+                var utype = user.utype;
+                if (oldPwd == null || newPwd == null || newPwd2 == null) {
+                    alert("请输入完整");
+                } else if (oldPwd != old) {
+                    alert("旧密码输入不正确，请重新输入！")
+                    $("#oldPwd").val('');
+                } else if (newPwd2 != newPwd) {
+                    alert("两次输入密码不一致，请重新输入！")
+                    $("#newPwd2").val('');
+                } else {
+                    $.ajax({
+                        type: "post",
+                        url: "/user",
+                        data: JSON.stringify({
+                            "uid": uid,
+                            "upwd": newPwd,
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.code == 0) {
+                                alert("修改成功");
+                                localStorage.setItem("user", JSON.stringify({
+                                    "uid": uid,
+                                    "upwd": newPwd,
+                                    "utype": utype
+                                }));
+                                window.location.reload();
+                            } else {
+                                alert("修改失败");
+                                $("#oldPwd").val('');
+                                $("#newPwd").val('');
+                                $("#newPwd2").val('');
+                            }
+                        },
+                    })
+                }
+
+            })
+            $("#alertInfo").on("click", function () {
+                var tname = $("#username").val();
+                var tsex = $("#tsex").val();
+                // var tno = $("#num").val();
+                if (tname == null) {
+                    alert("请输入完整");
+                } else {
+                    $.ajax({
+                        type: "post",
+                        url: "/teacher",
+                        data: JSON.stringify({
+                            "tno": uid,
+                            "tname": tname,
+                            "tsex": tsex,
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.code == 0) {
+                                alert("修改成功");
+                                window.location.reload();
+                            } else {
+                                alert("修改失败");
+                                $("#username").val('');
+                                $("#tsex").val('');
+                                $("#tage").val('');
+                            }
+                        },
+                        error: function (response) {
+                            if (response.code == 0) {
+                                alert("修改成功");
+                            } else {
+                                alert("修改失败");
+                            }
+                        },
+                    })
+                }
+
+            })
+        })
     </script>
 </body>
 </html>
