@@ -133,4 +133,10 @@
       depart = #{depart,jdbcType=CHAR}
     where sno = #{sno,jdbcType=CHAR}
   </update>
+<!--查询全部学生-->
+  <select id="selectStu" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from student
+  </select>
 </mapper>

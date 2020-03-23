@@ -21,7 +21,7 @@ $(function() {
             "addCallback" : function(data, isSuccess) {
                 //isSuccess: 方法，用于添加数据成功后，将可编辑状态变为不可编辑状态
             },
-            "delCallback" : function(isSuccess) {
+            "delCallback" : function(id,isSuccess) {
                 //isSuccess: 方法，用于删除数据成功后，将对应行删除
             }
         }, options);
@@ -156,8 +156,8 @@ $(function() {
                 } else if(replaceQuote($(this).html()) == replaceQuote(c.save)) { //如果此时是保存状态
                     var p = $(this).parents('tr'); //获取被点击的当前行
                     var data = []; //保存修改后的数据到数据内
-                    for(var i = 0; i < cols.length; i++) {
-                        var tr = p.children().eq(cols[i]);
+                    for(var i = 0; i < colsNum; i++) {
+                        var tr = p.children().eq(i);
                         var inputValue = tr.children('input').val();
                         data.push(inputValue);
                     }
@@ -225,7 +225,7 @@ $(function() {
                 var copyRow = p.clone(); //构建新的一行
                 var input = "<input type=\"text\"/>";
                 var childLen = p.children().length;
-                for(var i = 0; i < childLen; i++) {
+                for(var i = 1; i < childLen; i++) {
                     copyRow.children().eq(i).html("<input type=\"text\" class=\"form-control\"/>");
                 }
 
@@ -264,7 +264,8 @@ $(function() {
         function createDel(operateCol) {
             $(delLink).appendTo(operateCol).on("click", function() {
                 var _this = this;
-                c.delCallback(function() {
+                let id = $(_this).parents('tr').find("td").eq(1).text();
+                c.delCallback(id,function() {
                     $(_this).parents('tr').remove();
                 });
             });

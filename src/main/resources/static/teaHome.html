@@ -57,7 +57,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">课程成绩<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#csearch" aria-controls="csearch" role="tab" data-toggle="tab">授课查询</a></li>
+                                    <li><a id="classTab" href="#csearch" aria-controls="csearch" role="tab" data-toggle="tab">授课查询</a></li>
                                     <li><a href="#gsearch" aria-controls="gsearch" role="tab" data-toggle="tab">成绩查询</a></li>
                                     <li><a href="#analyse" aria-controls="" role="tab" data-toggle="tab">成绩分析</a></li>
                                     <li><a href="#" aria-controls="" role="tab" data-toggle="modal" data-target="#insert">
@@ -157,10 +157,6 @@
                 </div>
                 <div id="csearch" role="tabpanel" class="tab-pane" style="width: 600px;margin: 70px auto;">
                     <form class="form-inline" style="text-align: center">
-                        <!--<div class="form-group">-->
-                            <!--<label for="exampleInputName2">课程性质</label>-->
-                            <!--<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">-->
-                        <!--</div>-->
                         <label for="ctype">课程性质</label>
                         <select id="ctype" class="form-control">
                             <option>==请选择==</option>
@@ -176,44 +172,9 @@
                             <label for="cname">课程名称</label>
                             <input type="text" class="form-control" id="cname" placeholder="输入课程名称">
                         </div>&nbsp;&nbsp;
-                        <!--<label for="all">显示方式</label>-->
-                        <!--<select id="all" class="form-control">-->
-                            <!--<option>显示全部课程</option>-->
-                            <!--<option>显示及格成绩</option>-->
-                            <!--<option>显示不及格成绩</option>-->
-                        <!--</select>&nbsp;&nbsp;-->
-                        <button type="button" class="btn btn-primary">查询</button>
+                        <button id="seaCourse" type="button" class="btn btn-primary">查询</button>
                     </form><br>
                     <div id='showClass' class="panel">
-                        <table class="table table-bordered table-condensed" style="border-color: black">
-                            <tr>
-                                <th style="width: 10%">序号</th>
-                                <th style="width: 20%">课程编号</th>
-                                <th style="width: 20%">课程名称</th>
-                                <!--<th style="width: 10%">成绩</th>-->
-                                <th style="width: 15%">学分</th>
-                                <th style="width: 15%">学时</th>
-                                <th style="width: 20%">课程性质</th>
-                            </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <!--<td>...</td>-->
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                            </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <!--<td>...</td>-->
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                            </tr>
-                        </table>
                     </div>
                     <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
                         <ul class="pagination">
@@ -533,6 +494,146 @@
                             }
                         },
                     })
+                }
+
+            })
+            $("#classTab").on("click",function(){
+                // alert("查询该教师全课程");
+                $.ajax({
+                    type: "get",
+                    url: "course/teacher/all?tno=" + uid,
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.code == 0) {
+                            // alert("课程数据获取成功");
+                            let courses = response.data.courses;
+                            console.log(courses);
+                            showClassHtml = " <table class=\"table table-bordered table-condensed\" style=\"border-color: black\">\n" +
+                                "                            <tr>\n" +
+                                "                                <th style=\"width: 10%\">序号</th>\n" +
+                                "                                <th style=\"width: 20%\">课程编号</th>\n" +
+                                "                                <th style=\"width: 20%\">课程名称</th>\n" +
+                                "                                <th style=\"width: 15%\">学分</th>\n" +
+                                "                                <th style=\"width: 15%\">学时</th>\n" +
+                                "                                <th style=\"width: 20%\">课程性质</th>\n" +
+                                "                            </tr>";
+                            for (var i = 0; i < courses.length; i++) {
+                                n = i+1;
+                                html = "<tr>\n" +
+                                    "<td>"+ n +"</td>\n" +
+                                    "<td>"+ courses[i].cno +"</td>\n" +
+                                    "<td>"+ courses[i].cname +"</td>\n" +
+                                    "<td>"+ courses[i].credit +"</td>\n" +
+                                    "<td>"+ courses[i].ctime +"</td>\n" +
+                                    "<td>"+ courses[i].ctype +"</td>\n" +
+                                    "</tr>\n";
+                                showClassHtml += html;
+                            }
+                            showClassHtml += "</table>";
+                            $("#showClass").html(showClassHtml);
+                        } else {
+                            alert("您还未被安排授课！");
+                        }
+                    },
+                })
+            })
+            $("#seaCourse").on("click", function () {
+                var ctype = $("#ctype").val().trim();
+                var cname = $("#cname").val().trim();
+                console.log(ctype + cname);
+                if ( cname != "") {
+                    $.ajax({
+                        type: "post",
+                        url: "course/teacher/cname",
+                        data: JSON.stringify({
+                            "cname": cname,
+                            "tno": uid,
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.code == 0) {
+                                // alert("课程数据获取成功");
+                                let course = response.data.course;
+                                $("#showClass").html(" <table class=\"table table-bordered table-condensed\" style=\"border-color: black\">\n" +
+                                    "                            <tr>\n" +
+                                    "                                <th style=\"width: 10%\">序号</th>\n" +
+                                    "                                <th style=\"width: 20%\">课程编号</th>\n" +
+                                    "                                <th style=\"width: 20%\">课程名称</th>\n" +
+                                    "                                <th style=\"width: 15%\">学分</th>\n" +
+                                    "                                <th style=\"width: 15%\">学时</th>\n" +
+                                    "                                <th style=\"width: 20%\">课程性质</th>\n" +
+                                    "                            </tr>\n" +
+                                    "                            <tr>\n" +
+                                    "                                <td>1</td>\n" +
+                                    "                                <td>"+ course.cno +"</td>\n" +
+                                    "                                <td>"+ course.cname +"</td>\n" +
+                                    "                                <td>"+ course.credit +"</td>\n" +
+                                    "                                <td>"+ course.ctime +"</td>\n" +
+                                    "                                <td>"+ course.ctype +"</td>\n" +
+                                    "                            </tr>\n" +
+                                    "                        </table>")
+                            } else {
+                                alert("您未教授该课程！");
+                            }
+                        },
+                    })
+                } else if (ctype != "==请选择==") {
+                    // alert(ctype);
+                    $.ajax({
+                        type: "post",
+                        url: "course/teacher/ctype",
+                        data: JSON.stringify({
+                            "ctype": ctype,
+                            "tno": uid,
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.code == 0) {
+                                // alert("课程数据获取成功");
+                                let courses = response.data.courses;
+                                showClassHtml = " <table class=\"table table-bordered table-condensed\" style=\"border-color: black\">\n" +
+                                    "                            <tr>\n" +
+                                    "                                <th style=\"width: 10%\">序号</th>\n" +
+                                    "                                <th style=\"width: 20%\">课程编号</th>\n" +
+                                    "                                <th style=\"width: 20%\">课程名称</th>\n" +
+                                    "                                <th style=\"width: 15%\">学分</th>\n" +
+                                    "                                <th style=\"width: 15%\">学时</th>\n" +
+                                    "                                <th style=\"width: 20%\">课程性质</th>\n" +
+                                    "                            </tr>";
+                                for (var i = 0; i < courses.length; i++) {
+                                    n = i+1;
+                                    html = "<tr>\n" +
+                                        "<td>"+ n +"</td>\n" +
+                                        "<td>"+ courses[i].cno +"</td>\n" +
+                                        "<td>"+ courses[i].cname +"</td>\n" +
+                                        "<td>"+ courses[i].credit +"</td>\n" +
+                                        "<td>"+ courses[i].ctime +"</td>\n" +
+                                        "<td>"+ courses[i].ctype +"</td>\n" +
+                                        "</tr>\n";
+                                    showClassHtml += html;
+                                }
+                                showClassHtml += "</table>";
+                                $("#showClass").html(showClassHtml);
+                            } else {
+                                alert("未查询到该课程！");
+                            }
+                        },
+                    })
+                } else {
+                    alert("请输入筛选条件！");
+                    $("#showClass").html(" <table class=\"table table-bordered table-condensed\" style=\"border-color: black\">\n" +
+                        "                            <tr>\n" +
+                        "                                <th style=\"width: 10%\">序号</th>\n" +
+                        "                                <th style=\"width: 20%\">课程编号</th>\n" +
+                        "                                <th style=\"width: 20%\">课程名称</th>\n" +
+                        "                                <th style=\"width: 15%\">学分</th>\n" +
+                        "                                <th style=\"width: 15%\">学时</th>\n" +
+                        "                                <th style=\"width: 20%\">课程性质</th>\n" +
+                        "                            </tr>\n" +
+                        "                        </table>");
                 }
 
             })

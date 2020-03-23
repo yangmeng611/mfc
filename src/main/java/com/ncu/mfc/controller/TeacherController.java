@@ -6,6 +6,8 @@ import com.ncu.mfc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/teacher")
 public class TeacherController {
@@ -32,7 +34,25 @@ public class TeacherController {
          return responseData;
     }
 
-    @RequestMapping(value = "",
+    @RequestMapping(value = "/all",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    public ResponseData getAllTea() {
+        ResponseData responseData = new ResponseData();
+        List<Teacher> teachers = teacherService.findAllTeacher();
+        if(teachers != null) {
+            responseData.setCode(0);
+            responseData.setMsg("教师数据获取成功");
+            responseData.getData().put("teachers",teachers);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("教师数据获取失败");
+        }
+        return responseData;
+
+    }
+
+    @RequestMapping(value = "/add",
     consumes = "application/json",
     produces = "application/json",
     method = RequestMethod.PUT)
@@ -71,7 +91,7 @@ public class TeacherController {
 
     }
 
-    @RequestMapping(value = "/{tno}",
+    @RequestMapping(value = "/delete/{tno}",
     consumes = "application/json",
     produces = "application/json",
     method = RequestMethod.DELETE)

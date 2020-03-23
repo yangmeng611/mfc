@@ -1,6 +1,6 @@
 package com.ncu.mfc.service;
 
-import com.ncu.mfc.model.Classes;
+import com.ncu.mfc.model.Course;
 
 import java.util.List;
 
@@ -12,45 +12,48 @@ public interface CourseService {
     /**
      * @return 查询所有课程
      */
-    List<Classes> findAllCourse();
+    List<Course> findAllCourse();
 
     /**
      * @return 根据课程性质查询课程
      */
-    List<Classes> findCouByType();
+    List<Course> findCouByType(String ctype);
 
     /**
      * @return 查询某教师教授课程
      */
-    List<Classes> findCouByTno();
+    List<Course> findCouByTno(String tno);
 
     /**
      * @return 通过课程名称查找课程
      */
-    Classes findCouByCname();
+    Course findCouByCname(String cname);
 
     /**
      * @return 通过课程编号查找课程
      */
-    Classes findCouByCno();
+    Course findCouByCno(String cno);
 
     /**
      * @return 查询某教师教授的指定课程名称的课程
      */
-    Classes findCouByCnameAndTno();
-
+    Course findCouByCnameAndTno(String cname,String tno);
+    /**
+     * @return 查询某教师教授的指定课程性质的课程
+     */
+    List<Course> findCouByCtypeAndTno(String ctype,String tno);
     /**
      * @return 添加课程
      */
-    int insertCourse();
+    int insertCourse(Course course);
 
     /**
      * @return 修改课程信息
      */
-    int updateCourse();
+    int updateCourse(Course course);
 
     /**
      * @return 删除课程信息
      */
-    int delcourse();
+    int delcourse(String cno);
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = {"/student"})
@@ -38,10 +39,29 @@ public class StudentController {
 
     }
 
+    @RequestMapping(value = "/all",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    public ResponseData getAllStu() {
+
+        ResponseData responseData = new ResponseData();
+        List<Student> students = studentService.findAllStu();
+        if(students != null) {
+            responseData.setCode(0);
+            responseData.setMsg("学生数据获取成功");
+            responseData.getData().put("students",students);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("学生数据获取失败");
+        }
+        return responseData;
+
+    }
+
     @RequestMapping(value = "",
             consumes = "application/json",
             produces = "application/json",
-            method = RequestMethod.PUT)
+            method = RequestMethod.POST)
     public ResponseData updateStu(@RequestBody Student record) throws IOException {
         ResponseData responseData = new ResponseData();
         int num = studentService.updateStuBySno(record);
@@ -71,7 +91,7 @@ public class StudentController {
         return responseData;
     }
 
-    @RequestMapping(value = "/add/sno",
+    @RequestMapping(value = "/add",
     produces = "application/json",
     method = RequestMethod.PUT)
     public ResponseData addStu(@RequestBody Student student) {

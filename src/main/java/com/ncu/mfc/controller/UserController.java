@@ -21,6 +21,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/add",
+    consumes = "application/json",
     produces = "application/json",
     method = RequestMethod.PUT)
     public ResponseData addUser(@RequestBody User record) throws IOException {

@@ -19,8 +19,8 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentDao;
 
     @Override
-    public List<Student> findAllStudent() {
-        return null;
+    public List<Student> findAllStu() {
+        return studentDao.selectStu();
     }
 
     @Override
@@ -42,4 +42,5 @@ public class StudentServiceImpl implements StudentService {
     public int delTeaByTno(String sno) {
         return studentDao.deleteByPrimaryKey(sno);
     }
+
 }

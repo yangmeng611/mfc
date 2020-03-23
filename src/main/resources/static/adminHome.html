@@ -49,13 +49,13 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#home"  aria-controls="home" role="tab" data-toggle="tab">
                                 <span class="glyphicon glyphicon-home"></span> </a></li>
-                            <li><a href="#student"  aria-controls="student" role="tab" data-toggle="tab">
+                            <li><a href="#student" id="findAllStu"  aria-controls="student" role="tab" data-toggle="tab">
                                 学生管理 </a></li>
-                            <li><a href="#teacher"  aria-controls="teacher" role="tab" data-toggle="tab">
+                            <li><a href="#teacher" id="findAllTea" aria-controls="teacher" role="tab" data-toggle="tab">
                                 教师管理 </a></li>
-                            <li><a href="#course"  aria-controls="course" role="tab" data-toggle="tab">
+                            <li><a href="#course" id="findAllCou" aria-controls="course" role="tab" data-toggle="tab">
                                 课程管理 </a></li>
-                            <li><a href="#degree"  aria-controls="degree" role="tab" data-toggle="tab">
+                            <li><a href="#degree" id="findAllGra" aria-controls="degree" role="tab" data-toggle="tab">
                                 成绩管理 </a></li>
                             <form class="navbar-form navbar-left">
                                 <div class="form-group">
@@ -107,38 +107,23 @@
                         </div>&nbsp;&nbsp;
                         <button type="submit" class="btn btn-primary btn-sm">查询</button>
                     </form><br>
-                    <div id='showStu' class="panel">
-                        <table class="table table-condensed table-bordered editable">
+                    <div class="panel">
+                        <table class="table table-bordered table-condensed editable">
+                            <thead>
                             <tr>
-                                <th style="width: 10%">序号</th>
+                                <th style="width: 5%">序号</th>
                                 <th style="width: 15%">学号</th>
                                 <th style="width: 15%">姓名</th>
                                 <th style="width: 10%">性别</th>
                                 <th style="width: 10%">年龄</th>
                                 <th style="width: 15%">专业</th>
                                 <th style="width: 15%">院系</th>
-                                <th style="width: 10%">操作</th>
+                                <th style="width: 15%">操作</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>6130116020</td>
-                                <td>杨萌</td>
-                                <td>女</td>
-                                <td>22</td>
-                                <td>计算机科学与技术</td>
-                                <td>信息工程学院</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td></td>
-                            </tr>
+                            </thead>
+                            <tbody id='showStu'>
+
+                            </tbody>
                         </table>
                     </div>
                     <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
@@ -181,32 +166,21 @@
                         </div>&nbsp;&nbsp;
                         <button type="submit" class="btn btn-primary btn-sm">查询</button>
                     </form><br>
-                    <div id='showTea' class="panel" style="width: 80%;margin: 0 auto;">
+                    <div class="panel" style="width: 80%;margin: 0 auto;">
                         <table class="table table-condensed table-bordered editable1" >
-                            <tr>
-                                <th style="width: 10%">序号</th>
-                                <th style="width: 20%">职工号</th>
-                                <th style="width: 20%">姓名</th>
-                                <th style="width: 20%">性别</th>
-                                <th style="width: 20%">院系</th>
-                                <th style="width: 10%">操作</th>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>6130116020</td>
-                                <td>杨萌</td>
-                                <td>女</td>
-                                <td>信息工程学院</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td></td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">序号</th>
+                                    <th style="width: 20%">职工号</th>
+                                    <th style="width: 20%">姓名</th>
+                                    <th style="width: 20%">性别</th>
+                                    <th style="width: 20%">院系</th>
+                                    <th style="width: 15%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="showTea">
+
+                            </tbody>
                         </table>
                     </div>
                     <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
@@ -259,13 +233,13 @@
                     <div id='showClass' class="panel" style="width: 90%;margin: 0 auto;">
                         <table class="table table-bordered editable2 table-condensed" >
                             <tr>
-                                <th style="width: 10%">序号</th>
+                                <th style="width: 5%">序号</th>
                                 <th style="width: 20%">课程编号</th>
                                 <th style="width: 20%">课程名称</th>
                                 <th style="width: 20%">课程性质</th>
                                 <th style="width: 10%">学分</th>
                                 <th style="width: 10%">学时</th>
-                                <th style="width: 10%">操作</th>
+                                <th style="width: 15%">操作</th>
                             </tr>
                             <tr>
                                 <td>...</td>
@@ -474,6 +448,7 @@
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     <script src="js/Chart.min.js"></script>
+    <script src="js/editTable.js"></script>
     <script>
         var ctx = document.getElementById('myChart');
         var myChart = new Chart(ctx, {
@@ -496,106 +471,9 @@
                 }]
             },
             options: {
-                // scales: {
-                //     yAxes: [{
-                //         ticks: {
-                //             beginAtZero: true
-                //         }
-                //     }]
-                // }
             }
         });
-    </script>
-    <script src="js/editTable.js"></script>
-    <script>
         $(function() {
-            //$('.edit').handleTable({"cancel" : "<span class='glyphicon glyphicon-remove'></span>"});
-            $('.editable').handleTable({
-                "handleFirst" : false,
-                "cancel" : " <span class='glyphicon glyphicon-remove-circle'></span> ",
-                "edit" : " <span class='glyphicon glyphicon-edit'></span> ",
-                "add" : " <span class='glyphicon glyphicon-plus'></span> ",
-                "save" : " <span class='glyphicon glyphicon-saved'></span> ",
-                "confirm" : " <span class='glyphicon glyphicon-ok'></span> ",
-                "del" : " <span class='glyphicon glyphicon-remove'></span>",
-                "operatePos" : -1,
-                "editableCols" : "all",
-                "order": ["add","edit","del"],
-                "saveCallback" : function(data, isSuccess) { //这里可以写ajax内容，用于保存编辑后的内容
-                    //data: 返回的数据
-                    //isSucess: 方法，用于保存数据成功后，将可编辑状态变为不可编辑状态
-                    var flag = true; //ajax请求成功（保存数据成功），才回调isSuccess函数（修改保存状态为编辑状态）
-                    if(flag) {
-                        isSuccess();
-                        alert(data + " 保存成功");
-                    } else {
-                        alert(data + " 保存失败");
-                    }
-
-                    return true;
-                },
-                "addCallback" : function(data,isSuccess) {
-                    var flag = true;
-                    if(flag) {
-                        isSuccess();
-                        alert(data + " 增加成功");
-                    } else {
-                        alert(data + " 增加失败");
-                    }
-                },
-                "delCallback" : function(isSuccess) {
-                    var flag = true;
-                    if(flag) {
-                        isSuccess();
-                        alert("删除成功");
-                    } else {
-                        alert("删除失败");
-                    }
-                }
-            });
-            $('.editable1').handleTable({
-                "handleFirst" : false,
-                "cancel" : " <span class='glyphicon glyphicon-remove-circle'></span> ",
-                "edit" : " <span class='glyphicon glyphicon-edit'></span> ",
-                "add" : " <span class='glyphicon glyphicon-plus'></span> ",
-                "save" : " <span class='glyphicon glyphicon-saved'></span> ",
-                "confirm" : " <span class='glyphicon glyphicon-ok'></span> ",
-                "del" : " <span class='glyphicon glyphicon-remove'></span>",
-                "operatePos" : -1,
-                "editableCols" : "all",
-                "order": ["add","edit","del"],
-                "saveCallback" : function(data, isSuccess) { //这里可以写ajax内容，用于保存编辑后的内容
-                    //data: 返回的数据
-                    //isSucess: 方法，用于保存数据成功后，将可编辑状态变为不可编辑状态
-                    var flag = true; //ajax请求成功（保存数据成功），才回调isSuccess函数（修改保存状态为编辑状态）
-                    if(flag) {
-                        isSuccess();
-                        alert(data + " 保存成功");
-                    } else {
-                        alert(data + " 保存失败");
-                    }
-
-                    return true;
-                },
-                "addCallback" : function(data,isSuccess) {
-                    var flag = true;
-                    if(flag) {
-                        isSuccess();
-                        alert(data + " 增加成功");
-                    } else {
-                        alert(data + " 增加失败");
-                    }
-                },
-                "delCallback" : function(isSuccess) {
-                    var flag = true;
-                    if(flag) {
-                        isSuccess();
-                        alert("删除成功");
-                    } else {
-                        alert("删除失败");
-                    }
-                }
-            });
             $('.editable2').handleTable({
                 "handleFirst" : false,
                 "cancel" : " <span class='glyphicon glyphicon-remove-circle'></span> ",
@@ -682,10 +560,282 @@
                     }
                 }
             });
+            $("#findAllStu").on("click",function () {
+                $.ajax({
+                    type:'get',
+                    url:"/student/all",
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:function(response) {
+                        if(response.code == 0){
+                            // alert("获取全部学生数据成功");
+                            console.log(response);
+                            let students = response.data.students;
+                            let showStudentHtml="";
+                            for(let i = 0; i < students.length; i++) {
+                                let n = i+1;
+                                html = " <tr>\n" +
+                                    "                                <td>"+ n +"</td>\n" +
+                                    "                                <td>"+ students[i].sno +"</td>\n" +
+                                    "                                <td>"+ students[i].sname +"</td>\n" +
+                                    "                                <td>"+ students[i].ssex +"</td>\n" +
+                                    "                                <td>"+ students[i].sage +"</td>\n" +
+                                    "                                <td>"+ students[i].major +"</td>\n" +
+                                    "                                <td>"+ students[i].depart +"</td>\n" +
+                                    "                                <td></td>\n" +
+                                    "                            </tr>";
+                                showStudentHtml += html;
+                            };
+                            $("#showStu").html(showStudentHtml);
+                            $('.editable').handleTable({
+                                "handleFirst" : false,
+                                "cancel" : " <span class='glyphicon glyphicon-remove-circle'></span> ",
+                                "edit" : " <span class='glyphicon glyphicon-edit'></span> ",
+                                "add" : " <span class='glyphicon glyphicon-plus'></span> ",
+                                "save" : " <span class='glyphicon glyphicon-saved'></span> ",
+                                "confirm" : " <span class='glyphicon glyphicon-ok'></span> ",
+                                "del" : " <span class='glyphicon glyphicon-remove'></span>",
+                                "operatePos" : -1,
+                                "editableCols" : [2,3,4,5,6],
+                                "order": ["add","edit","del"],
+                                "saveCallback" : function(data, isSuccess) {
+                                    $.ajax({
+                                        type: 'post',
+                                        url: "/student",
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            "sno": data[1],
+                                            "sname": data[2],
+                                            "ssex": data[3],
+                                            "sage": data[4],
+                                            "major": data[5],
+                                            "depart": data[6]
+                                        }),
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            if (response.code == 0) {
+                                                isSuccess();
+                                                alert(data + " 保存成功");
+                                            } else {
+                                                alert(data + " 保存失败");
+                                            }
+                                        }
+                                    })
+
+                                },
+                                "addCallback" : function(data,isSuccess) {
+                                    alert(data[1]);
+                                    $.ajax({
+                                        type: 'put',
+                                        url: "/user/add",
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            "uid": data[1],
+                                            "upwd": data[1],
+                                            "utype": 1
+                                        }),
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            if (response.code == 0) {
+
+                                                $.ajax({
+                                                    type: 'put',
+                                                    url: "/student/add",
+                                                    contentType: 'application/json',
+                                                    data: JSON.stringify({
+                                                        "sno": data[1],
+                                                        "sname": data[2],
+                                                        "ssex": data[3],
+                                                        "sage": data[4],
+                                                        "major": data[5],
+                                                        "depart": data[6]
+                                                    }),
+                                                    dataType: 'json',
+                                                    success: function (response) {
+                                                        if (response.code == 0) {
+                                                            isSuccess();
+                                                            alert( " 增加成功");
+                                                        } else {
+                                                            alert( " 增加失败");
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    })
+                                },
+                                "delCallback" : function(id,isSuccess) {
+                                    $.ajax({
+                                        type: 'delete',
+                                        url: "/student/delete/" + id,
+                                        contentType: 'application/json',
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            if (response.code == 0) {
+                                                $.ajax({
+                                                    type: 'delete',
+                                                    url: "/user/delete/" + id,
+                                                    contentType: 'application/json',
+                                                    dataType: 'json',
+                                                    success: function (response) {
+                                                        if (response.code == 0) {
+                                                            isSuccess();
+                                                            alert(" 删除成功");
+                                                        } else {
+                                                            alert(" 删除失败");
+                                                        }
+                                                    }
+                                                })
+                                            } else {
+                                                alert(" 删除失败");
+                                            }
+                                        }
+                                    })
+                                }
+                            });
+                        } else {
+                            alert("获取全部学生数据失败！")
+                        }
+
+                    }
+                })
+
+            })
+            $("#findAllTea").on("click",function () {
+                $.ajax({
+                    type:'get',
+                    url:"/teacher/all",
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:function(response) {
+                        alert("获取全部教师数据成功");
+                        if(response.code == 0){
+                            console.log(response);
+                            let teachers = response.data.teachers;
+                            let showTeaHtml="";
+                            for(let i = 0; i < teachers.length; i++) {
+                                let n = i+1;
+                                html = " <tr>\n" +
+                                    "                                <td>"+ n +"</td>\n" +
+                                    "                                <td>"+ teachers[i].tno +"</td>\n" +
+                                    "                                <td>"+ teachers[i].tname +"</td>\n" +
+                                    "                                <td>"+ teachers[i].tsex +"</td>\n" +
+                                    "                                <td>"+ teachers[i].tdepart +"</td>\n" +
+                                    "                                <td></td>\n" +
+                                    "                            </tr>";
+                                showTeaHtml += html;
+                            };
+                            $("#showTea").html(showTeaHtml);
+                            $('.editable1').handleTable({
+                                "handleFirst" : false,
+                                "cancel" : " <span class='glyphicon glyphicon-remove-circle'></span> ",
+                                "edit" : " <span class='glyphicon glyphicon-edit'></span> ",
+                                "add" : " <span class='glyphicon glyphicon-plus'></span> ",
+                                "save" : " <span class='glyphicon glyphicon-saved'></span> ",
+                                "confirm" : " <span class='glyphicon glyphicon-ok'></span> ",
+                                "del" : " <span class='glyphicon glyphicon-remove'></span>",
+                                "operatePos" : -1,
+                                "editableCols" : [2,3,4],
+                                "order": ["add","edit","del"],
+                                "saveCallback" : function(data, isSuccess) {
+                                    $.ajax({
+                                        type: 'post',
+                                        url: "/teacher",
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            "tno": data[1],
+                                            "tname": data[2],
+                                            "tsex": data[3],
+                                            "tdepart": data[4]
+                                        }),
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            if (response.code == 0) {
+                                                isSuccess();
+                                                alert(" 保存成功");
+                                            } else {
+                                                alert(" 保存失败");
+                                            }
+                                        }
+                                    })
+
+                                },
+                                "addCallback" : function(data,isSuccess) {
+                                    $.ajax({
+                                        type: 'put',
+                                        url: "/user/add",
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            "uid": data[1],
+                                            "upwd": data[1],
+                                            "utype": 2
+                                        }),
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            if (response.code == 0) {
+
+                                                $.ajax({
+                                                    type: 'put',
+                                                    url: "/teacher/add",
+                                                    contentType: 'application/json',
+                                                    data: JSON.stringify({
+                                                        "tno": data[1],
+                                                        "tname": data[2],
+                                                        "tsex": data[3],
+                                                        "tdepart": data[4]
+                                                    }),
+                                                    dataType: 'json',
+                                                    success: function (response) {
+                                                        if (response.code == 0) {
+                                                            isSuccess();
+                                                            alert(" 增加成功");
+                                                        } else {
+                                                            alert(" 增加失败");
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    })
+                                },
+                                "delCallback" : function(id,isSuccess) {
+                                    $.ajax({
+                                        type: 'delete',
+                                        url: "/teacher/delete/" + id,
+                                        contentType: 'application/json',
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            if (response.code == 0) {
+                                                $.ajax({
+                                                    type: 'delete',
+                                                    url: "/user/delete/" + id,
+                                                    contentType: 'application/json',
+                                                    dataType: 'json',
+                                                    success: function (response) {
+                                                        if (response.code == 0) {
+                                                            isSuccess();
+                                                            alert(" 删除成功");
+                                                        } else {
+                                                            alert(" 删除失败");
+                                                        }
+                                                    }
+                                                })
+                                            } else {
+                                                alert(" 删除失败");
+                                            }
+                                        }
+                                    })
+                                }
+                            });
+                        } else {
+                            alert("服务器据出错啦！")
+                        }
+
+                    }
+                })
+
+            })
         });
     </script>
-<script>
-
-</script>
 </body>
 </html>

@@ -33,4 +33,5 @@ public interface TeacherService {
      * @return 删除教师信息
      */
     int delTeaByTno(String tno);
+
 }

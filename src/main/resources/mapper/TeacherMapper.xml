@@ -111,4 +111,10 @@
       tdepart = #{tdepart,jdbcType=CHAR}
     where tno = #{tno,jdbcType=CHAR}
   </update>
+  <!--获取全部教师信息-->
+  <select id="selectTea" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+  </select>
 </mapper>

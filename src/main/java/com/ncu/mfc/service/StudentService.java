@@ -9,7 +9,7 @@ public interface StudentService {
     /**
      * @return 获取所有学生信息
      */
-    List<Student> findAllStudent();
+    List<Student> findAllStu();
 
     /**
      * @return 通过学号获取学生信息
@@ -30,5 +30,6 @@ public interface StudentService {
      * @return 删除学生
      */
     int delTeaByTno(String sno);
+
 
 }
