@@ -37,6 +37,26 @@ public class CourseController {
         return responseData;
     }
 
+    @RequestMapping(value = "/all",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    public ResponseData findAllCourses(){
+        ResponseData responseData = new ResponseData();
+
+        List<Course> courses = courseService.findAllCourse();
+
+        if(courses != null) {
+            responseData.setCode(0);
+            responseData.setMsg("获取课程数据成功");
+            responseData.getData().put("courses",courses);
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("获取课程数据失败");
+        }
+        return responseData;
+    }
+
     @RequestMapping(value = "/ctype",
             consumes = "application/json",
             produces = "application/json",
@@ -103,12 +123,12 @@ public class CourseController {
     public ResponseData findCouByCnameAndTno(@RequestBody CnameAndTno requestJson){
         ResponseData responseData = new ResponseData();
 
-        Course course = courseService.findCouByCnameAndTno(requestJson.getCname(),requestJson.getTno());
+        List<Course> courses = courseService.findCouByCnameAndTno(requestJson);
 
-        if(course != null) {
+        if(courses != null) {
             responseData.setCode(0);
             responseData.setMsg("获取课程数据成功");
-            responseData.getData().put("course",course);
+            responseData.getData().put("courses",courses);
         }else {
             responseData.setCode(1);
             responseData.setMsg("获取课程数据失败");
@@ -136,4 +156,62 @@ public class CourseController {
         }
         return responseData;
     }
+
+    @RequestMapping(value = "",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData updateCourse(@RequestBody Course course){
+        ResponseData responseData = new ResponseData();
+
+        int num = courseService.updateCourse(course);
+
+        if(num != 0) {
+            responseData.setCode(0);
+            responseData.setMsg("课程数据更新成功");
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("课程数据更新失败");
+        }
+        return responseData;
+    }
+
+    @RequestMapping(value = "/add",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.PUT)
+    public ResponseData addCourse(@RequestBody Course course){
+        ResponseData responseData = new ResponseData();
+
+        int num = courseService.insertCourse(course);
+
+        if(num != 0) {
+            responseData.setCode(0);
+            responseData.setMsg("添加课程成功");
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("添加课程失败");
+        }
+        return responseData;
+    }
+
+    @RequestMapping(value = "delete/{cno}",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.DELETE)
+    public ResponseData updateCourse(@PathVariable("cno") String cno){
+        ResponseData responseData = new ResponseData();
+
+        int num = courseService.delcourse(cno);
+
+        if(num != 0) {
+            responseData.setCode(0);
+            responseData.setMsg("删除课程成功");
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("删除课程失败");
+        }
+        return responseData;
+    }
+
 }

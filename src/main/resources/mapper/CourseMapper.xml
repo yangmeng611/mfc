@@ -142,15 +142,19 @@
     where cname = #{cname,jdbcType=CHAR}
   </select>
   <!--查询某教师指定课程名称课程-->
-  <select id="selectByTnoAndCname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByTnoAndCname" resultMap="BaseResultMap" parameterType="com.ncu.mfc.dto.CnameAndTno" >
     select course.*
     from course,teach_class
-    where course.cno = teach_class.cno and cname = #{arg0,jdbcType=CHAR} and teano = #{arg1,jdbcType=CHAR}
+    where course.cno = teach_class.cno and cname LIKE "%"#{cname}"%" and teano = #{tno,jdbcType=CHAR}
   </select>
   <!--查询某教师指定课程性质课程-->
   <select id="selectByTnoAndCtype" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select course.*
     from course,teach_class
     where course.cno = teach_class.cno and ctype = #{arg0,jdbcType=CHAR} and teano = #{arg1,jdbcType=CHAR}
+  </select>
+  <select id="selectCourses" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select course.*
+    from course
   </select>
 </mapper>

@@ -1,7 +1,13 @@
 package com.ncu.mfc.mapper;
 
+import com.ncu.mfc.dto.CnameAndTno;
+import com.ncu.mfc.dto.GradeTnoBtn;
+import com.ncu.mfc.model.Degree;
 import com.ncu.mfc.model.Grade;
 import com.ncu.mfc.model.GradeKey;
+import com.ncu.mfc.model.Level;
+
+import java.util.List;
 
 public interface GradeMapper {
     /**
@@ -51,4 +57,20 @@ public interface GradeMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Grade record);
+
+    List<Degree> selectDegree();
+
+    Degree selectGraByCnoAndSno(GradeKey gradeKey);
+
+    Level analyseAllGrade();
+
+    Level analyseGrade(String cno);
+
+    Level analyseGradeByTno(String tno);
+
+    Level analyseGradeByTnoAndCname(CnameAndTno record);
+
+    List<Degree> selectGraByTno(String tno);
+
+    List<Degree> selectGraByTnoBtn(GradeTnoBtn record);
 }

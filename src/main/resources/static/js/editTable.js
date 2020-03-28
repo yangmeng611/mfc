@@ -21,7 +21,7 @@ $(function() {
             "addCallback" : function(data, isSuccess) {
                 //isSuccess: 方法，用于添加数据成功后，将可编辑状态变为不可编辑状态
             },
-            "delCallback" : function(id,isSuccess) {
+            "delCallback" : function(data,isSuccess) {
                 //isSuccess: 方法，用于删除数据成功后，将对应行删除
             }
         }, options);
@@ -158,7 +158,11 @@ $(function() {
                     var data = []; //保存修改后的数据到数据内
                     for(var i = 0; i < colsNum; i++) {
                         var tr = p.children().eq(i);
-                        var inputValue = tr.children('input').val();
+                        if(tr.children('input').length > 0){
+                            inputValue = tr.children('input').val();
+                        }else {
+                            inputValue = tr.text();
+                        }
                         data.push(inputValue);
                     }
 
@@ -264,8 +268,12 @@ $(function() {
         function createDel(operateCol) {
             $(delLink).appendTo(operateCol).on("click", function() {
                 var _this = this;
-                let id = $(_this).parents('tr').find("td").eq(1).text();
-                c.delCallback(id,function() {
+                var data = []; //保存修改后的数据到数据内
+                for(var i = 0; i < colsNum; i++) {
+                    let value = $(_this).parents('tr').find("td").eq(i).text();
+                    data.push(value);
+                }
+                c.delCallback(data,function() {
                     $(_this).parents('tr').remove();
                 });
             });

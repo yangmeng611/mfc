@@ -1,5 +1,6 @@
 package com.ncu.mfc.service;
 
+import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.model.Course;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public interface CourseService {
     /**
      * @return 查询某教师教授的指定课程名称的课程
      */
-    Course findCouByCnameAndTno(String cname,String tno);
+    List<Course> findCouByCnameAndTno(CnameAndTno record);
     /**
      * @return 查询某教师教授的指定课程性质的课程
      */

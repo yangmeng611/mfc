@@ -10,6 +10,27 @@
     <id column="cno" property="cno" jdbcType="CHAR" />
     <result column="degree" property="degree" jdbcType="CHAR" />
   </resultMap>
+  <!--成绩详细信息-->
+  <resultMap id="DegreeResultMap" type="com.ncu.mfc.model.Degree" >
+    <id column="cno" property="cno" jdbcType="CHAR" />
+    <id column="cname" property="cname" jdbcType="CHAR" />
+    <id column="sno" property="sno" jdbcType="CHAR" />
+    <id column="sname" property="sname" jdbcType="CHAR" />
+    <id column="degree" property="score" jdbcType="CHAR" />
+    <id column="credit" property="credit" jdbcType="CHAR" />
+    <id column="ctype" property="ctype" jdbcType="CHAR" />
+  </resultMap>
+
+  <!--成绩分析信息-->
+  <resultMap id="AnalyseResultMap" type="com.ncu.mfc.model.Level" >
+    <id column="fails" property="fails" jdbcType="CHAR" />
+    <id column="good" property="good" jdbcType="CHAR" />
+    <id column="excellence" property="excellence" jdbcType="CHAR" />
+    <id column="avgGra" property="avgGra" jdbcType="CHAR" />
+    <id column="maxGra" property="maxGra" jdbcType="CHAR" />
+    <id column="minGra" property="minGra" jdbcType="CHAR" />
+  </resultMap>
+
   <sql id="Base_Column_List" >
     <!--
       WARNING - @mbggenerated
@@ -17,6 +38,99 @@
     -->
     sno, cno, degree
   </sql>
+  <!--查询成绩详细信息-->
+  <select id="selectDegree" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
+    select course.cno,course.cname,student.sno,student.sname,
+    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    from grade,course,student
+    where grade.cno=course.cno and grade.sno=student.sno
+
+  </select>
+  <!--根据课程编号和学号查询成绩详细信息-->
+  <select id="selectGraByCnoAndSno" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
+    select course.cno,course.cname,student.sno,student.sname,
+    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    from grade,course,student
+    where grade.cno=course.cno and grade.sno=student.sno
+    and grade.sno = #{sno,jdbcType=CHAR}
+      and grade.cno = #{cno,jdbcType=CHAR}
+
+  </select>
+
+  <!--根据教师职工号查询教授课程的所有成绩详细信息-->
+  <select id="selectGraByTno" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
+     select course.cno,course.cname,student.sno,student.sname,
+    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    from grade,course,student,teach_class,teacher
+    where grade.cno=course.cno and grade.sno=student.sno and teacher.tno = teach_class.teano
+			and teach_class.cno = grade.cno
+			and teacher.tno=#{tno}
+  </select>
+
+
+  <select id="selectGraByTnoBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeTnoBtn" >
+
+    select course.cno,course.cname,student.sno,student.sname,
+    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    from grade,course,student,teach_class,teacher
+    where grade.cno=course.cno and grade.sno=student.sno and teacher.tno = teach_class.teano
+    and teach_class.cno = grade.cno
+    and teacher.tno=#{tno}
+    <if test="cname != '' and cname != null" >
+      and cname LIKE "%"#{cname}"%"
+    </if>
+    <if test="cname == '' or cname == null">
+      <if test="ctype != '==请选择=='">
+        and ctype = #{ctype}
+      </if>
+    </if>
+    <if test="compare != '' and compare != null" >
+      and degree ${compare} 60
+    </if>
+  </select>
+
+  <!--查询全部成绩的及格，不及格与优秀的比例-->
+  <select id="analyseAllGrade" resultMap="AnalyseResultMap">
+    SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra, MIN(grade.degree) AS minGra,
+    SUM(CASE WHEN grade.degree &lt; 60 || grade.degree = 'D' THEN 1 ELSE 0 END)/COUNT(1)*100 AS fails,
+    SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
+    SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
+    FROM grade
+  </select>
+
+  <!--查询指定课程的及格，不及格与优秀的比例-->
+  <select id="analyseGrade" resultMap="AnalyseResultMap" parameterType="java.lang.String">
+    SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra, MIN(grade.degree) AS minGra,
+    SUM(CASE WHEN grade.degree &lt; 60 || grade.degree = 'D' THEN 1 ELSE 0 END)/COUNT(1)*100 AS fails,
+    SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
+    SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
+    FROM grade,course
+    WHERE grade.cno = course.cno and course.cname=#{cname,jdbcType=CHAR}
+  </select>
+
+  <!--查询指定老师所有课程的及格，不及格与优秀的比例-->
+  <select id="analyseGradeByTno" resultMap="AnalyseResultMap" parameterType="java.lang.String">
+    SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra, MIN(grade.degree) AS minGra,
+    SUM(CASE WHEN grade.degree &lt; 60 || grade.degree = 'D' THEN 1 ELSE 0 END)/COUNT(1)*100 AS fails,
+    SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
+    SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
+    FROM grade,course,teach_class
+    WHERE teach_class.cno=course.cno and grade.cno = course.cno and teach_class.teano=#{teano,jdbcType=CHAR}
+  </select>
+
+  <!--查询指定老师指定课程的及格，不及格与优秀的比例-->
+  <select id="analyseGradeByTnoAndCname" resultMap="AnalyseResultMap" parameterType="com.ncu.mfc.dto.CnameAndTno">
+     SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra, MIN(grade.degree) AS minGra,
+    SUM(CASE WHEN grade.degree &lt; 60 || grade.degree = 'D' THEN 1 ELSE 0 END)/COUNT(1)*100 AS fails,
+    SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
+    SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
+    FROM grade,course,teach_class
+    WHERE teach_class.cno=course.cno and grade.cno = course.cno
+			and course.cname=#{cname}
+			and teach_class.teano=#{tno}
+
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
     <!--
       WARNING - @mbggenerated

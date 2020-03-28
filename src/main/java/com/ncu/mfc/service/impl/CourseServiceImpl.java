@@ -1,5 +1,6 @@
 package com.ncu.mfc.service.impl;
 
+import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.mapper.CourseMapper;
 import com.ncu.mfc.mapper.TeacherMapper;
 import com.ncu.mfc.model.Course;
@@ -21,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> findAllCourse() {
-        return null;
+        return courseDao.selectCourses();
     }
 
     @Override
@@ -46,9 +47,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course findCouByCnameAndTno(String cname, String tno) {
+    public List<Course> findCouByCnameAndTno(CnameAndTno record) {
 
-        return courseDao.selectByTnoAndCname(cname,tno);
+        return courseDao.selectByTnoAndCname(record);
     }
 
     @Override

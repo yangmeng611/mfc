@@ -1,5 +1,6 @@
 package com.ncu.mfc.mapper;
 
+import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.model.Course;
 
 import java.util.List;
@@ -59,7 +60,9 @@ public interface CourseMapper {
 
     Course selectByCname(String cname);
 
-    Course selectByTnoAndCname(String cname,String tno);
+    List<Course> selectByTnoAndCname(CnameAndTno record);
 
     List<Course> selectByTnoAndCtype(String ctype,String tno);
+
+    List<Course> selectCourses();
 }
