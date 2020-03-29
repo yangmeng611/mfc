@@ -1,7 +1,7 @@
 package com.ncu.mfc.service;
 
 import com.ncu.mfc.dto.CnameAndTno;
-import com.ncu.mfc.dto.GradeTnoBtn;
+import com.ncu.mfc.dto.GradeBtn;
 import com.ncu.mfc.model.Degree;
 import com.ncu.mfc.model.Grade;
 import com.ncu.mfc.model.GradeKey;
@@ -31,5 +31,9 @@ public interface GradeService {
 
     List<Degree> findDegreeByTno(String tno);
 
-    List<Degree> findDegreeByTnoBtn(GradeTnoBtn record);
+    List<Degree> findDegreeByTnoBtn(GradeBtn record);
+
+    List<Degree> findDegreeByStu(String sno);
+
+    List<Degree> findDegreeByStuBtn(GradeBtn record);
 }

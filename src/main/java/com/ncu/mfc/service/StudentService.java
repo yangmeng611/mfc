@@ -31,5 +31,7 @@ public interface StudentService {
      */
     int delTeaByTno(String sno);
 
+    List<Student> findStuByBtn(Student student);
+
 
 }

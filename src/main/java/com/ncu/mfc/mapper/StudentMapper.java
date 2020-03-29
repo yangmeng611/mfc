@@ -54,4 +54,6 @@ public interface StudentMapper {
     int updateByPrimaryKey(Student record);
 
     List<Student> selectStu();
+
+    List<Student> selectStuByBtn(Student stu);
 }

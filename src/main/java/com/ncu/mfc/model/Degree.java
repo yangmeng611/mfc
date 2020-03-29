@@ -19,6 +19,16 @@ public class Degree {
 
     private String ctype;
 
+    public String getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(String ctime) {
+        this.ctime = ctime;
+    }
+
+    private String ctime;
+
 
 
     public String getCno() {

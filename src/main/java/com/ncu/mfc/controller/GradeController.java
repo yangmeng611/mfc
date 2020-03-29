@@ -1,7 +1,7 @@
 package com.ncu.mfc.controller;
 
 import com.ncu.mfc.dto.CnameAndTno;
-import com.ncu.mfc.dto.GradeTnoBtn;
+import com.ncu.mfc.dto.GradeBtn;
 import com.ncu.mfc.dto.ResponseData;
 import com.ncu.mfc.model.Degree;
 import com.ncu.mfc.model.Grade;
@@ -108,7 +108,7 @@ public class GradeController {
     @RequestMapping(value = "/teacher/btn",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData findDegreeByTno(@RequestBody GradeTnoBtn record) {
+    public ResponseData findDegreeByTno(@RequestBody GradeBtn record) {
         ResponseData responseData = new ResponseData();
         List<Degree> grades = gradeService.findDegreeByTnoBtn(record);
         if(grades != null) {
@@ -152,6 +152,40 @@ public class GradeController {
         }else{
             responseData.setCode(1);
             responseData.setMsg("获取成绩分析数据失败");
+        }
+        return responseData;
+    }
+
+    @RequestMapping(value = "/student/all",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    public ResponseData findDegreeByStu(@RequestParam("sno") String sno) {
+        ResponseData responseData = new ResponseData();
+        List<Degree> grades = gradeService.findDegreeByStu(sno);
+        if(grades != null) {
+            responseData.setCode(0);
+            responseData.setMsg("获取成绩数据成功");
+            responseData.getData().put("grades",grades);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("获取成绩数据失败");
+        }
+        return responseData;
+    }
+
+    @RequestMapping(value = "/student/btn",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData findDegreeByStu(@RequestBody GradeBtn record) {
+        ResponseData responseData = new ResponseData();
+        List<Degree> grades = gradeService.findDegreeByStuBtn(record);
+        if(grades != null) {
+            responseData.setCode(0);
+            responseData.setMsg("获取成绩数据成功");
+            responseData.getData().put("grades",grades);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("获取成绩数据失败");
         }
         return responseData;
     }

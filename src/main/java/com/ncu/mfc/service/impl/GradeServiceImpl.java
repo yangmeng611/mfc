@@ -2,7 +2,7 @@ package com.ncu.mfc.service.impl;
 
 
 import com.ncu.mfc.dto.CnameAndTno;
-import com.ncu.mfc.dto.GradeTnoBtn;
+import com.ncu.mfc.dto.GradeBtn;
 import com.ncu.mfc.mapper.GradeMapper;
 import com.ncu.mfc.model.Degree;
 import com.ncu.mfc.model.Grade;
@@ -71,7 +71,17 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<Degree> findDegreeByTnoBtn(GradeTnoBtn record) {
+    public List<Degree> findDegreeByTnoBtn(GradeBtn record) {
         return gradeDao.selectGraByTnoBtn(record);
+    }
+
+    @Override
+    public List<Degree> findDegreeByStu(String sno) {
+        return gradeDao.selectGraByStu(sno);
+    }
+
+    @Override
+    public List<Degree> findDegreeByStuBtn(GradeBtn record) {
+        return gradeDao.selectGraByStuBtn(record);
     }
 }

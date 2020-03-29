@@ -1,7 +1,7 @@
 package com.ncu.mfc.mapper;
 
 import com.ncu.mfc.dto.CnameAndTno;
-import com.ncu.mfc.dto.GradeTnoBtn;
+import com.ncu.mfc.dto.GradeBtn;
 import com.ncu.mfc.model.Degree;
 import com.ncu.mfc.model.Grade;
 import com.ncu.mfc.model.GradeKey;
@@ -72,5 +72,9 @@ public interface GradeMapper {
 
     List<Degree> selectGraByTno(String tno);
 
-    List<Degree> selectGraByTnoBtn(GradeTnoBtn record);
+    List<Degree> selectGraByTnoBtn(GradeBtn record);
+
+    List<Degree> selectGraByStu(String sno);
+
+    List<Degree> selectGraByStuBtn(GradeBtn record);
 }

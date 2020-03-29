@@ -19,6 +19,7 @@
     <id column="degree" property="score" jdbcType="CHAR" />
     <id column="credit" property="credit" jdbcType="CHAR" />
     <id column="ctype" property="ctype" jdbcType="CHAR" />
+    <id column="ctime" property="ctime" jdbcType="CHAR" />
   </resultMap>
 
   <!--成绩分析信息-->
@@ -67,8 +68,8 @@
 			and teacher.tno=#{tno}
   </select>
 
-
-  <select id="selectGraByTnoBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeTnoBtn" >
+<!--教师端成绩查询筛选button-->
+  <select id="selectGraByTnoBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
     select course.cno,course.cname,student.sno,student.sname,
     grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
@@ -76,6 +77,36 @@
     where grade.cno=course.cno and grade.sno=student.sno and teacher.tno = teach_class.teano
     and teach_class.cno = grade.cno
     and teacher.tno=#{tno}
+    <if test="cname != '' and cname != null" >
+      and cname LIKE "%"#{cname}"%"
+    </if>
+    <if test="cname == '' or cname == null">
+      <if test="ctype != '==请选择=='">
+        and ctype = #{ctype}
+      </if>
+    </if>
+    <if test="compare != '' and compare != null" >
+      and degree ${compare} 60
+    </if>
+  </select>
+
+  <!--根据学号查询课程的所有成绩详细信息-->
+  <select id="selectGraByStu" resultMap="DegreeResultMap" parameterType="java.lang.String" >
+     select course.cno,course.cname,grade.degree degree,
+     if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
+    from grade,course,student
+    where grade.cno=course.cno and grade.sno=student.sno
+			and student.sno=#{sno}
+  </select>
+
+  <!--学生端成绩查询筛选button-->
+  <select id="selectGraByStuBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
+
+    select course.cno,course.cname,grade.degree degree,
+    if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
+    from grade,course,student
+    where grade.cno=course.cno and grade.sno=student.sno
+    and student.sno=#{sno}
     <if test="cname != '' and cname != null" >
       and cname LIKE "%"#{cname}"%"
     </if>

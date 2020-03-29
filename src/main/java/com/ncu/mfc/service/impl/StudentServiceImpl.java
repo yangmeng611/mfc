@@ -43,4 +43,9 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.deleteByPrimaryKey(sno);
     }
 
+    @Override
+    public List<Student> findStuByBtn(Student student) {
+        return studentDao.selectStuByBtn(student);
+    }
+
 }

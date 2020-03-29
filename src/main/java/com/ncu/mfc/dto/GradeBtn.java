@@ -3,7 +3,17 @@ package com.ncu.mfc.dto;
 /**
  * @author 杨萌
  */
-public class GradeTnoBtn {
+public class GradeBtn {
+
+    public String getSno() {
+        return sno;
+    }
+
+    public void setSno(String sno) {
+        this.sno = sno;
+    }
+
+    public String sno;
 
     public String getTno() {
         return tno;

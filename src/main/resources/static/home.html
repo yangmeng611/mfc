@@ -57,15 +57,14 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">学籍成绩<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#search" aria-controls="search" role="tab" data-toggle="tab">成绩查询</a></li>
-                                    <li><a href="#" aria-controls="" role="tab" data-toggle="tab">成绩分析</a></li>
+                                    <li><a id="gradeTab" href="#search" aria-controls="search" role="tab" data-toggle="tab">成绩查询</a></li>
                                 </ul>
                             </li>
                             <form class="navbar-form navbar-left">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="输入课程名称">
                                 </div>
-                                <button type="submit" class="btn btn-default" >查询</button>
+                                <button type="button" class="btn btn-default" >查询</button>
                             </form>
                         </ul>
 
@@ -134,7 +133,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">学号</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static" id="sno"></p>
+                                <p  id="num2" class="form-control-static"></p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -183,43 +182,31 @@
                             <label for="cname">课程名称</label>
                             <input type="text" class="form-control" id="cname" placeholder="输入课程名称">
                         </div>&nbsp;&nbsp;
-                        <label for="all">显示方式</label>
-                        <select id="all" class="form-control">
+                        <label for="showType">显示方式</label>
+                        <select id="showType" class="form-control">
                             <option>显示全部成绩</option>
                             <option>显示及格成绩</option>
                             <option>显示不及格成绩</option>
                         </select>&nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary">查询</button>
+                        <button id="gradeBtn" type="button" class="btn btn-primary">查询</button>
                     </form><br>
-                    <div id='showGrade' class="panel">
+                    <div class="panel">
                         <table class="table table-bordered table-condensed" style="border-color: black">
-                            <tr>
-                                <th style="width: 10%">序号</th>
-                                <th style="width: 15%">课程编号</th>
-                                <th style="width: 20%">课程名称</th>
-                                <th style="width: 10%">成绩</th>
-                                <th style="width: 10%">学分</th>
-                                <th style="width: 10%">学时</th>
-                                <th style="width: 15%">课程性质</th>
-                            </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                            </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">序号</th>
+                                    <th style="width: 15%">课程编号</th>
+                                    <th style="width: 20%">课程名称</th>
+                                    <th style="width: 10%">成绩</th>
+                                    <th style="width: 10%">学分</th>
+                                    <th style="width: 10%">学时</th>
+                                    <th style="width: 15%">课程性质</th>
+                                </tr>
+                            </thead>
+                            <tbody  id='showGrade'>
+
+                            </tbody>
+
                         </table>
                     </div>
                     <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
@@ -289,9 +276,10 @@
                             "                            <td id=\"major\">" + student.depart + "</td>\n" +
                             "                        </tr>");
                         $("#num").html(uid);
+                        $("#num2").html(uid);
                         $("#smajor").html(student.major);
                         $("#sdepart").html(student.depart);
-                        $("#sno").html(uid);
+
 
                     } else {
                         alert("获取数据失败");
@@ -346,12 +334,12 @@
 
             })
             $("#alertInfo").on("click", function () {
-                var sname = $("#username").val();
-                var ssex = $("#ssex").val();
-                var sage = $("#sage").val();
-                var sno = $("#num").val();
+                var sname = $("#username").val().trim();
+                var ssex = $("#ssex").val().trim();
+                var sage = $("#sage").val().trim();
+                var sno = $("#num").val().trim();
                 console.log(sname + ssex + sage + sno);
-                if (sname == null || sage == null) {
+                if (sname == "" || sage == "") {
                     alert("请输入完整");
                 } else {
                     $.ajax({
@@ -387,6 +375,93 @@
                 }
 
             })
+            $("#gradeTab").on("click",function () {
+                $.ajax({
+                    type:'get',
+                    url:"/grade/student/all?sno="+uid,
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:function(response) {
+                        // alert("获取全部成绩数据成功");
+                        if(response.code == 0) {
+                            console.log(response);
+                            let grades = response.data.grades;
+                            let showGraHtml = "";
+                            for (let i = 0; i < grades.length; i++) {
+                                let n = i + 1;
+                                html = " <tr>\n" +
+                                    "                                <td>" + n + "</td>\n" +
+                                    "                                <td>" + grades[i].cno + "</td>\n" +
+                                    "                                <td>" + grades[i].cname + "</td>\n" +
+                                    "                                <td>" + grades[i].score + "</td>\n" +
+                                    "                                <td>" + grades[i].credit + "</td>\n" +
+                                    "                                <td>" + grades[i].ctime + "</td>\n" +
+                                    "                                <td>" + grades[i].ctype + "</td>\n" +
+                                    "                            </tr>";
+                                showGraHtml += html;
+                            }
+                            ;
+                            $("#showGrade").html(showGraHtml);
+                        } else {
+                            alert("服务器据出错啦！")
+                        }
+
+                    }
+                })
+
+                $("#gradeBtn").on("click",function () {
+                    let ctype=$("#ctype").val().trim();
+                    let cname=$("#cname").val().trim();
+                    let showType=$("#showType").val().trim();
+                    let compare = "";
+                    if(showType == "显示全部成绩"){
+                        compare = "";
+                    }else if(showType == "显示及格成绩"){
+                        compare = ">";
+                    }else {
+                        compare = "<";
+                    }
+                    $.ajax({
+                        type: 'post',
+                        url: "/grade/student/btn",
+                        contentType: 'application/json',
+                        data:JSON.stringify({
+                            "sno" : uid,
+                            "cname" : cname,
+                            "ctype" : ctype,
+                            "compare" : compare
+                        }),
+                        dataType: 'json',
+                        success: function (response) {
+                            // alert("获取全部成绩数据成功");
+                            if (response.code == 0) {
+                                console.log(response);
+                                let grades = response.data.grades;
+                                let showGraHtml = "";
+                                for (let i = 0; i < grades.length; i++) {
+                                    let n = i + 1;
+                                    html = " <tr>\n" +
+                                        "                                <td>" + n + "</td>\n" +
+                                        "                                <td>" + grades[i].cno + "</td>\n" +
+                                        "                                <td>" + grades[i].cname + "</td>\n" +
+                                        "                                <td>" + grades[i].score + "</td>\n" +
+                                        "                                <td>" + grades[i].credit + "</td>\n" +
+                                        "                                <td>" + grades[i].ctime + "</td>\n" +
+                                        "                                <td>" + grades[i].ctype + "</td>\n" +
+                                        "                            </tr>";
+                                    showGraHtml += html;
+                                }
+                                ;
+                                $("#showGrade").html(showGraHtml);
+                            } else {
+                                alert("服务器据出错啦！")
+                            }
+
+                        }
+                    })
+                })
+
+            });
         })
     </script>
 </body>

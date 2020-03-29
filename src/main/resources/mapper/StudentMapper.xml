@@ -30,6 +30,31 @@
     from student
     where sno = #{sno,jdbcType=CHAR}
   </select>
+
+  <select id="selectStuByBtn" resultMap="BaseResultMap" parameterType="com.ncu.mfc.model.Student" >
+    select  <include refid="Base_Column_List" />
+    from student
+    where 1=1
+    <if test="sno != '' and sno != null" >
+      and sno = #{sno}
+    </if>
+    <if test="sno == '' or sno == null" >
+      <if test="sname != '' and sname != null" >
+        and sname LIKE "%"#{sname}"%"
+      </if>
+      <if test="sname == '' or sname == null" >
+        <if test="major != '' and major != null" >
+          and major LIKE "%"#{major}"%"
+        </if>
+        <if test="major == '' or major == null" >
+          <if test="depart != '' and depart != null" >
+            and depart LIKE "%"#{depart}"%"
+          </if>
+        </if>
+      </if>
+    </if>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     <!--
       WARNING - @mbggenerated

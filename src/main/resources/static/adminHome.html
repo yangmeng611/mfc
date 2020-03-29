@@ -105,7 +105,7 @@
                             <label for="sdepart3">院系</label>
                             <input type="text" class="form-control input-sm" id="sdepart3" placeholder="输入院系">
                         </div>&nbsp;&nbsp;
-                        <button type="button" class="btn btn-primary btn-sm">查询</button>
+                        <button id="stuBtn" type="button" class="btn btn-primary btn-sm">查询</button>
                     </form><br>
                     <div class="panel">
                         <table class="table table-bordered table-condensed editable">
@@ -446,117 +446,165 @@
                                 showStudentHtml += html;
                             };
                             $("#showStu").html(showStudentHtml);
-                            $('.editable').handleTable({
-                                "handleFirst" : false,
-                                "cancel" : " <span class='glyphicon glyphicon-remove-circle'></span> ",
-                                "edit" : " <span class='glyphicon glyphicon-edit'></span> ",
-                                "add" : " <span class='glyphicon glyphicon-plus'></span> ",
-                                "save" : " <span class='glyphicon glyphicon-saved'></span> ",
-                                "confirm" : " <span class='glyphicon glyphicon-ok'></span> ",
-                                "del" : " <span class='glyphicon glyphicon-remove'></span>",
-                                "operatePos" : -1,
-                                "editableCols" : [2,3,4,5,6],
-                                "order": ["add","edit","del"],
-                                "saveCallback" : function(data, isSuccess) {
-                                    $.ajax({
-                                        type: 'post',
-                                        url: "/student",
-                                        contentType: 'application/json',
-                                        data: JSON.stringify({
-                                            "sno": data[1],
-                                            "sname": data[2],
-                                            "ssex": data[3],
-                                            "sage": data[4],
-                                            "major": data[5],
-                                            "depart": data[6]
-                                        }),
-                                        dataType: 'json',
-                                        success: function (response) {
-                                            if (response.code == 0) {
-                                                isSuccess();
-                                                alert( " 保存成功");
-                                            } else {
-                                                alert(" 保存失败");
+                            var editable = function() {
+                                $('.editable').handleTable({
+                                    "handleFirst": false,
+                                    "cancel": " <span class='glyphicon glyphicon-remove-circle'></span> ",
+                                    "edit": " <span class='glyphicon glyphicon-edit'></span> ",
+                                    "add": " <span class='glyphicon glyphicon-plus'></span> ",
+                                    "save": " <span class='glyphicon glyphicon-saved'></span> ",
+                                    "confirm": " <span class='glyphicon glyphicon-ok'></span> ",
+                                    "del": " <span class='glyphicon glyphicon-remove'></span>",
+                                    "operatePos": -1,
+                                    "editableCols": [2, 3, 4, 5, 6],
+                                    "order": ["add", "edit", "del"],
+                                    "saveCallback": function (data, isSuccess) {
+                                        $.ajax({
+                                            type: 'post',
+                                            url: "/student",
+                                            contentType: 'application/json',
+                                            data: JSON.stringify({
+                                                "sno": data[1],
+                                                "sname": data[2],
+                                                "ssex": data[3],
+                                                "sage": data[4],
+                                                "major": data[5],
+                                                "depart": data[6]
+                                            }),
+                                            dataType: 'json',
+                                            success: function (response) {
+                                                if (response.code == 0) {
+                                                    isSuccess();
+                                                    alert(" 保存成功");
+                                                } else {
+                                                    alert(" 保存失败");
+                                                }
                                             }
-                                        }
-                                    })
+                                        })
 
-                                },
-                                "addCallback" : function(data,isSuccess) {
-                                    $.ajax({
-                                        type: 'put',
-                                        url: "/user/add",
-                                        contentType: 'application/json',
-                                        data: JSON.stringify({
-                                            "uid": data[1],
-                                            "upwd": data[1],
-                                            "utype": 1
-                                        }),
-                                        dataType: 'json',
-                                        success: function (response) {
-                                            if (response.code == 0) {
+                                    },
+                                    "addCallback": function (data, isSuccess) {
+                                        $.ajax({
+                                            type: 'put',
+                                            url: "/user/add",
+                                            contentType: 'application/json',
+                                            data: JSON.stringify({
+                                                "uid": data[1],
+                                                "upwd": data[1],
+                                                "utype": 1
+                                            }),
+                                            dataType: 'json',
+                                            success: function (response) {
+                                                if (response.code == 0) {
 
-                                                $.ajax({
-                                                    type: 'put',
-                                                    url: "/student/add",
-                                                    contentType: 'application/json',
-                                                    data: JSON.stringify({
-                                                        "sno": data[1],
-                                                        "sname": data[2],
-                                                        "ssex": data[3],
-                                                        "sage": data[4],
-                                                        "major": data[5],
-                                                        "depart": data[6]
-                                                    }),
-                                                    dataType: 'json',
-                                                    success: function (response) {
-                                                        if (response.code == 0) {
-                                                            isSuccess();
-                                                            alert( " 增加成功");
-                                                        } else {
-                                                            alert( " 增加失败");
+                                                    $.ajax({
+                                                        type: 'put',
+                                                        url: "/student/add",
+                                                        contentType: 'application/json',
+                                                        data: JSON.stringify({
+                                                            "sno": data[1],
+                                                            "sname": data[2],
+                                                            "ssex": data[3],
+                                                            "sage": data[4],
+                                                            "major": data[5],
+                                                            "depart": data[6]
+                                                        }),
+                                                        dataType: 'json',
+                                                        success: function (response) {
+                                                            if (response.code == 0) {
+                                                                isSuccess();
+                                                                alert(" 增加成功");
+                                                            } else {
+                                                                alert(" 增加失败");
+                                                            }
                                                         }
-                                                    }
-                                                })
+                                                    })
+                                                }
                                             }
-                                        }
-                                    })
-                                },
-                                "delCallback" : function(data,isSuccess) {
-                                    $.ajax({
-                                        type: 'delete',
-                                        url: "/student/delete/" + data[1],
-                                        contentType: 'application/json',
-                                        dataType: 'json',
-                                        success: function (response) {
-                                            if (response.code == 0) {
-                                                $.ajax({
-                                                    type: 'delete',
-                                                    url: "/user/delete/" + data[1],
-                                                    contentType: 'application/json',
-                                                    dataType: 'json',
-                                                    success: function (response) {
-                                                        if (response.code == 0) {
-                                                            isSuccess();
-                                                            alert(" 删除成功");
-                                                        } else {
-                                                            alert(" 删除失败");
+                                        })
+                                    },
+                                    "delCallback": function (data, isSuccess) {
+                                        $.ajax({
+                                            type: 'delete',
+                                            url: "/student/delete/" + data[1],
+                                            contentType: 'application/json',
+                                            dataType: 'json',
+                                            success: function (response) {
+                                                if (response.code == 0) {
+                                                    $.ajax({
+                                                        type: 'delete',
+                                                        url: "/user/delete/" + data[1],
+                                                        contentType: 'application/json',
+                                                        dataType: 'json',
+                                                        success: function (response) {
+                                                            if (response.code == 0) {
+                                                                isSuccess();
+                                                                alert(" 删除成功");
+                                                            } else {
+                                                                alert(" 删除失败");
+                                                            }
                                                         }
-                                                    }
-                                                })
-                                            } else {
-                                                alert(" 删除失败");
+                                                    })
+                                                } else {
+                                                    alert(" 删除失败");
+                                                }
                                             }
+                                        })
+                                    }
+                                });
+                            };
+                            editable();
+                            $("#stuBtn").on("click",function () {
+                                let sno = $("#sno3").val().trim();
+                                let sname = $("#sname3").val().trim();
+                                let major = $("#smajor3").val().trim();
+                                let depart = $("#sdepart3").val().trim();
+                                $.ajax({
+                                    type: 'post',
+                                    url: "student/btn",
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({
+                                        "sno": sno,
+                                        "sname": sname,
+                                        "age": "",
+                                        "major": major,
+                                        "depart": depart
+                                    }),
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        if(response.code == 0) {
+                                            // alert("获取全部学生数据成功");
+                                            console.log(response);
+                                            let students = response.data.students;
+                                            let showStudentHtml = "";
+                                            for (let i = 0; i < students.length; i++) {
+                                                let n = i + 1;
+                                                html = " <tr>\n" +
+                                                    "                                <td>" + n + "</td>\n" +
+                                                    "                                <td>" + students[i].sno + "</td>\n" +
+                                                    "                                <td>" + students[i].sname + "</td>\n" +
+                                                    "                                <td>" + students[i].ssex + "</td>\n" +
+                                                    "                                <td>" + students[i].sage + "</td>\n" +
+                                                    "                                <td>" + students[i].major + "</td>\n" +
+                                                    "                                <td>" + students[i].depart + "</td>\n" +
+                                                    "                                <td></td>\n" +
+                                                    "                            </tr>";
+                                                showStudentHtml += html;
+                                            }
+                                            ;
+                                            $("#showStu").html(showStudentHtml);
+                                            editable();
                                         }
-                                    })
-                                }
-                            });
+                                    }
+                                })
+                            })
                         } else {
                             alert("获取全部学生数据失败！")
                         }
 
                     }
                 })
+
 
             })
             $("#findAllTea").on("click",function () {

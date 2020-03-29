@@ -58,6 +58,25 @@ public class StudentController {
 
     }
 
+    @RequestMapping(value = "/btn",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData getlStuByBtn(@RequestBody Student student) {
+
+        ResponseData responseData = new ResponseData();
+        List<Student> students = studentService.findStuByBtn(student);
+        if(students != null) {
+            responseData.setCode(0);
+            responseData.setMsg("学生数据获取成功");
+            responseData.getData().put("students",students);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("学生数据获取失败");
+        }
+        return responseData;
+
+    }
+
     @RequestMapping(value = "",
             consumes = "application/json",
             produces = "application/json",
