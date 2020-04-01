@@ -1,5 +1,6 @@
 package com.ncu.mfc.service.impl;
 
+import com.ncu.mfc.dto.TnoBtn;
 import com.ncu.mfc.mapper.TeacherMapper;
 import com.ncu.mfc.model.Teacher;
 import com.ncu.mfc.service.TeacherService;
@@ -38,4 +39,11 @@ public class TeacherServiceImpl implements TeacherService {
     public int delTeaByTno(String tno) {
         return teacherDao.deleteByPrimaryKey(tno);
     }
+
+    @Override
+    public List<Teacher> findTeaBtn(TnoBtn record) {
+        return teacherDao.selectByBtn(record);
+    }
+
+
 }

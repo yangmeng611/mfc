@@ -36,4 +36,6 @@ public interface GradeService {
     List<Degree> findDegreeByStu(String sno);
 
     List<Degree> findDegreeByStuBtn(GradeBtn record);
+
+    List<Degree> findDegreeByAdminBtn(GradeBtn record);
 }

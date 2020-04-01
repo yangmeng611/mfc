@@ -60,9 +60,9 @@
                                     <li><a id="classTab" href="#csearch" aria-controls="csearch" role="tab" data-toggle="tab">授课查询</a></li>
                                     <li><a id="gradeTab" href="#gsearch" aria-controls="gsearch" role="tab" data-toggle="tab">成绩查询</a></li>
                                     <li><a id="analyseTab" href="#analyse" aria-controls="" role="tab" data-toggle="tab">成绩分析</a></li>
-                                    <li><a href="#" aria-controls="" role="tab" data-toggle="modal" data-target="#insert">
-                                        录入成绩
-                                    </a></li>
+                                    <!--<li><a href="#" aria-controls="" role="tab" data-toggle="modal" data-target="#insert">-->
+                                        <!--录入成绩-->
+                                    <!--</a></li>-->
                                 </ul>
                             </li>
                             <form class="navbar-form navbar-left">
@@ -224,7 +224,10 @@
                         <option>显示不及格成绩</option>
                         </select>&nbsp;&nbsp;
                         <button id="gradeBtn" type="button" class="btn btn-primary">查询</button>
-                    </form><br>
+                    </form>
+                    <button style="position: relative;left: 790px;margin-top: 10px;margin-bottom: 5px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#insert">
+                        <span class="glyphicon glyphicon-plus"></span> 录入成绩
+                    </button>
                     <div class="panel">
                         <table class="table table-bordered table-condensed" style="border-color: black">
                             <thead>

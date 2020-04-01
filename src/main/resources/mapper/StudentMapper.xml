@@ -42,15 +42,11 @@
       <if test="sname != '' and sname != null" >
         and sname LIKE "%"#{sname}"%"
       </if>
-      <if test="sname == '' or sname == null" >
         <if test="major != '' and major != null" >
           and major LIKE "%"#{major}"%"
         </if>
-        <if test="major == '' or major == null" >
-          <if test="depart != '' and depart != null" >
-            and depart LIKE "%"#{depart}"%"
-          </if>
-        </if>
+      <if test="depart != '' and depart != null" >
+        and depart LIKE "%"#{depart}"%"
       </if>
     </if>
   </select>

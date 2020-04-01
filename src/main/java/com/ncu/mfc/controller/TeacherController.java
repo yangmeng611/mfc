@@ -1,6 +1,7 @@
 package com.ncu.mfc.controller;
 
 import com.ncu.mfc.dto.ResponseData;
+import com.ncu.mfc.dto.TnoBtn;
 import com.ncu.mfc.model.Teacher;
 import com.ncu.mfc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,25 @@ public class TeacherController {
     public ResponseData getAllTea() {
         ResponseData responseData = new ResponseData();
         List<Teacher> teachers = teacherService.findAllTeacher();
+        if(teachers != null) {
+            responseData.setCode(0);
+            responseData.setMsg("教师数据获取成功");
+            responseData.getData().put("teachers",teachers);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("教师数据获取失败");
+        }
+        return responseData;
+
+    }
+
+       @RequestMapping(value = "/btn",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData getTeaByBtn(@RequestBody TnoBtn record) {
+
+        ResponseData responseData = new ResponseData();
+        List<Teacher> teachers = teacherService.findTeaBtn(record);
         if(teachers != null) {
             responseData.setCode(0);
             responseData.setMsg("教师数据获取成功");

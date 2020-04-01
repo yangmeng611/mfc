@@ -1,6 +1,7 @@
 package com.ncu.mfc.service;
 
 import com.ncu.mfc.dto.CnameAndTno;
+import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.model.Course;
 
 import java.util.List;
@@ -57,4 +58,6 @@ public interface CourseService {
      * @return 删除课程信息
      */
     int delcourse(String cno);
+
+    List<Course> findCouBtn(CourseBtn record);
 }

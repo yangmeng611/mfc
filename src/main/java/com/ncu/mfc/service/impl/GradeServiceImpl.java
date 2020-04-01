@@ -84,4 +84,9 @@ public class GradeServiceImpl implements GradeService {
     public List<Degree> findDegreeByStuBtn(GradeBtn record) {
         return gradeDao.selectGraByStuBtn(record);
     }
+
+    @Override
+    public List<Degree> findDegreeByAdminBtn(GradeBtn record) {
+        return gradeDao.selectGraByAdminBtn(record);
+    }
 }

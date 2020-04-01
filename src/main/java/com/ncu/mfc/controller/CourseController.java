@@ -1,6 +1,7 @@
 package com.ncu.mfc.controller;
 
 import com.ncu.mfc.dto.CnameAndTno;
+import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.dto.CtypeAndTno;
 import com.ncu.mfc.dto.ResponseData;
 import com.ncu.mfc.model.Course;
@@ -56,6 +57,25 @@ public class CourseController {
         }
         return responseData;
     }
+    @RequestMapping(value = "/btn",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData getTeaByBtn(@RequestBody CourseBtn record) {
+
+        ResponseData responseData = new ResponseData();
+        List<Course> courses = courseService.findCouBtn(record);
+        if(courses != null) {
+            responseData.setCode(0);
+            responseData.setMsg("课程数据获取成功");
+            responseData.getData().put("courses",courses);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("课程数据获取失败");
+        }
+        return responseData;
+
+    }
+
 
     @RequestMapping(value = "/ctype",
             consumes = "application/json",

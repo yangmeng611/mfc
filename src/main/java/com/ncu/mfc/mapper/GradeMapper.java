@@ -77,4 +77,6 @@ public interface GradeMapper {
     List<Degree> selectGraByStu(String sno);
 
     List<Degree> selectGraByStuBtn(GradeBtn record);
+
+    List<Degree> selectGraByAdminBtn(GradeBtn record);
 }

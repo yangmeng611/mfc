@@ -190,6 +190,23 @@ public class GradeController {
         return responseData;
     }
 
+    @RequestMapping(value = "/admin/btn",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData findDegreeByAdmin(@RequestBody GradeBtn record) {
+        ResponseData responseData = new ResponseData();
+        List<Degree> grades = gradeService.findDegreeByAdminBtn(record);
+        if(grades != null) {
+            responseData.setCode(0);
+            responseData.setMsg("获取成绩数据成功");
+            responseData.getData().put("grades",grades);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("获取成绩数据失败");
+        }
+        return responseData;
+    }
+
     @RequestMapping(value = "/add",
             produces = "application/json",
             method = RequestMethod.PUT)

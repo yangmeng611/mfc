@@ -1,5 +1,6 @@
 package com.ncu.mfc.service;
 
+import com.ncu.mfc.dto.TnoBtn;
 import com.ncu.mfc.model.Teacher;
 
 import java.util.List;
@@ -33,5 +34,7 @@ public interface TeacherService {
      * @return 删除教师信息
      */
     int delTeaByTno(String tno);
+
+    List<Teacher> findTeaBtn(TnoBtn record);
 
 }

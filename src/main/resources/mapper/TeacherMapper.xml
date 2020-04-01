@@ -28,6 +28,27 @@
     from teacher
     where tno = #{tno,jdbcType=CHAR}
   </select>
+<!--查询教师button-->
+  <select id="selectByBtn" resultMap="BaseResultMap" parameterType="com.ncu.mfc.dto.TnoBtn" >
+    select  distinct <include refid="Base_Column_List" />
+    from teacher,course,teach_class
+    where teacher.tno = teach_class.teano and course.cno = teach_class.cno
+    <if test="tno != '' and tno != null" >
+      and tno = #{tno}
+    </if>
+    <if test="tno == '' or tno == null" >
+      <if test="tname != '' and tname != null" >
+        and tname LIKE "%"#{tname}"%"
+      </if>
+      <if test="tdepart != '' and tdepart != null" >
+        and tdepart LIKE "%"#{tdepart}"%"
+      </if>
+      <if test="cname != '' and cname != null" >
+        and cname LIKE "%"#{cname}"%"
+      </if>
+    </if>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--
       WARNING - @mbggenerated

@@ -157,4 +157,31 @@
     select course.*
     from course
   </select>
+
+  <!--查询课程button-->
+  <select id="selectByBtn" resultMap="BaseResultMap" parameterType="com.ncu.mfc.dto.CourseBtn" >
+    select DISTINCT course.*
+    from course LEFT JOIN grade on grade.cno = course.cno
+    LEFT JOIN teach_class on teach_class.cno = course.cno
+    where  1=1
+    <if test="cno != '' and cno != null" >
+      and course.cno = #{cno}
+    </if>
+    <if test="cno == '' or cno == null" >
+      <if test="cname != '' and cname != null" >
+        and cname LIKE "%"#{cname}"%"
+      </if>
+      <if test="ctype != '==请选择==' ">
+        and ctype = #{ctype}
+      </if>
+      <if test="tno != '' and tno != null ">
+        and course.cno = teach_class.cno
+        and teach_class.teano = #{tno}
+      </if>
+      <if test="sno != '' and sno != null ">
+        AND grade.cno = course.cno
+        and sno = #{sno}
+      </if>
+    </if>
+  </select>
 </mapper>

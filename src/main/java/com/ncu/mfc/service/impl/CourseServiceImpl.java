@@ -1,6 +1,7 @@
 package com.ncu.mfc.service.impl;
 
 import com.ncu.mfc.dto.CnameAndTno;
+import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.mapper.CourseMapper;
 import com.ncu.mfc.mapper.TeacherMapper;
 import com.ncu.mfc.model.Course;
@@ -70,6 +71,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int delcourse(String cno) {
         return courseDao.deleteByPrimaryKey(cno);
+    }
+
+    @Override
+    public List<Course> findCouBtn(CourseBtn record) {
+        return courseDao.selectByBtn(record);
     }
 
 }

@@ -80,11 +80,9 @@
     <if test="cname != '' and cname != null" >
       and cname LIKE "%"#{cname}"%"
     </if>
-    <if test="cname == '' or cname == null">
       <if test="ctype != '==请选择=='">
         and ctype = #{ctype}
       </if>
-    </if>
     <if test="compare != '' and compare != null" >
       and degree ${compare} 60
     </if>
@@ -99,6 +97,30 @@
 			and student.sno=#{sno}
   </select>
 
+  <!--管理员端成绩查询筛选button-->
+  <select id="selectGraByAdminBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
+
+    select course.cno,course.cname,grade.degree degree,student.sno,student.sname,
+    if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
+    from grade,course,student,teach_class
+    where grade.cno=course.cno and grade.sno=student.sno and teach_class.cno = grade.cno
+    <if test="sno != '' and sno != null" >
+      and grade.sno = #{sno}
+    </if>
+    <if test="tno != '' and tno != null" >
+      and  teach_class.teano = #{tno}
+    </if>
+    <if test="cname != '' and cname != null" >
+      and cname LIKE "%"#{cname}"%"
+    </if>
+      <if test="ctype != '==请选择=='">
+        and ctype = #{ctype}
+      </if>
+    <if test="compare != '' and compare != null" >
+      and degree ${compare} 60
+    </if>
+  </select>
+
   <!--学生端成绩查询筛选button-->
   <select id="selectGraByStuBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
@@ -110,15 +132,14 @@
     <if test="cname != '' and cname != null" >
       and cname LIKE "%"#{cname}"%"
     </if>
-    <if test="cname == '' or cname == null">
-      <if test="ctype != '==请选择=='">
-        and ctype = #{ctype}
-      </if>
+    <if test="ctype != '==请选择=='">
+      and ctype = #{ctype}
     </if>
     <if test="compare != '' and compare != null" >
       and degree ${compare} 60
     </if>
   </select>
+
 
   <!--查询全部成绩的及格，不及格与优秀的比例-->
   <select id="analyseAllGrade" resultMap="AnalyseResultMap">

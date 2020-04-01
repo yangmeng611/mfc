@@ -1,5 +1,6 @@
 package com.ncu.mfc.mapper;
 
+import com.ncu.mfc.dto.TnoBtn;
 import com.ncu.mfc.model.Teacher;
 
 import java.util.List;
@@ -54,4 +55,6 @@ public interface TeacherMapper {
     int updateByPrimaryKey(Teacher record);
 
     List<Teacher> selectTea();
+
+    List<Teacher> selectByBtn(TnoBtn record);
 }
