@@ -23,10 +23,10 @@
             <div class="col-md-offset-7 col-md-1">
                 <span >教师端</span>
             </div>
-            <div class="col-md-1">
+            <a id="logout" href="#" class="col-md-1" style="color: white">
                 <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
                 <span>退出</span>
-            </div>
+            </a>
         </div>
         <div style="position:absolute;bottom:0;margin: 0;width: 100%;height: 93%;
         background: url(image/img2.jpg) no-repeat center;background-size:cover;">
@@ -50,8 +50,8 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人信息<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#alter" aria-controls="alter" role="tab" data-toggle="tab">修改个人信息</a></li>
-                                    <li><a href="#pwd" aria-controls="pwd" role="tab" data-toggle="tab">修改密码</a></li>
+                                    <li><a href="#" aria-controls="alter"  data-toggle="modal" data-target="#alter">修改个人信息</a></li>
+                                    <li><a href="#" aria-controls="pwd" data-toggle="modal" data-target="#pwd">修改密码</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -67,9 +67,10 @@
                             </li>
                             <form class="navbar-form navbar-left">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="输入课程名称">
+                                    <input id="tips" type="text" class="form-control" placeholder="输入课程名称/学号">
                                 </div>
-                                <button type="button" class="btn btn-default" >查询</button>
+                                <button id="btn" type="button" class="btn btn-default"
+                                        href="#gradeTable" aria-controls="gradeTable" role="tab" data-toggle="tab">查询</button>
                             </form>
                         </ul>
 
@@ -85,77 +86,7 @@
                     </table>
                     <div class="panel-footer">@南昌大学</div>
                 </div>
-                <div id="alter" role="tabpanel" class="tab-pane" style="width: 500px;margin: 70px auto;">
-                    <form class="form-horizontal nav-tabs">
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">姓名</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="username" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="num" class="col-sm-2 control-label">职工号</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static" id="num"></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tsex" class="col-sm-2 control-label">性别</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="tsex">
-                                    <option>男</option>
-                                    <option>女</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="tdepart" class="col-sm-2 control-label">院系</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static" id="tdepart"></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button id="alertInfo" type="button" class="btn btn-primary">修改</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div id="pwd" role="tabpanel" class="tab-pane" style="width: 600px;margin: 70px auto;">
-                    <form class="form-horizontal nav-tabs">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">职工号</label>
-                            <div class="col-sm-10">
-                                <p id="tno" class="form-control-static"></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="oldPwd" class="col-sm-2 control-label">旧密码</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="oldPwd" placeholder="旧密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="newPwd" class="col-sm-2 control-label">新密码</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="newPwd" placeholder="新密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="newPwd2" class="col-sm-2 control-label">确认新密码</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="newPwd2" placeholder="确认新密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button id="alertPwd" type="button" class="btn btn-primary">修改</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div id="csearch" role="tabpanel" class="tab-pane" style="width: 600px;margin: 70px auto;">
+                <div id="csearch" role="tabpanel" class="tab-pane" style="width: 800px;margin: 70px auto;">
                     <form class="form-inline" style="text-align: center">
                         <label for="ctype">课程性质</label>
                         <select id="ctype" class="form-control">
@@ -174,29 +105,37 @@
                         </div>&nbsp;&nbsp;
                         <button id="seaCourse" type="button" class="btn btn-primary">查询</button>
                     </form><br>
-                    <div id='showClass' class="panel">
+                    <div class="panel">
+                        <table class="table table-bordered table-condensed" style="border-color: black">
+                          <thead>
+                          <tr>
+                              <th style="width: 10%">序号</th>
+                              <th style="width: 20%">课程编号</th>
+                              <th style="width: 20%">课程名称</th>
+                              <th style="width: 15%">学分</th>
+                              <th style="width: 15%">学时</th>
+                              <th style="width: 20%">课程性质</th>
+                          </tr>
+                          </thead>
+                            <tbody id='showClass'>
+                            </tbody>
+                        </table>
                     </div>
-                    <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div id="paginationCourse" >
+                        <p id="coursePageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="indexCourse">首页</a>
+                        <a style='width: 100px' href="#" id = "lastCourse">上一页</a>
+                        <a style='width: 100px' href="#" id = "nextCourse">下一页</a>
+                        <a style='width: 100px' href="#" id = "finalCourse">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum1' placeholder="页数"
+                                   style="border: none;margin-left: 200px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="coursePageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="gsearch" role="tabpanel" class="tab-pane" style="width: 900px;margin: 70px auto;">
+                <div id="gsearch" role="tabpanel" class="tab-pane" style="width: 900px;margin: 50px auto;">
                     <form class="form-inline" style="text-align: center">
                         <!--<div class="form-group">-->
                         <!--<label for="exampleInputName2">课程性质</label>-->
@@ -246,25 +185,52 @@
                             </tbody>
                         </table>
                     </div>
-                    <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div id="pagination" >
+                        <p id="gradePageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="index">首页</a>
+                        <a style='width: 100px' href="#" id = "last">上一页</a>
+                        <a style='width: 100px' href="#" id = "next">下一页</a>
+                        <a style='width: 100px' href="#" id = "final">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum' placeholder="页数"
+                                   style="border: none;margin-left: 250px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="gradePageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="gradeTable" role="tabpanel" class="tab-pane" style="width: 900px;margin: 70px auto;">
+                    <div class="panel">
+                        <table class="table table-bordered table-condensed" style="border-color: black">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%">序号</th>
+                                <th style="width: 15%">课程编号</th>
+                                <th style="width: 15%">课程名称</th>
+                                <th style="width: 15%">学生姓名</th>
+                                <th style="width: 15%">学号</th>
+                                <th style="width: 10%">成绩</th>
+                                <th style="width: 10%">学分</th>
+                                <th style="width: 10%">课程性质</th>
+                            </tr>
+                            </thead>
+                            <tbody id='gradeData'>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="pagination1" >
+                        <p id="PageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="index1">首页</a>
+                        <a style='width: 100px' href="#" id = "last1">上一页</a>
+                        <a style='width: 100px' href="#" id = "next1">下一页</a>
+                        <a style='width: 100px' href="#" id = "final1">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum3' placeholder="页数"
+                                   style="border: none;margin-left: 250px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="PageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
                 </div>
                 <div id="analyse" role="tabpanel" class="tab-pane" style="width: 700px;margin: 70px auto;">
                     <!--<a href="#gsearch"  aria-controls="degree" role="tab" data-toggle="tab" style="margin-left: 100px">-->
@@ -278,6 +244,97 @@
                     </form><br>
                     <div style="width:600px; margin: 20px auto;">
                         <canvas id="myChart" width="600" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!--alertInfo Modal -->
+            <div id="alter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">修改个人信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal nav-tabs">
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-2 control-label">姓名</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="username" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="num" class="col-sm-2 control-label">职工号</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static" id="num"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tsex" class="col-sm-2 control-label">性别</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="tsex">
+                                            <option>男</option>
+                                            <option>女</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="tdepart" class="col-sm-2 control-label">院系</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static" id="tdepart"></p>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+                                <button id="alertInfo" type="button" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--alertPwd Modal -->
+            <div id="pwd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">修改密码</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal nav-tabs">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">职工号</label>
+                                    <div class="col-sm-10">
+                                        <p id="tno" class="form-control-static"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="oldPwd" class="col-sm-2 control-label">旧密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="oldPwd" placeholder="旧密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPwd" class="col-sm-2 control-label">新密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPwd" placeholder="新密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPwd2" class="col-sm-2 control-label">确认新密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPwd2" placeholder="确认新密码">
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+                                <button id="alertPwd" type="button" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

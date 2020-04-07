@@ -1,11 +1,12 @@
 package com.ncu.mfc.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.mapper.CourseMapper;
 import com.ncu.mfc.mapper.TeacherMapper;
 import com.ncu.mfc.model.Course;
-import com.ncu.mfc.model.Teacher;
 import com.ncu.mfc.service.CourseService;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +23,27 @@ public class CourseServiceImpl implements CourseService {
     TeacherMapper teacherDao;
 
     @Override
-    public List<Course> findAllCourse() {
-        return courseDao.selectCourses();
+    public PageInfo<Course> findAllCourse(int pageNum) {
+        PageHelper.startPage(pageNum, 7);
+        List<Course> lists = courseDao.selectCourses();
+        PageInfo<Course> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
-    public List<Course> findCouByType(String ctype) {
-
-        return courseDao.selectByType(ctype);
+    public PageInfo<Course> findCouByType(int pageNum,String ctype) {
+        PageHelper.startPage(pageNum, 7);
+        List<Course> lists = courseDao.selectByType(ctype);
+        PageInfo<Course> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
-    public List<Course> findCouByTno(String tno) {
-        return courseDao.selectByTno(tno);
+    public PageInfo<Course> findCouByTno(int pageNum,String tno) {
+        PageHelper.startPage(pageNum, 7);
+        List<Course> lists = courseDao.selectByTno(tno);
+        PageInfo<Course> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
@@ -48,14 +57,19 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findCouByCnameAndTno(CnameAndTno record) {
-
-        return courseDao.selectByTnoAndCname(record);
+    public PageInfo<Course> findCouByCnameAndTno(int pageNum,CnameAndTno record) {
+        PageHelper.startPage(pageNum, 7);
+        List<Course> lists = courseDao.selectByTnoAndCname(record);
+        PageInfo<Course> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
-    public List<Course> findCouByCtypeAndTno(String ctype, String tno) {
-        return courseDao.selectByTnoAndCtype(ctype,tno);
+    public PageInfo<Course> findCouByCtypeAndTno(int pageNum,String ctype, String tno) {
+        PageHelper.startPage(pageNum, 7);
+        List<Course> lists = courseDao.selectByTnoAndCtype(ctype,tno);
+        PageInfo<Course> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
@@ -74,8 +88,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findCouBtn(CourseBtn record) {
-        return courseDao.selectByBtn(record);
+    public PageInfo<Course> findCouBtn(int pageNum,CourseBtn record) {
+
+        PageHelper.startPage(pageNum, 7);
+        List<Course> lists = courseDao.selectByBtn(record);
+        PageInfo<Course> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
 }

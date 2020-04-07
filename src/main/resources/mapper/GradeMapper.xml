@@ -45,7 +45,7 @@
     grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
-
+    order by course.cno
   </select>
   <!--根据课程编号和学号查询成绩详细信息-->
   <select id="selectGraByCnoAndSno" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
@@ -80,7 +80,7 @@
     <if test="cname != '' and cname != null" >
       and cname LIKE "%"#{cname}"%"
     </if>
-      <if test="ctype != '==请选择=='">
+      <if test="ctype != '==请选择==' and ctype != '' and ctype != null">
         and ctype = #{ctype}
       </if>
     <if test="compare != '' and compare != null" >
@@ -100,10 +100,12 @@
   <!--管理员端成绩查询筛选button-->
   <select id="selectGraByAdminBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
-    select course.cno,course.cname,grade.degree degree,student.sno,student.sname,
-    if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
-    from grade,course,student,teach_class
-    where grade.cno=course.cno and grade.sno=student.sno and teach_class.cno = grade.cno
+    select distinct grade.cno,course.cname,student.sno,student.sname,
+    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    from grade LEFT JOIN course on grade.cno=course.cno
+    LEFT JOIN student on student.sno = grade.sno
+    LEFT JOIN teach_class on teach_class.cno = grade.cno
+    where 1=1
     <if test="sno != '' and sno != null" >
       and grade.sno = #{sno}
     </if>
@@ -113,12 +115,32 @@
     <if test="cname != '' and cname != null" >
       and cname LIKE "%"#{cname}"%"
     </if>
-      <if test="ctype != '==请选择=='">
+      <if test="ctype != '==请选择==' and ctype != '' and ctype != null">
         and ctype = #{ctype}
       </if>
     <if test="compare != '' and compare != null" >
       and degree ${compare} 60
     </if>
+    order by grade.cno
+  </select>
+  <!--查询button-->
+  <select id="selectByAdminBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
+
+    select distinct grade.cno,course.cname,student.sno,student.sname,
+    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    from grade LEFT JOIN course on grade.cno=course.cno
+    LEFT JOIN student on student.sno = grade.sno
+    LEFT JOIN teach_class on teach_class.cno = grade.cno
+    where 1=1 and
+    <if test="tips != '' and tips != null" >
+      ( grade.sno = #{tips}
+      or cname LIKE "%"#{tips}"%"
+      or teach_class.teano = #{tips})
+      <if test="tno!=null and tno != ''">
+        and teach_class.teano = #{tno}
+      </if>
+    </if>
+    order by grade.cno
   </select>
 
   <!--学生端成绩查询筛选button-->
@@ -132,7 +154,7 @@
     <if test="cname != '' and cname != null" >
       and cname LIKE "%"#{cname}"%"
     </if>
-    <if test="ctype != '==请选择=='">
+    <if test="ctype != '==请选择==' and ctype != '' and ctype != null">
       and ctype = #{ctype}
     </if>
     <if test="compare != '' and compare != null" >

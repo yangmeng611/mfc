@@ -1,5 +1,6 @@
 package com.ncu.mfc.service;
 
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.TnoBtn;
 import com.ncu.mfc.model.Teacher;
 
@@ -13,7 +14,7 @@ public interface TeacherService {
     /**
      * @return 查询所有教师
      */
-    List<Teacher> findAllTeacher();
+    PageInfo<Teacher> findAllTeacher(int pageNum);
 
     /**
      * @return 查询指定教师信息
@@ -35,6 +36,6 @@ public interface TeacherService {
      */
     int delTeaByTno(String tno);
 
-    List<Teacher> findTeaBtn(TnoBtn record);
+    PageInfo<Teacher> findTeaBtn(int pageNum,TnoBtn record);
 
 }

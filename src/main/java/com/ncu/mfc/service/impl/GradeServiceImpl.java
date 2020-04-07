@@ -1,6 +1,8 @@
 package com.ncu.mfc.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.dto.GradeBtn;
 import com.ncu.mfc.mapper.GradeMapper;
@@ -21,9 +23,15 @@ public class GradeServiceImpl implements GradeService {
     private GradeMapper gradeDao;
 
     @Override
-    public List<Degree> adminFindDegree() {
-        return gradeDao.selectDegree();
+    public PageInfo<Degree> adminFindDegreePage(int pageNum) {
+        // TODO Auto-generated method stub
+        PageHelper.startPage(pageNum, 7);
+        List<Degree> lists = gradeDao.selectDegree();
+        PageInfo<Degree> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
+
     }
+
 
     @Override
     public int updateDegree(Grade grade) {
@@ -66,27 +74,51 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<Degree> findDegreeByTno(String tno) {
-        return gradeDao.selectGraByTno(tno);
+    public PageInfo<Degree> findDegreeByTno(int pageNum,String tno)
+    {
+        PageHelper.startPage(pageNum, 7);
+        List<Degree> lists = gradeDao.selectGraByTno(tno);
+        PageInfo<Degree> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
-    public List<Degree> findDegreeByTnoBtn(GradeBtn record) {
-        return gradeDao.selectGraByTnoBtn(record);
+    public PageInfo<Degree> findDegreeByTnoBtn(int pageNum,GradeBtn record) {
+        PageHelper.startPage(pageNum, 7);
+        List<Degree> lists = gradeDao.selectGraByTnoBtn(record);
+        PageInfo<Degree> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
-    public List<Degree> findDegreeByStu(String sno) {
-        return gradeDao.selectGraByStu(sno);
+    public PageInfo<Degree> findDegreeByStu(int pageNum,String sno) {
+        PageHelper.startPage(pageNum, 7);
+        List<Degree> lists = gradeDao.selectGraByStu(sno);
+        PageInfo<Degree> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
-    public List<Degree> findDegreeByStuBtn(GradeBtn record) {
-        return gradeDao.selectGraByStuBtn(record);
+    public PageInfo<Degree> findDegreeByStuBtn(int pageNum,GradeBtn record) {
+        PageHelper.startPage(pageNum, 7);
+        List<Degree> lists = gradeDao.selectGraByStuBtn(record);
+        PageInfo<Degree> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
-    public List<Degree> findDegreeByAdminBtn(GradeBtn record) {
-        return gradeDao.selectGraByAdminBtn(record);
+    public PageInfo<Degree> findDegreeByAdminBtn(int pageNum,GradeBtn record) {
+        PageHelper.startPage(pageNum, 7);
+        List<Degree> lists = gradeDao.selectGraByAdminBtn(record);
+        PageInfo<Degree> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<Degree> findByAdminBtn(int pageNum, GradeBtn record) {
+        PageHelper.startPage(pageNum,7);
+        List<Degree> lists = gradeDao.selectByAdminBtn(record);
+        PageInfo<Degree> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 }

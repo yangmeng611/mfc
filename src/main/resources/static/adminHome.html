@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,10 +26,10 @@
             <div class="col-md-offset-7 col-md-1">
                 <span >管理员端</span>
             </div>
-            <div class="col-md-1">
+            <a id="logout" href="#" class="col-md-1" style="color: white">
                 <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
                 <span>退出</span>
-            </div>
+            </a>
         </div>
         <div style="position:absolute;bottom:0;margin: 0;width: 100%;height: 93%;
         background: url(image/img2.jpg) no-repeat center;background-size:cover;">
@@ -59,9 +61,10 @@
                                 成绩管理 </a></li>
                             <form class="navbar-form navbar-left">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search">
+                                    <input id="tips" type="text" class="form-control" placeholder="课程名称/学号/职工号">
                                 </div>
-                                <button type="submit" class="btn btn-default">查询</button>
+                                <button id="btn" class="btn btn-default"
+                                        href="#gradeTable" aria-controls="gradeTable" role="tab" data-toggle="tab">查询</button>
                             </form>
                         </ul>
 
@@ -126,25 +129,19 @@
                             </tbody>
                         </table>
                     </div>
-                    <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div id="paginationStudent" >
+                        <p id="studentPageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="indexStudent">首页</a>
+                        <a style='width: 100px' href="#" id = "lastStudent">上一页</a>
+                        <a style='width: 100px' href="#" id = "nextStudent">下一页</a>
+                        <a style='width: 100px' href="#" id = "finalStudent">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum3' placeholder="页数"
+                                   style="border: none;margin-left: 200px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="studentPageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
                 </div>
                 <div id="teacher" role="tabpanel" class="tab-pane" style="width: 1000px;margin: 70px auto;">
                     <form class="form-inline" style="text-align: center">
@@ -183,25 +180,19 @@
                             </tbody>
                         </table>
                     </div>
-                    <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div id="paginationTeacher" style="width: 80%;margin: 15px auto;" >
+                        <p id="teacherPageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="indexTeacher">首页</a>
+                        <a style='width: 100px' href="#" id = "lastTeacher">上一页</a>
+                        <a style='width: 100px' href="#" id = "nextTeacher">下一页</a>
+                        <a style='width: 100px' href="#" id = "finalTeacher">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum2' placeholder="页数"
+                                   style="border: none;margin-left: 200px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="teacherPageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
                 </div>
                 <div id="course" role="tabpanel" class="tab-pane" style="width: 1150px;margin: 70px auto;">
                     <form class="form-inline" style="text-align: center">
@@ -242,40 +233,30 @@
                                     <th style="width: 20%">课程编号</th>
                                     <th style="width: 20%">课程名称</th>
                                     <th style="width: 20%">课程性质</th>
-                                    <th style="width: 10%">学分</th>
                                     <th style="width: 10%">学时</th>
+                                    <th style="width: 10%">学分</th>
                                     <th style="width: 15%">操作</th>
                                 </tr>
                             </thead>
                             <tbody id="showClass"></tbody>
                         </table>
                     </div>
-                    <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div id="paginationCourse" style="width: 90%;margin: 15px auto;" >
+                        <p id="coursePageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="indexCourse">首页</a>
+                        <a style='width: 100px' href="#" id = "lastCourse">上一页</a>
+                        <a style='width: 100px' href="#" id = "nextCourse">下一页</a>
+                        <a style='width: 100px' href="#" id = "finalCourse">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum1' placeholder="页数"
+                                   style="border: none;margin-left: 220px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="coursePageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="degree" role="tabpanel" class="tab-pane" style="width: 1100px;margin: 70px auto;">
+                <div id="degree" role="tabpanel" class="tab-pane" style="width: 1100px;margin: 60px auto;">
                     <form class="form-inline" style="text-align: center">
-                        <!--<div class="form-group">-->
-                        <!--<label for="exampleInputName2">课程性质</label>-->
-                        <!--<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">-->
-                        <!--</div>-->
                         <label for="ctype2">课程性质</label>
                         <select id="ctype2" class="form-control input-sm">
                             <option>==请选择==</option>
@@ -289,7 +270,7 @@
                         </select>&nbsp;
                         <div class="form-group">
                             <label for="cno">课程名称</label>
-                            <input type="text" class="form-control input-sm" id="cno" placeholder="课程编号">
+                            <input type="text" class="form-control input-sm" id="cno" placeholder="课程名称">
                         </div>&nbsp;
                         <div class="form-group">
                             <label for="sno">学号</label>
@@ -378,25 +359,20 @@
 
                         </table>
                     </div>
-                    <nav class="navbar-fixed-bottom" aria-label="Page navigation" style="text-align: center">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div id="pagination" >
+                        <p id="gradePageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                            <a style='width: 100px' href="#" id="index">首页</a>
+                            <a style='width: 100px' href="#" id = "last">上一页</a>
+                            <a style='width: 100px' href="#" id = "next">下一页</a>
+                            <a style='width: 100px' href="#" id = "final">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum' placeholder="页数"
+                                   style="border: none;margin-left: 300px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="gradePageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
+
                 </div>
                 <div id="analyse" role="tabpanel" class="tab-pane" style="width: 100%;margin: 50px auto;">
                     <a href="#degree"  aria-controls="degree" role="tab" data-toggle="tab" style="margin-left: 100px">
@@ -410,6 +386,41 @@
                     </form><br>
                     <div style="width:600px; margin: 20px auto;">
                         <canvas id="myChart" width="600" height="300"></canvas>
+                    </div>
+                </div>
+                <div id="gradeTable" role="tabpanel" class="tab-pane" style="width: 900px;margin: 70px auto;">
+                    <div class="panel">
+                        <table class="table table-bordered table-condensed" style="border-color: black">
+                            <thead>
+                            <tr>
+                            <tr>
+                                <th style="width: 10%">序号</th>
+                                <th style="width: 15%">课程编号</th>
+                                <th style="width: 20%">课程名称</th>
+                                <th style="width: 10%">姓名</th>
+                                <th style="width: 10%">学号</th>
+                                <th style="width: 10%">成绩</th>
+                                <th style="width: 10%">学分</th>
+                                <th style="width: 15%">课程性质</th>
+                            </tr>
+                            </tr>
+                            </thead>
+                            <tbody id='gradeData'>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="pagination1" >
+                        <p id="PageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="index1">首页</a>
+                        <a style='width: 100px' href="#" id = "last1">上一页</a>
+                        <a style='width: 100px' href="#" id = "next1">下一页</a>
+                        <a style='width: 100px' href="#" id = "final1">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum4' placeholder="页数"
+                                   style="border: none;margin-left: 250px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="PageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
                     </div>
                 </div>
             </div>

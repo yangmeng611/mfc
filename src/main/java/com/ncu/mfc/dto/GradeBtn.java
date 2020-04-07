@@ -31,6 +31,16 @@ public class GradeBtn {
 
     private String compare;
 
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    private String tips;
+
     public String getCtype() {
         return ctype;
     }

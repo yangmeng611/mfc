@@ -32,7 +32,7 @@
   <select id="selectByBtn" resultMap="BaseResultMap" parameterType="com.ncu.mfc.dto.TnoBtn" >
     select  distinct <include refid="Base_Column_List" />
     from teacher,course,teach_class
-    where teacher.tno = teach_class.teano and course.cno = teach_class.cno
+    where 1=1
     <if test="tno != '' and tno != null" >
       and tno = #{tno}
     </if>
@@ -44,6 +44,7 @@
         and tdepart LIKE "%"#{tdepart}"%"
       </if>
       <if test="cname != '' and cname != null" >
+        and teacher.tno = teach_class.teano and course.cno = teach_class.cno
         and cname LIKE "%"#{cname}"%"
       </if>
     </if>

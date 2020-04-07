@@ -79,4 +79,6 @@ public interface GradeMapper {
     List<Degree> selectGraByStuBtn(GradeBtn record);
 
     List<Degree> selectGraByAdminBtn(GradeBtn record);
+
+    List<Degree> selectByAdminBtn(GradeBtn record);
 }

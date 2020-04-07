@@ -1,5 +1,7 @@
 package com.ncu.mfc.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.dto.CtypeAndTno;
@@ -42,15 +44,15 @@ public class CourseController {
             consumes = "application/json",
             produces = "application/json",
             method = RequestMethod.GET)
-    public ResponseData findAllCourses(){
+    public ResponseData findAllCourses(@RequestParam("page") int pageNum){
         ResponseData responseData = new ResponseData();
 
-        List<Course> courses = courseService.findAllCourse();
+        PageInfo<Course> courses = courseService.findAllCourse(pageNum);
 
         if(courses != null) {
             responseData.setCode(0);
             responseData.setMsg("获取课程数据成功");
-            responseData.getData().put("courses",courses);
+            responseData.getData().put("pageInfo",courses);
         }else {
             responseData.setCode(1);
             responseData.setMsg("获取课程数据失败");
@@ -60,14 +62,14 @@ public class CourseController {
     @RequestMapping(value = "/btn",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData getTeaByBtn(@RequestBody CourseBtn record) {
+    public ResponseData getTeaByBtn(@RequestParam("page") int pageNum,@RequestBody CourseBtn record) {
 
         ResponseData responseData = new ResponseData();
-        List<Course> courses = courseService.findCouBtn(record);
+        PageInfo<Course> courses = courseService.findCouBtn(pageNum,record);
         if(courses != null) {
             responseData.setCode(0);
             responseData.setMsg("课程数据获取成功");
-            responseData.getData().put("courses",courses);
+            responseData.getData().put("pageInfo",courses);
         }else{
             responseData.setCode(1);
             responseData.setMsg("课程数据获取失败");
@@ -81,15 +83,15 @@ public class CourseController {
             consumes = "application/json",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData findCouByType(@RequestBody String ctype){
+    public ResponseData findCouByType(@RequestParam("page") int pageNum,@RequestBody String ctype){
         ResponseData responseData = new ResponseData();
 
-        List<Course> courses = courseService.findCouByType(ctype);
+        PageInfo<Course> courses = courseService.findCouByType(pageNum,ctype);
 
         if(courses != null) {
             responseData.setCode(0);
             responseData.setMsg("获取课程数据成功");
-            responseData.getData().put("courses",courses);
+            responseData.getData().put("pageInfo",courses);
         }else {
             responseData.setCode(1);
             responseData.setMsg("获取课程数据失败");
@@ -120,15 +122,15 @@ public class CourseController {
             consumes = "application/json",
             produces = "application/json",
             method = RequestMethod.GET)
-    public ResponseData findCouByCnameAndTno(@RequestParam String tno){
+    public ResponseData findCouByCnameAndTno(@RequestParam("page") int pageNum,@RequestParam String tno){
         ResponseData responseData = new ResponseData();
 
-        List<Course> courses = courseService.findCouByTno(tno);
+        PageInfo<Course> courses = courseService.findCouByTno(pageNum,tno);
 
         if(courses != null) {
             responseData.setCode(0);
             responseData.setMsg("获取课程数据成功");
-            responseData.getData().put("courses",courses);
+            responseData.getData().put("pageInfo",courses);
         }else {
             responseData.setCode(1);
             responseData.setMsg("获取课程数据失败");
@@ -140,15 +142,15 @@ public class CourseController {
             consumes = "application/json",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData findCouByCnameAndTno(@RequestBody CnameAndTno requestJson){
+    public ResponseData findCouByCnameAndTno(@RequestParam("page") int pageNum,@RequestBody CnameAndTno requestJson){
         ResponseData responseData = new ResponseData();
 
-        List<Course> courses = courseService.findCouByCnameAndTno(requestJson);
+        PageInfo<Course> courses = courseService.findCouByCnameAndTno(pageNum,requestJson);
 
         if(courses != null) {
             responseData.setCode(0);
             responseData.setMsg("获取课程数据成功");
-            responseData.getData().put("courses",courses);
+            responseData.getData().put("pageInfo",courses);
         }else {
             responseData.setCode(1);
             responseData.setMsg("获取课程数据失败");
@@ -160,16 +162,16 @@ public class CourseController {
             consumes = "application/json",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData findCouByCtypeAndTno(@RequestBody CtypeAndTno requestJson){
+    public ResponseData findCouByCtypeAndTno(@RequestParam("page") int pageNum,@RequestBody CtypeAndTno requestJson){
         System.out.println(requestJson);
         ResponseData responseData = new ResponseData();
 
-        List<Course> courses = courseService.findCouByCtypeAndTno(requestJson.getCtype(),requestJson.getTno());
+        PageInfo<Course> courses = courseService.findCouByCtypeAndTno(pageNum,requestJson.getCtype(),requestJson.getTno());
 
         if(courses != null) {
             responseData.setCode(0);
             responseData.setMsg("获取课程数据成功");
-            responseData.getData().put("courses",courses);
+            responseData.getData().put("pageInfo",courses);
         }else {
             responseData.setCode(1);
             responseData.setMsg("获取课程数据失败");

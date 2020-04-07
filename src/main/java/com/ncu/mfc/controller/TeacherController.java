@@ -1,5 +1,6 @@
 package com.ncu.mfc.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.ResponseData;
 import com.ncu.mfc.dto.TnoBtn;
 import com.ncu.mfc.model.Teacher;
@@ -38,13 +39,13 @@ public class TeacherController {
     @RequestMapping(value = "/all",
             produces = "application/json",
             method = RequestMethod.GET)
-    public ResponseData getAllTea() {
+    public ResponseData getAllTea(@RequestParam("page") int pageNum) {
         ResponseData responseData = new ResponseData();
-        List<Teacher> teachers = teacherService.findAllTeacher();
+        PageInfo<Teacher> teachers = teacherService.findAllTeacher(pageNum);
         if(teachers != null) {
             responseData.setCode(0);
             responseData.setMsg("教师数据获取成功");
-            responseData.getData().put("teachers",teachers);
+            responseData.getData().put("pageInfo",teachers);
         }else{
             responseData.setCode(1);
             responseData.setMsg("教师数据获取失败");
@@ -56,14 +57,14 @@ public class TeacherController {
        @RequestMapping(value = "/btn",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData getTeaByBtn(@RequestBody TnoBtn record) {
+    public ResponseData getTeaByBtn(@RequestParam("page") int pageNum,@RequestBody TnoBtn record) {
 
         ResponseData responseData = new ResponseData();
-        List<Teacher> teachers = teacherService.findTeaBtn(record);
+        PageInfo<Teacher> teachers = teacherService.findTeaBtn(pageNum,record);
         if(teachers != null) {
             responseData.setCode(0);
             responseData.setMsg("教师数据获取成功");
-            responseData.getData().put("teachers",teachers);
+            responseData.getData().put("pageInfo",teachers);
         }else{
             responseData.setCode(1);
             responseData.setMsg("教师数据获取失败");

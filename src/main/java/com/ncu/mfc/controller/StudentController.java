@@ -1,5 +1,6 @@
 package com.ncu.mfc.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.ResponseData;
 import com.ncu.mfc.model.Student;
 import com.ncu.mfc.service.StudentService;
@@ -42,14 +43,14 @@ public class StudentController {
     @RequestMapping(value = "/all",
             produces = "application/json",
             method = RequestMethod.GET)
-    public ResponseData getAllStu() {
+    public ResponseData getAllStu(@RequestParam("page") int pageNum) {
 
         ResponseData responseData = new ResponseData();
-        List<Student> students = studentService.findAllStu();
+        PageInfo<Student> students = studentService.findAllStu(pageNum);
         if(students != null) {
             responseData.setCode(0);
             responseData.setMsg("学生数据获取成功");
-            responseData.getData().put("students",students);
+            responseData.getData().put("pageInfo",students);
         }else{
             responseData.setCode(1);
             responseData.setMsg("学生数据获取失败");
@@ -61,14 +62,14 @@ public class StudentController {
     @RequestMapping(value = "/btn",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData getlStuByBtn(@RequestBody Student student) {
+    public ResponseData getStuByBtn(@RequestParam("page") int pageNum,@RequestBody Student student) {
 
         ResponseData responseData = new ResponseData();
-        List<Student> students = studentService.findStuByBtn(student);
+        PageInfo<Student> students = studentService.findStuByBtn(pageNum,student);
         if(students != null) {
             responseData.setCode(0);
             responseData.setMsg("学生数据获取成功");
-            responseData.getData().put("students",students);
+            responseData.getData().put("pageInfo",students);
         }else{
             responseData.setCode(1);
             responseData.setMsg("学生数据获取失败");

@@ -37,7 +37,107 @@ $(function() {
             }
         }
 
+    })
+    $("#logout").on("click",function(){
+        $.ajax({
+            type:"get",
+            url:"/user/logout",
+            success:function(response){
+                if(confirm("确认退出登录?")){
+                    window.location.href="/";
+                }
 
+            }
+        })
+    })
+    $("#btn").on("click",function () {
+        let tips = $("#tips").val().trim();
+        let grades=null;
+        let totalSize=null;
+        let pageNo = 1;
+        let pageNum = 1;
+        let loadGrade = function(pageNo) {
+            $.ajax({
+                type: 'post',
+                url: "/grade/btn?page=" + pageNo ,
+                contentType: 'application/json',
+                data:JSON.stringify({
+                    "tno":uid,
+                    "tips":tips
+                }),
+                dataType: 'json',
+                success: function (response) {
+                    // alert("获取全部成绩数据成功");
+                    if (response.code == 0) {
+                        console.log(response);
+                        data = response.data.pageInfo;
+                        console.log(data);
+
+                        grades = data.list;
+                        pageNum = data.pages;
+                        totalSize = grades.length;
+                        $("#gradeData").html("");
+                        for (var i = 0; i < totalSize; i++) {
+                            $("#gradeData").append(
+                                " <tr>\n" +
+                                "                                <td>" + (i + 1) + "</td>\n" +
+                                "                                <td>" + grades[i].cno + "</td>\n" +
+                                "                                <td>" + grades[i].cname + "</td>\n" +
+                                "                                <td>" + grades[i].sname + "</td>\n" +
+                                "                                <td>" + grades[i].sno + "</td>\n" +
+                                "                                <td>" + grades[i].score + "</td>\n" +
+                                "                                <td>" + grades[i].credit + "</td>\n" +
+                                "                                <td>" + grades[i].ctype + "</td>\n" +
+                                "                            </tr>");
+                        }
+                        ;
+                        $("#PageText").html("一共" + pageNum + "页,当前第" + pageNo + "页");
+                    } else {
+                        alert("服务器据出错啦！")
+                    }
+
+                }
+            })
+        };
+        $("#index1").on("click",function () {
+            pageNo = 1;
+            loadGrade(pageNo);
+        });
+
+        $("#last1").on("click",function (){
+            if(pageNo == 1){
+                return false;
+            } else {
+                pageNo--;
+                loadGrade(pageNo);
+
+            }
+        });
+        $("#next1").on("click",function (){
+            if(pageNo == pageNum){
+                return false;
+            } else {
+                pageNo++;
+                loadGrade(pageNo);
+            }
+        });
+        $("#final1").on("click",function (){
+                pageNo = pageNum;
+                loadGrade(pageNo);
+        });
+        $("#PageBtn").on("click",function (){
+            let pageNumber = $.trim($("#pageNum3").val().trim());
+            pageNo = pageNumber;
+                loadGrade(pageNo);
+        });
+
+        if(tips == ""){
+            alert("请输入课程名称/学号！");
+            $("#tips").focus();
+            return false;
+        } else {
+            loadGrade(pageNo);
+        }
     })
     $("#alertPwd").on("click", function () {
         var newPwd = $("#newPwd").val();
@@ -123,54 +223,122 @@ $(function() {
         }
 
     })
-    $("#classTab").on("click",function f(){
-        // alert("查询该教师全课程");
-        $.ajax({
-            type: "get",
-            url: "course/teacher/all?tno=" + uid,
-            contentType: "application/json",
-            dataType: "json",
-            success: function (response) {
-                if (response.code == 0) {
-                    // alert("课程数据获取成功");
-                    let courses = response.data.courses;
-                    console.log(courses);
-                    showClassHtml = " <table class=\"table table-bordered table-condensed\" style=\"border-color: black\">\n" +
-                        "                            <tr>\n" +
-                        "                                <th style=\"width: 10%\">序号</th>\n" +
-                        "                                <th style=\"width: 20%\">课程编号</th>\n" +
-                        "                                <th style=\"width: 20%\">课程名称</th>\n" +
-                        "                                <th style=\"width: 15%\">学分</th>\n" +
-                        "                                <th style=\"width: 15%\">学时</th>\n" +
-                        "                                <th style=\"width: 20%\">课程性质</th>\n" +
-                        "                            </tr>";
-                    for (var i = 0; i < courses.length; i++) {
-                        n = i+1;
-                        html = "<tr>\n" +
-                            "<td>"+ n +"</td>\n" +
-                            "<td>"+ courses[i].cno +"</td>\n" +
-                            "<td>"+ courses[i].cname +"</td>\n" +
-                            "<td>"+ courses[i].credit +"</td>\n" +
-                            "<td>"+ courses[i].ctime +"</td>\n" +
-                            "<td>"+ courses[i].ctype +"</td>\n" +
-                            "</tr>\n";
-                        showClassHtml += html;
+    $("#classTab").on("click",function (){
+        let courses=null;
+        let totalSize=null;
+        let pageNo = 1;
+        let pageNum = 1;
+        let courses1=null;
+        let totalSize1=null;
+        let pageNum1 = 1;
+        let flag = false;
+        let loadCourse = function (pageNo) {
+            flag = false;
+            $.ajax({
+                type: "get",
+                url: "course/teacher/all?tno=" + uid + "&page=" + pageNo,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    if (response.code == 0) {
+                        data = response.data.pageInfo;
+                        console.log(data);
+
+                        courses = data.list;
+                        pageNum = data.pages;
+                        totalSize = courses.length;
+
+                        if (pageNo > pageNum) {
+                            pageNo = pageNum;
+                        }
+                        $("#showClass").html("");
+                        for (var i = 0; i < totalSize; i++) {
+
+                            $("#showClass").append(
+                                "<tr>\n" +
+                                "<td>" + (i+1) + "</td>\n" +
+                                "<td>" + courses[i].cno + "</td>\n" +
+                                "<td>" + courses[i].cname + "</td>\n" +
+                                "<td>" + courses[i].credit + "</td>\n" +
+                                "<td>" + courses[i].ctime + "</td>\n" +
+                                "<td>" + courses[i].ctype + "</td>\n" +
+                                "</tr>");
+                        }
+                        ;
+                        $("#coursePageText").html("一共" + pageNum + "页,当前第" + pageNo + "页");
+                    } else {
+                        alert("您还未被安排授课！");
                     }
-                    showClassHtml += "</table>";
-                    $("#showClass").html(showClassHtml);
-                } else {
-                    alert("您还未被安排授课！");
+                },
+            })
+        };
+        $("#indexCourse").on("click",function () {
+            pageNo = 1;
+            if(flag == true){
+                courseBtn(pageNo);
+            } else{
+                loadCourse(pageNo);
+            }
+        });
+
+        $("#lastCourse").on("click",function (){
+            if(pageNo == 1){
+                return false;
+            } else {
+                pageNo--;
+                if(flag){
+                    courseBtn(pageNo);
+                } else{
+                    loadCourse(pageNo);
                 }
-            },
-        })
-        $("#seaCourse").on("click", function () {
+            }
+        });
+        $("#nextCourse").on("click",function (){
+            if(flag){
+                if(pageNo == pageNum1){
+                    return false;
+                } else {
+                    pageNo++;
+                    courseBtn(pageNo);
+                }
+            } else {
+                if(pageNo == pageNum){
+                    return false;
+                } else {
+                    pageNo++;
+                    loadCourse(pageNo);
+                }
+            }
+
+        });
+        $("#finalCourse").on("click",function (){
+            if(flag){
+                pageNo = pageNum1;
+                courseBtn(pageNo);
+            } else{
+                pageNo = pageNum;
+                loadCourse(pageNo);
+            }
+
+        });
+        $("#coursePageBtn").on("click",function (){
+            let pageNumber = $.trim($("#pageNum1").val().trim());
+            pageNo = pageNumber;
+            if(flag){
+                courseBtn(pageNo);
+            } else{
+                loadCourse(pageNo);
+            }
+        });
+        let courseBtn = function (pageNo) {
+            flag = true;
             var ctype = $("#ctype").val().trim();
             var cname = $("#cname").val().trim();
             console.log(ctype + cname);
             if ( cname != "") {
                 $.ajax({
                     type: "post",
-                    url: "course/teacher/cname",
+                    url: "course/teacher/cname?page=" + pageNo,
                     data: JSON.stringify({
                         "cname": cname,
                         "tno": uid,
@@ -179,41 +347,40 @@ $(function() {
                     dataType: "json",
                     success: function (response) {
                         if (response.code == 0) {
-                            let courses = response.data.courses;
-                            console.log(courses);
-                            showClassHtml = " <table class=\"table table-bordered table-condensed\" style=\"border-color: black\">\n" +
-                                "                            <tr>\n" +
-                                "                                <th style=\"width: 10%\">序号</th>\n" +
-                                "                                <th style=\"width: 20%\">课程编号</th>\n" +
-                                "                                <th style=\"width: 20%\">课程名称</th>\n" +
-                                "                                <th style=\"width: 15%\">学分</th>\n" +
-                                "                                <th style=\"width: 15%\">学时</th>\n" +
-                                "                                <th style=\"width: 20%\">课程性质</th>\n" +
-                                "                            </tr>";
-                            for (var i = 0; i < courses.length; i++) {
-                                n = i+1;
-                                html = "<tr>\n" +
-                                    "<td>"+ n +"</td>\n" +
-                                    "<td>"+ courses[i].cno +"</td>\n" +
-                                    "<td>"+ courses[i].cname +"</td>\n" +
-                                    "<td>"+ courses[i].credit +"</td>\n" +
-                                    "<td>"+ courses[i].ctime +"</td>\n" +
-                                    "<td>"+ courses[i].ctype +"</td>\n" +
-                                    "</tr>\n";
-                                showClassHtml += html;
+                            data1 = response.data.pageInfo;
+                            console.log(data1);
+
+                            courses1 = data1.list;
+                            pageNum1 = data1.pages;
+                            totalSize1 = courses1.length;
+
+                            if (pageNo > pageNum1) {
+                                pageNo = pageNum1;
                             }
-                            showClassHtml += "</table>";
-                            $("#showClass").html(showClassHtml);
+                            $("#showClass").html("");
+                            for (var i = 0; i < totalSize1; i++) {
+
+                                $("#showClass").append(
+                                    "<tr>\n" +
+                                    "<td>" + (i+1) + "</td>\n" +
+                                    "<td>" + courses1[i].cno + "</td>\n" +
+                                    "<td>" + courses1[i].cname + "</td>\n" +
+                                    "<td>" + courses1[i].credit + "</td>\n" +
+                                    "<td>" + courses1[i].ctime + "</td>\n" +
+                                    "<td>" + courses1[i].ctype + "</td>\n" +
+                                    "</tr>");
+                            }
+                            ;
+                            $("#coursePageText").html("一共" + pageNum1 + "页,当前第" + pageNo + "页");
                         } else {
                             alert("您未教授该课程！");
                         }
                     },
                 })
             } else if (ctype != "==请选择==") {
-                // alert(ctype);
                 $.ajax({
                     type: "post",
-                    url: "course/teacher/ctype",
+                    url: "course/teacher/ctype?page=" + pageNo,
                     data: JSON.stringify({
                         "ctype": ctype,
                         "tno": uid,
@@ -222,31 +389,31 @@ $(function() {
                     dataType: "json",
                     success: function (response) {
                         if (response.code == 0) {
-                            // alert("课程数据获取成功");
-                            let courses = response.data.courses;
-                            showClassHtml = " <table class=\"table table-bordered table-condensed\" style=\"border-color: black\">\n" +
-                                "                            <tr>\n" +
-                                "                                <th style=\"width: 10%\">序号</th>\n" +
-                                "                                <th style=\"width: 20%\">课程编号</th>\n" +
-                                "                                <th style=\"width: 20%\">课程名称</th>\n" +
-                                "                                <th style=\"width: 15%\">学分</th>\n" +
-                                "                                <th style=\"width: 15%\">学时</th>\n" +
-                                "                                <th style=\"width: 20%\">课程性质</th>\n" +
-                                "                            </tr>";
-                            for (var i = 0; i < courses.length; i++) {
-                                n = i+1;
-                                html = "<tr>\n" +
-                                    "<td>"+ n +"</td>\n" +
-                                    "<td>"+ courses[i].cno +"</td>\n" +
-                                    "<td>"+ courses[i].cname +"</td>\n" +
-                                    "<td>"+ courses[i].credit +"</td>\n" +
-                                    "<td>"+ courses[i].ctime +"</td>\n" +
-                                    "<td>"+ courses[i].ctype +"</td>\n" +
-                                    "</tr>\n";
-                                showClassHtml += html;
+                            data1 = response.data.pageInfo;
+                            console.log(data1);
+
+                            courses1 = data1.list;
+                            pageNum1 = data1.pages;
+                            totalSize1 = courses1.length;
+
+                            if (pageNo > pageNum1) {
+                                pageNo = pageNum1;
                             }
-                            showClassHtml += "</table>";
-                            $("#showClass").html(showClassHtml);
+                            $("#showClass").html("");
+                            for (var i = 0; i < totalSize1; i++) {
+
+                                $("#showClass").append(
+                                    "<tr>\n" +
+                                    "<td>" + (i+1) + "</td>\n" +
+                                    "<td>" + courses1[i].cno + "</td>\n" +
+                                    "<td>" + courses1[i].cname + "</td>\n" +
+                                    "<td>" + courses1[i].credit + "</td>\n" +
+                                    "<td>" + courses1[i].ctime + "</td>\n" +
+                                    "<td>" + courses1[i].ctype + "</td>\n" +
+                                    "</tr>");
+                            }
+                            ;
+                            $("#coursePageText").html("一共" + pageNum1 + "页,当前第" + pageNo + "页");
                         } else {
                             alert("未查询到该课程！");
                         }
@@ -256,44 +423,129 @@ $(function() {
                 alert("请输入筛选条件！");
             }
 
+        };
+        loadCourse(pageNo);
+        $("#seaCourse").on("click", function () {
+            pageNo = 1;
+            courseBtn(pageNo);
         })
     })
     $("#gradeTab").on("click",function () {
-        $.ajax({
-            type:'get',
-            url:"/grade/teacher/all?tno="+uid,
-            contentType:'application/json',
-            dataType:'json',
-            success:function(response) {
-                // alert("获取全部成绩数据成功");
-                if(response.code == 0) {
-                    console.log(response);
-                    let grades = response.data.grades;
-                    let showGraHtml = "";
-                    for (let i = 0; i < grades.length; i++) {
-                        let n = i + 1;
-                        html = " <tr>\n" +
-                            "                                <td>" + n + "</td>\n" +
-                            "                                <td>" + grades[i].cno + "</td>\n" +
-                            "                                <td>" + grades[i].cname + "</td>\n" +
-                            "                                <td>" + grades[i].sname + "</td>\n" +
-                            "                                <td>" + grades[i].sno + "</td>\n" +
-                            "                                <td>" + grades[i].score + "</td>\n" +
-                            "                                <td>" + grades[i].credit + "</td>\n" +
-                            "                                <td>" + grades[i].ctype + "</td>\n" +
-                            "                            </tr>";
-                        showGraHtml += html;
+        let grades=null;
+        let totalSize=null;
+        let pageNo = 1;
+        let pageNum = 1;
+        let grades1=null;
+        let totalSize1=null;
+        let pageNum1 = 1;
+        let flag = false;
+        let loadGrade = function (pageNo) {
+            flag = false;
+            $.ajax({
+                type: 'get',
+                url: "/grade/teacher/all?tno=" + uid + "&page=" + pageNo,
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    // alert("获取全部成绩数据成功");
+                    if (response.code == 0) {
+                        console.log(response);
+                        data = response.data.pageInfo;
+                        console.log(data);
+
+                        grades = data.list;
+                        pageNum = data.pages;
+                        totalSize = grades.length;
+
+                        if (pageNo > pageNum) {
+                            pageNo = pageNum;
+                        }
+
+                        $("#showGrade").html("");
+                        for (var i = 0; i < totalSize; i++) {
+
+                            $("#showGrade").append(
+                                " <tr>\n" +
+                                "                                <td>" + (i + 1) + "</td>\n" +
+                                "                                <td>" + grades[i].cno + "</td>\n" +
+                                "                                <td>" + grades[i].cname + "</td>\n" +
+                                "                                <td>" + grades[i].sname + "</td>\n" +
+                                "                                <td>" + grades[i].sno + "</td>\n" +
+                                "                                <td>" + grades[i].score + "</td>\n" +
+                                "                                <td>" + grades[i].credit + "</td>\n" +
+                                "                                <td>" + grades[i].ctype + "</td>\n" +
+                                "                            </tr>");
+                        }
+                        ;
+                        $("#gradePageText").html("一共" + pageNum + "页,当前第" + pageNo + "页");
+                    } else {
+                        alert("服务器据出错啦！")
                     }
-                    ;
-                    $("#showGrade").html(showGraHtml);
-                } else {
-                    alert("服务器据出错啦！")
+
                 }
-
+            })
+        };
+        $("#index").on("click",function () {
+            pageNo = 1;
+            if(flag == true){
+                gradeBtn(pageNo);
+            } else{
+                loadGrade(pageNo);
             }
-        })
+        });
 
-        $("#gradeBtn").on("click",function () {
+        $("#last").on("click",function (){
+            if(pageNo == 1){
+                return false;
+            } else {
+                pageNo--;
+                if(flag){
+                    gradeBtn(pageNo);
+                } else{
+                    loadGrade(pageNo);
+                }
+            }
+        });
+        $("#next").on("click",function (){
+            if(flag){
+                if(pageNo == pageNum1){
+                    return false;
+                } else {
+                    pageNo++;
+                    gradeBtn(pageNo);
+                }
+            } else {
+                if(pageNo == pageNum){
+                    return false;
+                } else {
+                    pageNo++;
+                    loadGrade(pageNo);
+                }
+            }
+
+        });
+        $("#final").on("click",function (){
+            if(flag){
+                pageNo = pageNum1;
+                gradeBtn(pageNo);
+            } else{
+                pageNo = pageNum;
+                loadGrade(pageNo);
+            }
+
+        });
+        $("#gradePageBtn").on("click",function (){
+            let pageNumber = $.trim($("#pageNum").val().trim());
+            pageNo = pageNumber;
+            if(flag){
+                gradeBtn(pageNo);
+            } else{
+                loadGrade(pageNo);
+            }
+        });
+
+        let gradeBtn = function (pageNo) {
+            flag = true;
             let ctype=$("#ctype2").val().trim();
             let cname=$("#cname2").val().trim();
             let showType=$("#showType").val().trim();
@@ -307,7 +559,7 @@ $(function() {
             }
             $.ajax({
                 type: 'post',
-                url: "/grade/teacher/btn",
+                url: "/grade/teacher/btn?page=" + pageNo,
                 contentType: 'application/json',
                 data:JSON.stringify({
                     "tno" : uid,
@@ -320,28 +572,88 @@ $(function() {
                     // alert("获取全部成绩数据成功");
                     if (response.code == 0) {
                         console.log(response);
-                        let grades = response.data.grades;
-                        let showGraHtml = "";
-                        for (let i = 0; i < grades.length; i++) {
-                            let n = i + 1;
-                            html = " <tr>\n" +
-                                "                                <td>" + n + "</td>\n" +
-                                "                                <td>" + grades[i].cno + "</td>\n" +
-                                "                                <td>" + grades[i].cname + "</td>\n" +
-                                "                                <td>" + grades[i].sname + "</td>\n" +
-                                "                                <td>" + grades[i].sno + "</td>\n" +
-                                "                                <td>" + grades[i].score + "</td>\n" +
-                                "                                <td>" + grades[i].credit + "</td>\n" +
-                                "                                <td>" + grades[i].ctype + "</td>\n" +
-                                "                            </tr>";
-                            showGraHtml += html;
+                        data1 = response.data.pageInfo;
+                        console.log(data1);
+
+                        grades1 = data1.list;
+                        pageNum1 = data1.pages;
+                        totalSize1 = grades1.length;
+
+                        if (pageNo > pageNum1) {
+                            pageNo = pageNum1;
+                        }
+                        $("#showGrade").html("");
+                        for (var i = 0; i < totalSize1; i++) {
+
+                            $("#showGrade").append(
+                                " <tr>\n" +
+                                "                                <td>" + (i + 1) + "</td>\n" +
+                                "                                <td>" + grades1[i].cno + "</td>\n" +
+                                "                                <td>" + grades1[i].cname + "</td>\n" +
+                                "                                <td>" + grades1[i].sname + "</td>\n" +
+                                "                                <td>" + grades1[i].sno + "</td>\n" +
+                                "                                <td>" + grades1[i].score + "</td>\n" +
+                                "                                <td>" + grades1[i].credit + "</td>\n" +
+                                "                                <td>" + grades1[i].ctype + "</td>\n" +
+                                "                            </tr>");
                         }
                         ;
-                        $("#showGrade").html(showGraHtml);
+                        $("#gradePageText").html("一共" + pageNum1 + "页,当前第" + pageNo + "页");
                     } else {
                         alert("服务器据出错啦！")
                     }
 
+                }
+            })
+        };
+        loadGrade(pageNo);
+        $("#gradeBtn").on("click", function(){
+            pageNo = 1;
+            gradeBtn(pageNo);
+        });
+        $("#addGrade").on("click",function () {
+            let cno = $("#cno").val().trim();
+            let sno = $("#sno").val().trim();
+            let degree = $("#degree").val();
+            if(cno=="" || sno=="" || degree=="") {
+                alert("请填写完整信息");
+                return false;
+            }
+            $.ajax({
+                type: 'put',
+                url: "/grade/add",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "cno": cno,
+                    "sno": sno,
+                    "degree": degree
+                }),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.code == 0) {
+                        $('#insert').modal('hide');
+                        alert(" 成绩录入成功");
+                        $.ajax({
+                            type: 'post',
+                            url: "/grade/new",
+                            data: JSON.stringify({
+                                "sno": sno,
+                                "cno": cno
+                            }),
+                            contentType: 'application/json',
+                            dataType: 'json',
+                            success: function (response) {
+                                // alert("获取全部成绩数据成功");
+                                if (response.code == 0) {
+                                    loadGrade(1);
+                                } else {
+                                    alert("获取单次成绩数据失败");
+                                }
+                            }
+                        })
+                    } else {
+                        alert(" 成绩录入失败");
+                    }
                 }
             })
         })
@@ -474,59 +786,5 @@ $(function() {
         }
     })
 
-    $("#addGrade").on("click",function () {
-        let cno = $("#cno").val().trim();
-        let sno = $("#sno").val().trim();
-        let degree = $("#degree").val();
-        $.ajax({
-            type: 'put',
-            url: "/grade/add",
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "cno": cno,
-                "sno": sno,
-                "degree": degree
-            }),
-            dataType: 'json',
-            success: function (response) {
-                if (response.code == 0) {
-                    $('#insert').modal('hide');
-                    alert(" 成绩录入成功");
-                    $.ajax({
-                        type: 'post',
-                        url: "/grade/new",
-                        data: JSON.stringify({
-                            "sno": sno,
-                            "cno": cno
-                        }),
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        success: function (response) {
-                            // alert("获取全部成绩数据成功");
-                            if (response.code == 0) {
-                                console.log(response);
-                                let grade = response.data.grade;
-                                var _len = $("#showGrade tr").length;
-                                $("#showGrade").append(" <tr>\n" +
-                                    "                                <td>" + (_len + 2) + "</td>\n" +
-                                    "                                <td>" + grade.cno + "</td>\n" +
-                                    "                                <td>" + grade.cname + "</td>\n" +
-                                    "                                <td>" + grade.sname + "</td>\n" +
-                                    "                                <td>" + grade.sno + "</td>\n" +
-                                    "                                <td>" + grade.score + "</td>\n" +
-                                    "                                <td>" + grade.credit + "</td>\n" +
-                                    "                                <td>" + grade.ctype + "</td>\n" +
-                                    "                            </tr>");
-                            } else {
-                                alert("获取单次成绩数据失败");
-                            }
-                        }
-                    })
-                } else {
-                    alert(" 成绩录入失败");
-                }
-            }
-        })
-    })
 
 })

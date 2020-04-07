@@ -1,5 +1,6 @@
 package com.ncu.mfc.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.dto.GradeBtn;
 import com.ncu.mfc.dto.ResponseData;
@@ -11,7 +12,6 @@ import com.ncu.mfc.service.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/grade")
@@ -23,13 +23,13 @@ public class GradeController {
     @RequestMapping(value = "/all",
     produces = "application/json",
     method = RequestMethod.GET)
-    public ResponseData findAllDegree() {
+    public ResponseData findAllDegree(@RequestParam("page") int pageNum) {
         ResponseData responseData = new ResponseData();
-        List<Degree> grades = gradeService.adminFindDegree();
+        PageInfo<Degree> grades = gradeService.adminFindDegreePage(pageNum);
         if(grades != null) {
             responseData.setCode(0);
             responseData.setMsg("获取成绩数据成功");
-            responseData.getData().put("grades",grades);
+            responseData.getData().put("pageInfo",grades);
         }else{
             responseData.setCode(1);
             responseData.setMsg("获取成绩数据失败");
@@ -91,13 +91,13 @@ public class GradeController {
     @RequestMapping(value = "/teacher/all",
             produces = "application/json",
             method = RequestMethod.GET)
-    public ResponseData findDegreeByTno(@RequestParam("tno") String tno) {
+    public ResponseData findDegreeByTno(@RequestParam("page") int pageNum,@RequestParam("tno") String tno) {
         ResponseData responseData = new ResponseData();
-        List<Degree> grades = gradeService.findDegreeByTno(tno);
+        PageInfo<Degree> grades = gradeService.findDegreeByTno(pageNum,tno);
         if(grades != null) {
             responseData.setCode(0);
             responseData.setMsg("获取成绩数据成功");
-            responseData.getData().put("grades",grades);
+            responseData.getData().put("pageInfo",grades);
         }else{
             responseData.setCode(1);
             responseData.setMsg("获取成绩数据失败");
@@ -108,13 +108,13 @@ public class GradeController {
     @RequestMapping(value = "/teacher/btn",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData findDegreeByTno(@RequestBody GradeBtn record) {
+    public ResponseData findDegreeByTno(@RequestParam("page") int pageNum,@RequestBody GradeBtn record) {
         ResponseData responseData = new ResponseData();
-        List<Degree> grades = gradeService.findDegreeByTnoBtn(record);
+        PageInfo<Degree> grades = gradeService.findDegreeByTnoBtn(pageNum,record);
         if(grades != null) {
             responseData.setCode(0);
             responseData.setMsg("获取成绩数据成功");
-            responseData.getData().put("grades",grades);
+            responseData.getData().put("pageInfo",grades);
         }else{
             responseData.setCode(1);
             responseData.setMsg("获取成绩数据失败");
@@ -159,13 +159,13 @@ public class GradeController {
     @RequestMapping(value = "/student/all",
             produces = "application/json",
             method = RequestMethod.GET)
-    public ResponseData findDegreeByStu(@RequestParam("sno") String sno) {
+    public ResponseData findDegreeByStu(@RequestParam("page") int pageNum,@RequestParam("sno") String sno) {
         ResponseData responseData = new ResponseData();
-        List<Degree> grades = gradeService.findDegreeByStu(sno);
+        PageInfo<Degree> grades = gradeService.findDegreeByStu(pageNum,sno);
         if(grades != null) {
             responseData.setCode(0);
             responseData.setMsg("获取成绩数据成功");
-            responseData.getData().put("grades",grades);
+            responseData.getData().put("pageInfo",grades);
         }else{
             responseData.setCode(1);
             responseData.setMsg("获取成绩数据失败");
@@ -176,13 +176,13 @@ public class GradeController {
     @RequestMapping(value = "/student/btn",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData findDegreeByStu(@RequestBody GradeBtn record) {
+    public ResponseData findDegreeByStu(@RequestParam("page") int pageNum,@RequestBody GradeBtn record) {
         ResponseData responseData = new ResponseData();
-        List<Degree> grades = gradeService.findDegreeByStuBtn(record);
+        PageInfo<Degree> grades = gradeService.findDegreeByStuBtn(pageNum,record);
         if(grades != null) {
             responseData.setCode(0);
             responseData.setMsg("获取成绩数据成功");
-            responseData.getData().put("grades",grades);
+            responseData.getData().put("pageInfo",grades);
         }else{
             responseData.setCode(1);
             responseData.setMsg("获取成绩数据失败");
@@ -193,13 +193,30 @@ public class GradeController {
     @RequestMapping(value = "/admin/btn",
             produces = "application/json",
             method = RequestMethod.POST)
-    public ResponseData findDegreeByAdmin(@RequestBody GradeBtn record) {
+    public ResponseData findDegreeByAdmin(@RequestParam("page") int pageNum,@RequestBody GradeBtn record) {
         ResponseData responseData = new ResponseData();
-        List<Degree> grades = gradeService.findDegreeByAdminBtn(record);
+        PageInfo<Degree> grades = gradeService.findDegreeByAdminBtn(pageNum,record);
         if(grades != null) {
             responseData.setCode(0);
             responseData.setMsg("获取成绩数据成功");
-            responseData.getData().put("grades",grades);
+            responseData.getData().put("pageInfo",grades);
+        }else{
+            responseData.setCode(1);
+            responseData.setMsg("获取成绩数据失败");
+        }
+        return responseData;
+    }
+
+    @RequestMapping(value = "/btn",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData findByAdmin(@RequestParam("page") int pageNum,@RequestBody GradeBtn record) {
+        ResponseData responseData = new ResponseData();
+        PageInfo<Degree> grades = gradeService.findByAdminBtn(pageNum,record);
+        if(grades != null) {
+            responseData.setCode(0);
+            responseData.setMsg("获取成绩数据成功");
+            responseData.getData().put("pageInfo",grades);
         }else{
             responseData.setCode(1);
             responseData.setMsg("获取成绩数据失败");

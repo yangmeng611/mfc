@@ -1,5 +1,7 @@
 package com.ncu.mfc.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.mapper.StudentMapper;
 import com.ncu.mfc.model.Student;
 import com.ncu.mfc.service.StudentService;
@@ -19,8 +21,11 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentDao;
 
     @Override
-    public List<Student> findAllStu() {
-        return studentDao.selectStu();
+    public PageInfo<Student> findAllStu(int pageNum) {
+        PageHelper.startPage(pageNum,7);
+        List<Student> lists = studentDao.selectStu();
+        PageInfo<Student> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
@@ -44,8 +49,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> findStuByBtn(Student student) {
-        return studentDao.selectStuByBtn(student);
+    public PageInfo<Student> findStuByBtn(int pageNum,Student student) {
+        PageHelper.startPage(pageNum,7);
+        List<Student> lists = studentDao.selectStuByBtn(student);
+        PageInfo<Student> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
 }

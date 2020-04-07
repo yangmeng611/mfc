@@ -1,5 +1,6 @@
 package com.ncu.mfc.service;
 
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.dto.GradeBtn;
 import com.ncu.mfc.model.Degree;
@@ -7,11 +8,11 @@ import com.ncu.mfc.model.Grade;
 import com.ncu.mfc.model.GradeKey;
 import com.ncu.mfc.model.Level;
 
-import java.util.List;
 
 public interface GradeService {
 
-    List<Degree> adminFindDegree();
+
+    PageInfo<Degree> adminFindDegreePage(int pageNum);
 
     int updateDegree(Grade grade);
 
@@ -29,13 +30,15 @@ public interface GradeService {
 
     Level analyseByTnoAndCname(CnameAndTno record);
 
-    List<Degree> findDegreeByTno(String tno);
+    PageInfo<Degree> findDegreeByTno(int pageNum, String tno);
 
-    List<Degree> findDegreeByTnoBtn(GradeBtn record);
+    PageInfo<Degree> findDegreeByTnoBtn(int pageNum, GradeBtn record);
 
-    List<Degree> findDegreeByStu(String sno);
+    PageInfo<Degree> findDegreeByStu(int pageNum,String sno);
 
-    List<Degree> findDegreeByStuBtn(GradeBtn record);
+    PageInfo<Degree> findDegreeByStuBtn(int pageNum,GradeBtn record);
 
-    List<Degree> findDegreeByAdminBtn(GradeBtn record);
+    PageInfo<Degree> findDegreeByAdminBtn(int pageNum, GradeBtn record);
+
+    PageInfo<Degree> findByAdminBtn(int pageNum, GradeBtn record);
 }

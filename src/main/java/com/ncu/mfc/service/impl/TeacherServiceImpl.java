@@ -1,5 +1,7 @@
 package com.ncu.mfc.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.TnoBtn;
 import com.ncu.mfc.mapper.TeacherMapper;
 import com.ncu.mfc.model.Teacher;
@@ -16,8 +18,12 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherMapper teacherDao;
 
     @Override
-    public List<Teacher> findAllTeacher() {
-        return teacherDao.selectTea();
+    public PageInfo<Teacher> findAllTeacher(int pageNum) {
+
+        PageHelper.startPage(pageNum, 7);
+        List<Teacher> lists = teacherDao.selectTea();
+        PageInfo<Teacher> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
     @Override
@@ -41,8 +47,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> findTeaBtn(TnoBtn record) {
-        return teacherDao.selectByBtn(record);
+    public PageInfo<Teacher> findTeaBtn(int pageNum,TnoBtn record) {
+        PageHelper.startPage(pageNum, 7);
+        List<Teacher> lists = teacherDao.selectByBtn(record);
+        PageInfo<Teacher> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
     }
 
 
