@@ -1,6 +1,9 @@
 package com.ncu.mfc.mapper;
 
+import com.ncu.mfc.model.Teach;
 import com.ncu.mfc.model.TeachClassKey;
+
+import java.util.List;
 
 public interface TeachClassMapper {
     /**
@@ -26,4 +29,8 @@ public interface TeachClassMapper {
      * @mbggenerated
      */
     int insertSelective(TeachClassKey record);
+
+    List<Teach> selectAllTeach();
+
+    List<Teach> selectTeachBtn(Teach record);
 }

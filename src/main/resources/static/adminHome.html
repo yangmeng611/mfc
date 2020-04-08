@@ -53,8 +53,13 @@
                                 <span class="glyphicon glyphicon-home"></span> </a></li>
                             <li><a href="#student" id="findAllStu"  aria-controls="student" role="tab" data-toggle="tab">
                                 学生管理 </a></li>
-                            <li><a href="#teacher" id="findAllTea" aria-controls="teacher" role="tab" data-toggle="tab">
-                                教师管理 </a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">教师管理<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="findAllTea" href="#teacher" aria-controls="teacher" role="tab" data-toggle="tab">信息管理</a></li>
+                                    <li><a id="findAllTeach" href="#teach" aria-controls="teach" role="tab" data-toggle="tab">授课管理</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#course" id="findAllCou" aria-controls="course" role="tab" data-toggle="tab">
                                 课程管理 </a></li>
                             <li><a href="#degree" id="findAllGra" aria-controls="degree" role="tab" data-toggle="tab">
@@ -191,6 +196,92 @@
                                    style="border: none;margin-left: 200px;
                                    border-radius:9px;width: 100px; text-align: center"/>
                             <button id="teacherPageBtn" style="border: none;background: none;color: white" >查找</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="teach" role="tabpanel" class="tab-pane" style="width: 1000px;margin: 50px auto;">
+                    <form class="form-inline" style="text-align: center">
+                        <div class="form-group">
+                            <label for="tno1">职工号</label>
+                            <input type="text" class="form-control input-sm" id="tno1" placeholder="输入职工号">
+                        </div>&nbsp;&nbsp;
+                        <div class="form-group">
+                            <label for="tname1">姓名</label>
+                            <input type="text" class="form-control input-sm" id="tname1" placeholder="输入姓名">
+                        </div>&nbsp;&nbsp;
+                        <div class="form-group">
+                            <label for="course1">课程编号</label>
+                            <input type="text" class="form-control input-sm" id="course1" placeholder="所授课程名称">
+                        </div>&nbsp;&nbsp;
+                        <div class="form-group">
+                            <label for="cname2">课程名称</label>
+                            <input type="text" class="form-control input-sm" id="cname2" placeholder="所授课程名称">
+                        </div>&nbsp;&nbsp;
+                        <button id="teachBtn" type="button" class="btn btn-primary btn-sm">查询</button>
+                    </form>
+                    <button style="position: relative;left: 790px;margin-top: 8px;margin-bottom: 8px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#tcourse">
+                        <span class="glyphicon glyphicon-plus"></span> 新增授课
+                    </button>
+                    <!--Model-->
+                    <div id="tcourse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">添加授课</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="sno3" class="col-sm-2 control-label">职工号</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="tno3" placeholder="输入职工号">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cno3" class="col-sm-2 control-label">课程编号</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="cno3" placeholder="输入课程编号">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+                                        <button id="addTeach" type="button" class="btn btn-primary">添加</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel" style="width: 80%;margin: 0 auto;">
+                        <table class="table table-condensed table-bordered editable4" >
+                            <thead>
+                            <tr>
+                                <th style="width: 5%">序号</th>
+                                <th style="width: 20%">职工号</th>
+                                <th style="width: 20%">姓名</th>
+                                <th style="width: 20%">课程编号</th>
+                                <th style="width: 20%">课程名称</th>
+                                <th style="width: 15%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="showTeach">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="paginationTeach" style="width: 80%;margin: 15px auto;" >
+                        <p id="teachPageText" style='font-size: 15px;font-weight: bold;float: right'></p>
+                        <a style='width: 100px' href="#" id="indexTeach">首页</a>
+                        <a style='width: 100px' href="#" id = "lastTeach">上一页</a>
+                        <a style='width: 100px' href="#" id = "nextTeach">下一页</a>
+                        <a style='width: 100px' href="#" id = "finalTeach">末页</a>
+                        <div style="text-align: right;display:inline">
+                            <input type='text' id='pageNum5' placeholder="页数"
+                                   style="border: none;margin-left: 200px;
+                                   border-radius:9px;width: 100px; text-align: center"/>
+                            <button id="teachPageBtn" style="border: none;background: none;color: white" >查找</button>
                         </div>
                     </div>
                 </div>

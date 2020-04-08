@@ -9,6 +9,37 @@
     <id column="teano" property="teano" jdbcType="CHAR" />
     <id column="cno" property="cno" jdbcType="CHAR" />
   </resultMap>
+
+  <resultMap id="ResultMap" type="com.ncu.mfc.model.Teach" >
+    <id column="tno" property="tno" jdbcType="CHAR" />
+    <id column="tname" property="tname" jdbcType="CHAR" />
+    <id column="cno" property="cno" jdbcType="CHAR" />
+    <id column="cname" property="cname" jdbcType="CHAR" />
+  </resultMap>
+  <!--查询所有授课-->
+  <select id="selectAllTeach" resultMap="ResultMap">
+    select teacher.tno,teacher.tname,course.cno,course.cname
+    from teacher,course,teach_class
+    where teach_class.teano = teacher.tno and teach_class.cno = course.cno
+  </select>
+  <!--查询授课BUTTON-->
+  <select id="selectTeachBtn" resultMap="ResultMap" parameterType="com.ncu.mfc.model.Teach">
+    select teacher.tno,teacher.tname,course.cno,course.cname
+    from teacher,course,teach_class
+    where teach_class.teano = teacher.tno and teach_class.cno = course.cno
+    <if test="tno !='' and tno != null">
+      and teacher.tno = #{tno}
+    </if>
+    <if test="cno !='' and cno != null">
+      and course.cno = #{cno}
+    </if>
+    <if test="tname !='' and tname != null">
+      and teacher.tname LIKE "%"#{tname}"%"
+    </if>
+    <if test="cname !='' and cname != null">
+      and course.cname LIKE "%"#{cname}"%"
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.ncu.mfc.model.TeachClassKey" >
     <!--
       WARNING - @mbggenerated

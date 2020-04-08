@@ -225,6 +225,7 @@ $(function() {
                                         if (response.code == 0) {
                                             isSuccess();
                                             alert(" 添加学生数据成功");
+                                            loadStudent(1);
                                         } else {
                                             alert(" 添加学生数据失败");
                                         }
@@ -256,6 +257,7 @@ $(function() {
                                         if (response.code == 0) {
                                             isSuccess();
                                             alert(" 删除成功");
+                                            loadStudent(1);
                                         } else {
                                             alert(" 删除失败");
                                         }
@@ -503,6 +505,7 @@ $(function() {
                                         if (response.code == 0) {
                                             isSuccess();
                                             alert(" 添加教师数据成功");
+                                            loadTeacher(1);
                                         } else {
                                             alert(" 添加教师数据失败");
                                         }
@@ -534,6 +537,7 @@ $(function() {
                                         if (response.code == 0) {
                                             isSuccess();
                                             alert(" 删除成功");
+                                            loadTeacher(1);
                                         } else {
                                             alert(" 删除失败");
                                         }
@@ -662,6 +666,241 @@ $(function() {
         });
 
     })
+    $("#findAllTeach").on("click", function () {
+        let teach=null;
+        let totalSize=null;
+        let pageNo = 1;
+        let pageNum = 1;
+        let teach1=null;
+        let totalSize1=null;
+        let pageNum1 = 1;
+        let flag = false;
+        let loadTeach = function (pageNo) {
+            flag = false;
+            $.ajax({
+                type: 'get',
+                url: "/teach/all?page=" + pageNo,
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                     // alert("获取全部数据成功");
+                    if (response.code == 0) {
+                        data = response.data.pageInfo;
+                        console.log(data);
+
+                        teach = data.list;
+                        pageNum = data.pages;
+                        totalSize = teach.length;
+
+                        if (pageNo > pageNum) {
+                            pageNo = pageNum;
+                        }
+                        $("#showTeach").html("");
+                        for (let i = 0; i < totalSize; i++) {
+
+                            $("#showTeach").append(
+                                " <tr>\n" +
+                                "                                <td>" + (i+1) + "</td>\n" +
+                                "                                <td>" + teach[i].tno + "</td>\n" +
+                                "                                <td>" + teach[i].tname + "</td>\n" +
+                                "                                <td>" + teach[i].cno + "</td>\n" +
+                                "                                <td>" + teach[i].cname + "</td>\n" +
+                                "                                <td></td>\n" +
+                                "                            </tr>");
+                        }
+                        ;
+                        $("#teachPageText").html("一共" + pageNum + "页,当前第" + pageNo + "页");
+                        editable4();
+                    } else {
+                        alert("服务器据出错啦！")
+                    }
+
+                }
+            })
+        };
+        let editable4 = function () {
+
+            $('.editable4').handleTable({
+                "handleFirst": false,
+                "cancel": " <span class='glyphicon glyphicon-remove-circle'></span> ",
+                "edit": " <span class='glyphicon glyphicon-edit'></span> ",
+                "add": " <span class='glyphicon glyphicon-plus'></span> ",
+                "save": " <span class='glyphicon glyphicon-saved'></span> ",
+                "confirm": " <span class='glyphicon glyphicon-ok'></span> ",
+                "del": " <span class='glyphicon glyphicon-remove'></span>",
+                "operatePos": -1,
+                "editableCols": [2,3,4],
+                "order": ["del"],
+                "delCallback": function (data, isSuccess) {
+                    $.ajax({
+                        type: 'delete',
+                        url: "/teach/delete/",
+                        data:JSON.stringify({
+                            "teano":data[1],
+                            "cno":data[3]
+                        }),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.code == 0) {
+                                isSuccess();
+                                alert(" 删除成功");
+                                loadTeach(1);
+                            } else {
+                                alert(" 删除失败");
+                            }
+                        },
+                        error:function(response){
+                            alert(response.msg);
+                        }
+                    })
+                }
+            });
+        };
+        $("#indexTeach").on("click",function () {
+            pageNo = 1;
+            if(flag == true){
+                teachBtn(pageNo);
+            } else{
+                loadTeach(pageNo);
+            }
+        });
+
+        $("#lastTeach").on("click",function (){
+            if(pageNo == 1){
+                return false;
+            } else {
+                pageNo--;
+                if(flag){
+                    teachBtn(pageNo);
+                } else{
+                    loadTeach(pageNo);
+                }
+            }
+        });
+        $("#nextTeach").on("click",function (){
+            if(flag){
+                if(pageNo == pageNum1){
+                    return false;
+                } else {
+                    pageNo++;
+                    teachBtn(pageNo);
+                }
+            } else {
+                if(pageNo == pageNum){
+                    return false;
+                } else {
+                    pageNo++;
+                    loadTeach(pageNo);
+                }
+            }
+
+        });
+        $("#finalTeach").on("click",function (){
+            if(flag){
+                pageNo = pageNum1;
+                teachBtn(pageNo);
+            } else{
+                pageNo = pageNum;
+                loadTeach(pageNo);
+            }
+
+        });
+        $("#teachPageBtn").on("click",function (){
+            let pageNumber = $.trim($("#pageNum5").val().trim());
+            pageNo = pageNumber;
+            if(flag){
+                teachBtn(pageNo);
+            } else{
+                loadTeach(pageNo);
+            }
+        });
+        let teachBtn = function (pageNo) {
+            flag = true;
+            let tno = $("#tno1").val().trim();
+            let tname = $("#tname1").val().trim();
+            let cno = $("#course1").val().trim();
+            let cname = $("#cname2").val().trim();
+            $.ajax({
+                type: 'post',
+                url: "teach/btn?page=" + pageNo,
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "tno": tno,
+                    "tname": tname,
+                    "cno": cno,
+                    "cname": cname
+                }),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.code == 0) {
+                        data1 = response.data.pageInfo;
+                        console.log(data1);
+
+                        teach1 = data1.list;
+                        pageNum1 = data1.pages;
+                        totalSize1 = teach1.length;
+
+                        if (pageNo > pageNum1) {
+                            pageNo = pageNum1;
+                        }
+                        console.log(teach1);
+                        $("#showTeach").html("");
+                        for (let i = 0; i < totalSize1; i++) {
+
+                            $("#showTeach").append(
+                                " <tr>\n" +
+                                "                                <td>" + (i+1) + "</td>\n" +
+                                "                                <td>" + teach1[i].tno + "</td>\n" +
+                                "                                <td>" + teach1[i].tname + "</td>\n" +
+                                "                                <td>" + teach1[i].cno + "</td>\n" +
+                                "                                <td>" + teach1[i].cname + "</td>\n" +
+                                "                                <td></td>\n" +
+                                "                            </tr>");
+                        }
+                        ;
+                        $("#teachPageText").html("一共" + pageNum1 + "页,当前第" + pageNo + "页");
+                        editable4();
+                    }
+                }
+            })
+        };
+        loadTeach(pageNo);
+        $("#teachBtn").on("click", function () {
+            pageNo = 1;
+            teachBtn(pageNo);
+        });
+        $("#addTeach").on("click", function () {
+            let cno = $("#cno3").val().trim();
+            let tno = $("#tno3").val().trim();
+            if(cno == ""||tno == ""){
+                alert("请填写完整信息");
+            }
+            $.ajax({
+                type: 'put',
+                url: "/teach/add",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "cno": cno,
+                    "teano": tno,
+                }),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.code == 0) {
+                        $('#tcourse').modal('hide');
+                        alert(" 新增授课成功");
+                        loadTeach(1);
+                    } else {
+                        alert(" 新增授课失败");
+                    }
+                },
+                error:function(){
+                    alert("输入错误");
+                }
+            })
+        });
+
+    })
     $("#findAllCou").on("click", function () {
         let courses = null;
         let totalSize = null;
@@ -773,6 +1012,7 @@ $(function() {
                             if (response.code == 0) {
                                 isSuccess();
                                 alert(" 添加课程成功");
+                                loadCourse(1);
                             } else {
                                 alert(" 添加课程失败");
                             }
@@ -792,6 +1032,7 @@ $(function() {
                             if (response.code == 0) {
                                 isSuccess();
                                 alert(" 删除成功");
+                                loadCourse(1);
                             } else {
                                 alert(" 删除失败");
                             }
@@ -1018,6 +1259,7 @@ $(function() {
                             if (response.code == 0) {
                                 isSuccess();
                                 alert(" 删除成功");
+                                loadGrade(1);
                             } else {
                                 alert(" 删除失败");
                             }
@@ -1174,7 +1416,7 @@ $(function() {
                     if (response.code == 0) {
                         $('#insert').modal('hide');
                         alert(" 成绩录入成功");
-                        loadGrade(pageNum);
+                        loadGrade(1);
                     } else {
                         alert(" 成绩录入失败");
                     }
