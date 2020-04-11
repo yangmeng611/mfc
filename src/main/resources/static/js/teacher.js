@@ -12,7 +12,7 @@ $(function() {
                 // alert("数据获取成功");
                 let teacher = response.data.teacher;
                 var username = teacher.tname;
-                $(".navbar-brand").html(username + "(" + teacher.tno + ")");
+                $(".navbar-text").html(username + "(" + teacher.tno + ")");
                 $("#teaTable").html("<tr>\n" +
                     "                            <td style=\"width: 40%;\">姓名</td>\n" +
                     "                            <td style=\"width: 60%;\">" + teacher.tname + "</td>\n" +

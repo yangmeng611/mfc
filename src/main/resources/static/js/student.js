@@ -12,7 +12,7 @@ $(function() {
                 // alert("数据获取成功");
                 let student = response.data.student;
                 var username = student.sname;
-                $(".navbar-brand").html(username + "(" + student.sno + ")");
+                $(".navbar-text").html(username + "(" + student.sno + ")");
                 $("#stuTable").html("<tr>\n" +
                     "                            <td style=\"width: 40%;\">姓名</td>\n" +
                     "                            <td id=\"name\" style=\"width: 60%;\">" + student.sname + "</td>\n" +

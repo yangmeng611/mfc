@@ -11,41 +11,35 @@
         {
             text-align:center;
         }
+        body {
+            background-attachment: fixed;
+            background: url(image/img2.jpg);
+            background-size:cover;
+        }
     </style>
 </head>
 <body>
     <div class="page">
-        <div class="row" style="width:100%;height: 50px;line-height: 50px;background-color: #1b6d85;color: white;margin: 0;">
-            <div class="col-md-3">
-            &nbsp;&nbsp;<span class="glyphicon glyphicon-education" style="font-size: 25px" aria-hidden="true"></span>
-            &nbsp;&nbsp;<span style="font-weight: bold;font-size: 16px">南昌大学成绩管理平台</span>
-            </div>
-            <div class="col-md-offset-7 col-md-1">
-                <span >教师端</span>
-            </div>
-            <a id="logout" href="#" class="col-md-1" style="color: white">
-                <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
-                <span>退出</span>
-            </a>
-        </div>
-        <div style="position:absolute;bottom:0;margin: 0;width: 100%;height: 93%;
-        background: url(image/img2.jpg) no-repeat center;background-size:cover;">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <span class="navbar-brand" href="#"></span>
+        <div style="position:absolute;bottom:0;margin: 0;width: 100%;height: 84%;">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="row" style="width:100%;height: 50px;line-height: 50px;background-color: #1b6d85;color: white;margin: 0;">
+                    <div class="col-md-3">
+                        &nbsp;&nbsp;<span class="glyphicon glyphicon-education" style="font-size: 25px" aria-hidden="true"></span>
+                        &nbsp;&nbsp;<span style="font-weight: bold;font-size: 16px">南昌大学成绩管理平台</span>
                     </div>
-
+                    <div class="col-md-offset-7 col-md-1">
+                        <span >教师端</span>
+                    </div>
+                    <a id="logout" href="#" class="col-md-1" style="color: white">
+                        <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
+                        <span>退出</span>
+                    </a>
+                </div>
+                <div class="container-fluid">
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="row collapse navbar-collapse">
-                        <ul class="nav navbar-nav nav-tabs" role="tablist">
+                        <ul class="nav navbar-nav nav-tabs" role="tablist" style="width: 100%;">
+                            <p class="navbar-text"></p>
                             <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-home"></span> </a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人信息<span class="caret"></span></a>
@@ -78,7 +72,7 @@
                 </div><!-- /.container-fluid -->
             </nav>
             <div class="tab-content">
-                <div id="home" role="tabpanel" class="tab-pane fade in active panel panel-primary nav-tabs" style="width: 800px;margin: 50px auto;">
+                <div id="home" role="tabpanel" class="tab-pane fade in active panel panel-primary nav-tabs" style="width: 800px;margin: 80px auto;">
                     <div class="panel-heading">
                         <h1 class="panel-title"><span class="glyphicon glyphicon-user"></span> 个人名片</h1>
                     </div>
@@ -232,7 +226,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="analyse" role="tabpanel" class="tab-pane" style="width: 700px;margin: 70px auto;">
+                <div id="analyse" role="tabpanel" class="tab-pane" style="width: 700px;margin: 50px auto;">
                     <!--<a href="#gsearch"  aria-controls="degree" role="tab" data-toggle="tab" style="margin-left: 100px">-->
                         <!--<span class="glyphicon glyphicon-chevron-left"></span>返回 </a>-->
                     <form class="form-inline" style="text-align: center">

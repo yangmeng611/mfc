@@ -13,42 +13,36 @@
         {
             text-align:center;
         }
+        body {
+            background-attachment: fixed;
+            background: url(image/img2.jpg);
+            background-size:cover;
+        }
     </style>
 
 </head>
 <body>
     <div class="page">
-        <div class="row" style="width:100%;height: 50px;line-height: 50px;background-color: #1b6d85;color: white;margin: 0;">
-            <div class="col-md-3">
-            &nbsp;&nbsp;<span class="glyphicon glyphicon-education" style="font-size: 25px" aria-hidden="true"></span>
-            &nbsp;&nbsp;<span style="font-weight: bold;font-size: 16px">南昌大学成绩管理平台</span>
-            </div>
-            <div class="col-md-offset-7 col-md-1">
-                <span >管理员端</span>
-            </div>
-            <a id="logout" href="#" class="col-md-1" style="color: white">
-                <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
-                <span>退出</span>
-            </a>
-        </div>
-        <div style="position:absolute;bottom:0;margin: 0;width: 100%;height: 93%;
-        background: url(image/img2.jpg) no-repeat center;background-size:cover;">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <span class="navbar-brand" href="#">欢迎登录</span>
+        <div style="position:absolute;bottom:0;margin: 0;width: 100%;height: 84%;">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="row" style="width:100%;height: 50px;line-height: 50px;background-color: #1b6d85;color: white;margin: 0;">
+                    <div class="col-md-3">
+                        &nbsp;&nbsp;<span class="glyphicon glyphicon-education" style="font-size: 25px" aria-hidden="true"></span>
+                        &nbsp;&nbsp;<span style="font-weight: bold;font-size: 16px">南昌大学成绩管理平台</span>
                     </div>
-
+                    <div class="col-md-offset-7 col-md-1">
+                        <span >管理员端</span>
+                    </div>
+                    <a id="logout" href="#" class="col-md-1" style="color: white">
+                        <span class="glyphicon glyphicon-off" style="font-size: 16px" aria-hidden="true"></span>
+                        <span>退出</span>
+                    </a>
+                </div>
+                <div class="container-fluid">
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="row collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav " style="width: 100%;">
+                            <p class="navbar-text">欢迎登陆</p>
                             <li class="active"><a href="#home"  aria-controls="home" role="tab" data-toggle="tab">
                                 <span class="glyphicon glyphicon-home"></span> </a></li>
                             <li><a href="#student" id="findAllStu"  aria-controls="student" role="tab" data-toggle="tab">
@@ -83,15 +77,18 @@
                         管理员操作手册</h1>
                     </div>
                     <div class="panel-body">
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
-                        <p>&&&&&&&&&&&&&&</p>
+                        <p>1.管理员进行后台登陆，新系统默认系统管理员帐号和密码为 111111和111111.</p>
+                        <p>2.管理员不具有修改密码的权限，若有更改需求，请联系教务处88888888</p>
+                        <p>3.“学生管理”可以添加学生账号，更改、删除学生信息，条件筛选查询按钮，可查询指定学生信息</p>
+                        <p>4.“教师管理-信息管理”可以添加教师账号，更改、删除教师信息，条件筛选查询按钮，可查询指定教师信息</p>
+                        <p>5.“教师管理-授课管理”可以添加、删除授课，条件筛选查询按钮，可查询指定授课</p>
+                        <p>6.“课程管理”可以添加、更改、删除课程信息，条件筛选查询按钮，可查询指定课程信息</p>
+                        <p>7.“成绩管理”可以更改、删除成绩信息，条件筛选查询按钮，可查询指定成绩信息。
+                            “录入成绩”按钮可以录入学生成绩。
+                            “成绩分析”按钮可以实现所有课程或者指定课程的最高分、平均分、最低分、不及格率、良好率、优秀率分析</p>
+                        <p>8.“查询”按钮可以输入课程名称/学号/职工号，快捷查询成绩</p>
+                        <p>9.管理员要确保数据的准确性，不可以私自更改数据</p>
+
                     </div>
                     <div class="panel-footer">@南昌大学</div>
                 </div>
@@ -465,7 +462,7 @@
                     </div>
 
                 </div>
-                <div id="analyse" role="tabpanel" class="tab-pane" style="width: 100%;margin: 50px auto;">
+                <div id="analyse" role="tabpanel" class="tab-pane" style="width: 100%;margin: 40px auto;">
                     <a href="#degree"  aria-controls="degree" role="tab" data-toggle="tab" style="margin-left: 100px">
                         <span class="glyphicon glyphicon-chevron-left"></span>返回 </a>
                     <form class="form-inline" style="text-align: center">
