@@ -42,7 +42,8 @@
   <!--查询成绩详细信息-->
   <select id="selectDegree" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
     select course.cno,course.cname,student.sno,student.sname,
-    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    if(degree = 0,'修读中',grade.degree) as degree,
+    if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
     order by course.cno
@@ -50,7 +51,8 @@
   <!--根据课程编号和学号查询成绩详细信息-->
   <select id="selectGraByCnoAndSno" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
     select course.cno,course.cname,student.sno,student.sname,
-    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+   if(degree = 0,'修读中',grade.degree) as degree,
+   if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
     and grade.sno = #{sno,jdbcType=CHAR}
@@ -61,7 +63,8 @@
   <!--根据教师职工号查询教授课程的所有成绩详细信息-->
   <select id="selectGraByTno" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
      select course.cno,course.cname,student.sno,student.sname,
-    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    if(degree = 0,'修读中',grade.degree) as degree,
+    if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student,teach_class,teacher
     where grade.cno=course.cno and grade.sno=student.sno and teacher.tno = teach_class.teano
 			and teach_class.cno = grade.cno
@@ -72,7 +75,8 @@
   <select id="selectGraByTnoBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
     select course.cno,course.cname,student.sno,student.sname,
-    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    if(degree = 0,'修读中',grade.degree) as degree,
+    if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student,teach_class,teacher
     where grade.cno=course.cno and grade.sno=student.sno and teacher.tno = teach_class.teano
     and teach_class.cno = grade.cno
@@ -90,8 +94,8 @@
 
   <!--根据学号查询课程的所有成绩详细信息-->
   <select id="selectGraByStu" resultMap="DegreeResultMap" parameterType="java.lang.String" >
-     select course.cno,course.cname,grade.degree degree,
-     if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
+     select course.cno,course.cname,if(degree = 0,'修读中',grade.degree) as degree,
+     if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
 			and student.sno=#{sno}
@@ -101,7 +105,8 @@
   <select id="selectGraByAdminBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
     select distinct grade.cno,course.cname,student.sno,student.sname,
-    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    if(degree = 0,'修读中',grade.degree) as degree,
+    if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade LEFT JOIN course on grade.cno=course.cno
     LEFT JOIN student on student.sno = grade.sno
     LEFT JOIN teach_class on teach_class.cno = grade.cno
@@ -127,7 +132,8 @@
   <select id="selectByAdminBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
     select distinct grade.cno,course.cname,student.sno,student.sname,
-    grade.degree degree,if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
+    if(degree = 0,'修读中',grade.degree) as degree,
+    if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade LEFT JOIN course on grade.cno=course.cno
     LEFT JOIN student on student.sno = grade.sno
     LEFT JOIN teach_class on teach_class.cno = grade.cno
@@ -146,8 +152,8 @@
   <!--学生端成绩查询筛选button-->
   <select id="selectGraByStuBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
-    select course.cno,course.cname,grade.degree degree,
-    if(degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
+    select course.cno,course.cname,if(degree = 0,'修读中',grade.degree) as degree,
+    if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
     and student.sno=#{sno}

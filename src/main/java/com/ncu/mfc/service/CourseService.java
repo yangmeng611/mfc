@@ -1,9 +1,12 @@
 package com.ncu.mfc.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.model.Course;
+import com.ncu.mfc.model.GradeKey;
+import com.ncu.mfc.model.Learn;
 
 
 /**
@@ -60,4 +63,12 @@ public interface CourseService {
     int delcourse(String cno);
 
     PageInfo<Course> findCouBtn(int pageNum,CourseBtn record);
+
+    PageInfo<Learn> findAllLearn(int pageNum);
+
+    PageInfo<Learn> findLearnBtn(int pageNum, CourseBtn record);
+
+    int insertLearn(CourseBtn courseBtn);
+
+    int deleteLearn(GradeKey gradeKey);
 }

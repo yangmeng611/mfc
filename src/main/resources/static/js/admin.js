@@ -388,6 +388,243 @@ $(function() {
         })
 
     })
+    $("#findAllLearn").on("click", function () {
+        let learn=null;
+        let totalSize=null;
+        let pageNo = 1;
+        let pageNum = 1;
+        let learn1=null;
+        let totalSize1=null;
+        let pageNum1 = 1;
+        let flag = false;
+        let loadLearn = function (pageNo) {
+            flag = false;
+            $.ajax({
+                type: 'get',
+                url: "/course/learn/all?page=" + pageNo,
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                     // alert("获取全部数据成功");
+                    if (response.code == 0) {
+                        data = response.data.pageInfo;
+                        console.log(data);
+
+                        learn = data.list;
+                        pageNum = data.pages;
+                        totalSize = learn.length;
+
+                        if (pageNo > pageNum) {
+                            pageNo = pageNum;
+                        }
+                        $("#showLearn").html("");
+                        for (let i = 0; i < totalSize; i++) {
+
+                            $("#showLearn").append(
+                                " <tr>\n" +
+                                "                                <td>" + (i+1) + "</td>\n" +
+                                "                                <td>" + learn[i].sno + "</td>\n" +
+                                "                                <td>" + learn[i].sname + "</td>\n" +
+                                "                                <td>" + learn[i].major + "</td>\n" +
+                                "                                <td>" + learn[i].cno + "</td>\n" +
+                                "                                <td>" + learn[i].cname + "</td>\n" +
+                                "                                <td></td>\n" +
+                                "                            </tr>");
+                        }
+                        ;
+                        $("#learnPageText").html("一共" + pageNum + "页,当前第" + pageNo + "页");
+                        editable5();
+                    } else {
+                        alert("服务器据出错啦！")
+                    }
+
+                }
+            })
+        };
+        let editable5 = function () {
+
+            $('.editable5').handleTable({
+                "handleFirst": false,
+                "cancel": " <span class='glyphicon glyphicon-remove-circle'></span> ",
+                "edit": " <span class='glyphicon glyphicon-edit'></span> ",
+                "add": " <span class='glyphicon glyphicon-plus'></span> ",
+                "save": " <span class='glyphicon glyphicon-saved'></span> ",
+                "confirm": " <span class='glyphicon glyphicon-ok'></span> ",
+                "del": " <span class='glyphicon glyphicon-remove'></span>",
+                "operatePos": -1,
+                "editableCols": [2,3,4],
+                "order": ["del"],
+                "delCallback": function (data, isSuccess) {
+                    $.ajax({
+                        type: 'delete',
+                        url: "/course/learn/delete",
+                        data:JSON.stringify({
+                            "sno":data[1],
+                            "cno":data[4]
+                        }),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.code == 0) {
+                                isSuccess();
+                                alert(" 删除成功");
+                                loadLearn(1);
+                            } else {
+                                alert(" 删除失败");
+                            }
+                        },
+                        error:function(response){
+                            alert(response.msg);
+                        }
+                    })
+                }
+            });
+        };
+        $("#indexLearn").on("click",function () {
+            pageNo = 1;
+            if(flag == true){
+                learnBtn(pageNo);
+            } else{
+                loadLearn(pageNo);
+            }
+        });
+
+        $("#lastLearn").on("click",function (){
+            if(pageNo == 1){
+                return false;
+            } else {
+                pageNo--;
+                if(flag){
+                    learnBtn(pageNo);
+                } else{
+                    loadLearn(pageNo);
+                }
+            }
+        });
+        $("#nextLearn").on("click",function (){
+            if(flag){
+                if(pageNo == pageNum1){
+                    return false;
+                } else {
+                    pageNo++;
+                    learnBtn(pageNo);
+                }
+            } else {
+                if(pageNo == pageNum){
+                    return false;
+                } else {
+                    pageNo++;
+                    loadLearn(pageNo);
+                }
+            }
+
+        });
+        $("#finalLearn").on("click",function (){
+            if(flag){
+                pageNo = pageNum1;
+                learnBtn(pageNo);
+            } else{
+                pageNo = pageNum;
+                loadLearn(pageNo);
+            }
+
+        });
+        $("#learnPageBtn").on("click",function (){
+            let pageNumber = $.trim($("#pageNum6").val().trim());
+            pageNo = pageNumber;
+            if(flag){
+                learnBtn(pageNo);
+            } else{
+                loadLearn(pageNo);
+            }
+        });
+        let learnBtn = function (pageNo) {
+            flag = true;
+            let sno = $("#sno1").val().trim();
+            let major = $("#major").val().trim();
+            let cno = $("#stuCno").val().trim();
+            let cname = $("#stuCname").val().trim();
+            $.ajax({
+                type: 'post',
+                url: "course/learn/btn?page=" + pageNo,
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "sno": sno,
+                    "major": major,
+                    "cno": cno,
+                    "cname": cname
+                }),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.code == 0) {
+                        data1 = response.data.pageInfo;
+                        console.log(data1);
+
+                        learn1 = data1.list;
+                        pageNum1 = data1.pages;
+                        totalSize1 = learn1.length;
+
+                        if (pageNo > pageNum1) {
+                            pageNo = pageNum1;
+                        }
+                        console.log(learn1);
+                        $("#showLearn").html("");
+                        for (let i = 0; i < totalSize1; i++) {
+
+                            $("#showLearn").append(
+                                " <tr>\n" +
+                                "                                <td>" + (i+1) + "</td>\n" +
+                                "                                <td>" + learn1[i].sno + "</td>\n" +
+                                "                                <td>" + learn1[i].sname + "</td>\n" +
+                                "                                <td>" + learn1[i].major + "</td>\n" +
+                                "                                <td>" + learn1[i].cno + "</td>\n" +
+                                "                                <td>" + learn1[i].cname + "</td>\n" +
+                                "                                <td></td>\n" +
+                                "                            </tr>");
+                        }
+                        ;
+                        $("#learnPageText").html("一共" + pageNum1 + "页,当前第" + pageNo + "页");
+                        editable5();
+                    }
+                }
+            })
+        };
+        loadLearn(pageNo);
+        $("#learnBtn").on("click", function () {
+            pageNo = 1;
+            learnBtn(pageNo);
+        });
+        $("#addLearn").on("click", function () {
+            let major = $("#smajor").val().trim();
+            let cno = $("#scno").val().trim();
+            if(major == ""||cno == ""){
+                alert("请填写完整信息");
+            }
+            $.ajax({
+                type: 'put',
+                url: "course/learn/add",
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "cno": cno,
+                    "major": major,
+                }),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.code == 0) {
+                        $('#sLearn').modal('hide');
+                        alert(" 选课成功");
+                        loadLearn(1);
+                    } else {
+                        alert(" 选课失败");
+                    }
+                },
+                error:function(){
+                    alert("输入错误");
+                }
+            })
+        });
+
+    })
     $("#findAllTea").on("click", function () {
         let teachers=null;
         let totalSize=null;

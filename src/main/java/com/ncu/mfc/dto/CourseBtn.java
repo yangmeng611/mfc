@@ -13,6 +13,16 @@ public class CourseBtn {
 
     private String tno;
 
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    private String major;
+
     public String getSno() {
         return sno;
     }

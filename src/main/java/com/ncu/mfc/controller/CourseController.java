@@ -7,6 +7,8 @@ import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.dto.CtypeAndTno;
 import com.ncu.mfc.dto.ResponseData;
 import com.ncu.mfc.model.Course;
+import com.ncu.mfc.model.GradeKey;
+import com.ncu.mfc.model.Learn;
 import com.ncu.mfc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -232,6 +234,82 @@ public class CourseController {
         }else {
             responseData.setCode(1);
             responseData.setMsg("删除课程失败");
+        }
+        return responseData;
+    }
+    @RequestMapping(value = "/learn/all",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    public ResponseData findAllLearn(@RequestParam("page") int pageNum){
+        ResponseData responseData = new ResponseData();
+
+        PageInfo<Learn> learn = courseService.findAllLearn(pageNum);
+
+        if(learn != null) {
+            responseData.setCode(0);
+            responseData.setMsg("获取课程数据成功");
+            responseData.getData().put("pageInfo",learn);
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("获取课程数据失败");
+        }
+        return responseData;
+    }
+
+    @RequestMapping(value = "/learn/btn",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    public ResponseData findLearnBtn(@RequestParam("page") int pageNum,@RequestBody CourseBtn record){
+        ResponseData responseData = new ResponseData();
+
+        PageInfo<Learn> learn = courseService.findLearnBtn(pageNum,record);
+
+        if(learn != null) {
+            responseData.setCode(0);
+            responseData.setMsg("获取课程数据成功");
+            responseData.getData().put("pageInfo",learn);
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("获取课程数据失败");
+        }
+        return responseData;
+    }
+
+    @RequestMapping(value = "/learn/add",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.PUT)
+    public ResponseData addLearn(@RequestBody CourseBtn record){
+        ResponseData responseData = new ResponseData();
+
+        int num = courseService.insertLearn(record);
+
+        if(num != 0) {
+            responseData.setCode(0);
+            responseData.setMsg("选课成功");
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("选课失败");
+        }
+        return responseData;
+    }
+    @RequestMapping(value = "/learn/delete",
+            consumes = "application/json",
+            produces = "application/json",
+            method = RequestMethod.DELETE)
+    public ResponseData delLearn(@RequestBody GradeKey record){
+        ResponseData responseData = new ResponseData();
+
+        int num = courseService.deleteLearn(record);
+
+        if(num != 0) {
+            responseData.setCode(0);
+            responseData.setMsg("删除选课成功");
+        }else {
+            responseData.setCode(1);
+            responseData.setMsg("删除选课失败");
         }
         return responseData;
     }

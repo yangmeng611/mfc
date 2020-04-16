@@ -3,6 +3,8 @@ package com.ncu.mfc.mapper;
 import com.ncu.mfc.dto.CnameAndTno;
 import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.model.Course;
+import com.ncu.mfc.model.GradeKey;
+import com.ncu.mfc.model.Learn;
 
 import java.util.List;
 
@@ -68,4 +70,12 @@ public interface CourseMapper {
     List<Course> selectCourses();
 
     List<Course> selectByBtn(CourseBtn record);
+
+    List<Learn> selectLearn();
+
+    List<Learn> selectLearnBtn(CourseBtn record);
+
+    int insertLearn(CourseBtn record);
+
+    int deleteLearn(GradeKey gradeKey);
 }

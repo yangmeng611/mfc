@@ -7,6 +7,8 @@ import com.ncu.mfc.dto.CourseBtn;
 import com.ncu.mfc.mapper.CourseMapper;
 import com.ncu.mfc.mapper.TeacherMapper;
 import com.ncu.mfc.model.Course;
+import com.ncu.mfc.model.GradeKey;
+import com.ncu.mfc.model.Learn;
 import com.ncu.mfc.service.CourseService;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,6 @@ public class CourseServiceImpl implements CourseService {
     @Resource
     CourseMapper courseDao;
 
-    @Resource
-    TeacherMapper teacherDao;
 
     @Override
     public PageInfo<Course> findAllCourse(int pageNum) {
@@ -94,6 +94,32 @@ public class CourseServiceImpl implements CourseService {
         List<Course> lists = courseDao.selectByBtn(record);
         PageInfo<Course> pageInfo = new PageInfo<>(lists);
         return pageInfo;
+    }
+
+    @Override
+    public PageInfo<Learn> findAllLearn(int pageNum) {
+        PageHelper.startPage(pageNum,7);
+        List<Learn> lists = courseDao.selectLearn();
+        PageInfo<Learn> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<Learn> findLearnBtn(int pageNum, CourseBtn record) {
+        PageHelper.startPage(pageNum,7);
+        List<Learn> lists = courseDao.selectLearnBtn(record);
+        PageInfo<Learn> pageInfo = new PageInfo<>(lists);
+        return pageInfo;
+    }
+
+    @Override
+    public int insertLearn(CourseBtn courseBtn) {
+        return courseDao.insertLearn(courseBtn);
+    }
+
+    @Override
+    public int deleteLearn(GradeKey gradeKey) {
+        return courseDao.deleteLearn(gradeKey);
     }
 
 }
