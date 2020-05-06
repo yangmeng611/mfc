@@ -41,8 +41,7 @@
   </sql>
   <!--查询成绩详细信息-->
   <select id="selectDegree" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
-    select course.cno,course.cname,student.sno,student.sname,
-    if(degree = 0,'修读中',grade.degree) as degree,
+    select course.cno,course.cname,student.sno,student.sname, degree,
     if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
@@ -50,8 +49,7 @@
   </select>
   <!--根据课程编号和学号查询成绩详细信息-->
   <select id="selectGraByCnoAndSno" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
-    select course.cno,course.cname,student.sno,student.sname,
-   if(degree = 0,'修读中',grade.degree) as degree,
+    select course.cno,course.cname,student.sno,student.sname, degree,
    if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
@@ -62,8 +60,7 @@
 
   <!--根据教师职工号查询教授课程的所有成绩详细信息-->
   <select id="selectGraByTno" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.model.GradeKey" >
-     select course.cno,course.cname,student.sno,student.sname,
-    if(degree = 0,'修读中',grade.degree) as degree,
+     select course.cno,course.cname,student.sno,student.sname,degree,
     if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student,teach_class,teacher
     where grade.cno=course.cno and grade.sno=student.sno and teacher.tno = teach_class.teano
@@ -74,8 +71,7 @@
 <!--教师端成绩查询筛选button-->
   <select id="selectGraByTnoBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
-    select course.cno,course.cname,student.sno,student.sname,
-    if(degree = 0,'修读中',grade.degree) as degree,
+    select course.cno,course.cname,student.sno,student.sname, degree,
     if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade,course,student,teach_class,teacher
     where grade.cno=course.cno and grade.sno=student.sno and teacher.tno = teach_class.teano
@@ -94,7 +90,7 @@
 
   <!--根据学号查询课程的所有成绩详细信息-->
   <select id="selectGraByStu" resultMap="DegreeResultMap" parameterType="java.lang.String" >
-     select course.cno,course.cname,if(degree = 0,'修读中',grade.degree) as degree,
+     select course.cno,course.cname, degree,
      if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
@@ -104,8 +100,7 @@
   <!--管理员端成绩查询筛选button-->
   <select id="selectGraByAdminBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
-    select distinct grade.cno,course.cname,student.sno,student.sname,
-    if(degree = 0,'修读中',grade.degree) as degree,
+    select distinct grade.cno,course.cname,student.sno,student.sname, degree,
     if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade LEFT JOIN course on grade.cno=course.cno
     LEFT JOIN student on student.sno = grade.sno
@@ -131,8 +126,7 @@
   <!--查询button-->
   <select id="selectByAdminBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
-    select distinct grade.cno,course.cname,student.sno,student.sname,
-    if(degree = 0,'修读中',grade.degree) as degree,
+    select distinct grade.cno,course.cname,student.sno,student.sname, degree,
     if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctype
     from grade LEFT JOIN course on grade.cno=course.cno
     LEFT JOIN student on student.sno = grade.sno
@@ -152,7 +146,7 @@
   <!--学生端成绩查询筛选button-->
   <select id="selectGraByStuBtn" resultMap="DegreeResultMap" parameterType="com.ncu.mfc.dto.GradeBtn" >
 
-    select course.cno,course.cname,if(degree = 0,'修读中',grade.degree) as degree,
+    select course.cno,course.cname, degree,
     if(degree &gt; 0 &amp;&amp; degree &lt; 60||degree='D','0',course.credit) as credit,course.ctime,course.ctype
     from grade,course,student
     where grade.cno=course.cno and grade.sno=student.sno
@@ -175,7 +169,7 @@
     SUM(CASE WHEN grade.degree &lt; 60 || grade.degree = 'D' THEN 1 ELSE 0 END)/COUNT(1)*100 AS fails,
     SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
     SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
-    FROM grade
+    FROM grade where degree rlike '^[0-9]+$'
   </select>
 
   <!--查询指定课程的及格，不及格与优秀的比例-->
@@ -185,27 +179,29 @@
     SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
     SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
     FROM grade,course
-    WHERE grade.cno = course.cno and course.cname=#{cname,jdbcType=CHAR}
+    WHERE grade.cno = course.cno and degree rlike '^[0-9]+$' and course.cname=#{cname,jdbcType=CHAR}
   </select>
 
   <!--查询指定老师所有课程的及格，不及格与优秀的比例-->
   <select id="analyseGradeByTno" resultMap="AnalyseResultMap" parameterType="java.lang.String">
-    SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra, MIN(grade.degree) AS minGra,
+    SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra,
+     MIN(grade.degree) AS minGra,
     SUM(CASE WHEN grade.degree &lt; 60 || grade.degree = 'D' THEN 1 ELSE 0 END)/COUNT(1)*100 AS fails,
     SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
     SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
     FROM grade,course,teach_class
-    WHERE teach_class.cno=course.cno and grade.cno = course.cno and teach_class.teano=#{teano,jdbcType=CHAR}
+    WHERE teach_class.cno=course.cno and degree rlike '^[0-9]+$' and grade.cno = course.cno and teach_class.teano=#{teano,jdbcType=CHAR}
   </select>
 
   <!--查询指定老师指定课程的及格，不及格与优秀的比例-->
   <select id="analyseGradeByTnoAndCname" resultMap="AnalyseResultMap" parameterType="com.ncu.mfc.dto.CnameAndTno">
-     SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra, MIN(grade.degree) AS minGra,
+     SELECT AVG(grade.degree) AS avgGra,MAX(grade.degree) AS maxGra,
+      MIN(grade.degree) AS minGra,
     SUM(CASE WHEN grade.degree &lt; 60 || grade.degree = 'D' THEN 1 ELSE 0 END)/COUNT(1)*100 AS fails,
     SUM(CASE WHEN grade.degree &gt;= 60 &amp;&amp; grade.degree &lt; 80 || grade.degree = 'B' || grade.degree = 'C' THEN 1 ELSE 0 END)/COUNT(1)*100 AS good,
     SUM(CASE WHEN grade.degree &gt;= 80 || grade.degree = 'A' THEN 1 ELSE 0 END)/COUNT(1)*100 AS excellence
     FROM grade,course,teach_class
-    WHERE teach_class.cno=course.cno and grade.cno = course.cno
+    WHERE teach_class.cno=course.cno and grade.cno = course.cno and where rlike '^[0-9]+$'
 			and course.cname=#{cname}
 			and teach_class.teano=#{tno}
 
